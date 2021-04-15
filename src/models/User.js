@@ -3,7 +3,7 @@ const validator = require('validator')
 const bcrypt = require('bcryptjs')
 
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
 
 const User = Schema({
@@ -28,14 +28,9 @@ const User = Schema({
         type: String,
         required: true
     },
-    dateOfBirth: {
-        type: Date,
-        required: true
-    },
-    identityCard: {
+    phone: {
         type: String,
         required: true
-
     },
     password: {
         type: String,
@@ -65,8 +60,6 @@ User.pre('save', async function (next) {
     }
     next()
 })
-
-
 
 
 
