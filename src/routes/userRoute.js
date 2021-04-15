@@ -66,22 +66,7 @@ router.post('/user/login', async (req, res) => {
     }
 })
 
-router.get('/user/me', auth, (req, res) => {
-    res.send(req.user)
-})
 
-router.post('/user/logout', async (req, res) => {
-    console.log(req.token)
-    try {
-        //req.user.tokens.splice(0, req.user.tokens.length)
-        req.token = ''
-        console.log('New token' + req.token)
-        //await req.user.save()
-        res.status(200).send('Logout!!')
-    } catch (error) {
-        res.status(500).send(error)
-    }
-})
 
 
 module.exports = router
