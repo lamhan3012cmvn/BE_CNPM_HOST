@@ -1,8 +1,9 @@
 const USER = require("../models/User")
-const bcrypt=require('bcryptjs')
+const bcrypt = require('bcryptjs')
+
 const register = async (body) => {
   try {
-    console.log("body",body)
+    console.log("body", body)
     //check if email is already in the database
     const emailExist = await USER.findOne({
       email: body.email
