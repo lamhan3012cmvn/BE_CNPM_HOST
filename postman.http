@@ -1,0 +1,20 @@
+POST http://localhost:3333/auth/login
+content-type: application/json
+
+{
+    "email": "sample@gmail.com",
+    "password": "lamlamlam"
+}
+
+###
+
+POST http://localhost:3333/auth/register
+content-type: application/json
+
+{
+  "username": "sample@gmail.com",
+  "password": "lamlamlam",
+  "email":"sample@gmail.com",
+  "fullName":"Pham Tan Dat",
+  "phone":"0947123456"
+}

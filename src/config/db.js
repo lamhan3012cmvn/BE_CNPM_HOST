@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
-
+const {MONGO_URI} =require('./index')
+console.log(MONGO_URI)
 async function connect() {
-
     try {
-        await mongoose.connect(process.env.MONGODB_URL, {
+        await mongoose.connect(MONGO_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useFindAndModify: false,
