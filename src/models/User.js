@@ -37,8 +37,12 @@ const User = Schema({
         required: true
     },
     isAdmin: {
-        type: String,
+        type: Boolean,
         required: true,
+        default: false
+    },
+    isVerify: {
+        type: Boolean,
         default: false
     },
     tokens: [{

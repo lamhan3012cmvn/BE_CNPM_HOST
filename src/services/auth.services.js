@@ -3,7 +3,9 @@ const bcrypt = require('bcryptjs')
 
 const register = async (body) => {
   try {
+    const { email, username } = body
     console.log("body", body)
+    console.log(email)
     //check if email is already in the database
     const emailExist = await USER.findOne({
       email: body.email
@@ -33,6 +35,7 @@ const register = async (body) => {
 
     console.log("save")
     await newUser.save()
+    sendMail(email, username)
     return {
       message: 'Successfully registered',
       success: true,
@@ -81,6 +84,31 @@ const login = async (body) => {
       success: false
     }
   }
+}
+
+const sendMail = (email, username) => {
+  let transport = nodemailer.createTransport({
+    service: 'hotmail',
+    auth: {
+      user: 'holmesz17@outlook.com',
+      pass: 'phamtandat1712'
+    }
+  })
+
+  let mailOptions
+  mailOptions = {
+    from: 'holmesz17@outlook.com',
+    to: email,
+    subject: 'Email confirmation',
+    html: `Press <a href=http://localhost:5000/verify/${username}> here </a> to verify your email.`
+  }
+  transport.sendMail(mailOptions, function (err, res) {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log('Message sent')
+    }
+  })
 }
 
 module.exports = {

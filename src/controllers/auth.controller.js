@@ -32,7 +32,22 @@ const login = async (req, res, next) => {
   }
 }
 
+const verify = async (req, res) => {
+  const { username } = req.params
+  const user = await User.findOne({ username: username })
+  if (user) {
+    user.isVerify = true
+    await user.save()
+
+    res.send('Thank for confirm email')
+
+  } else {
+    res.json('User not found')
+  }
+}
+
 module.exports = {
   register,
-  login
+  login,
+  verify
 }
