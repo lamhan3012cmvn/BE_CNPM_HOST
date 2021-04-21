@@ -45,12 +45,13 @@ const User = Schema({
         type: Boolean,
         default: false
     },
-    tokens: [{
-        token: {
-            type: String,
-            required: true
-        }
-    }]
+    token: {
+        type: String,
+        required: true
+    },
+    tokenExp:{
+        type:Number
+    }
 
 }, {
     collection: 'user'
@@ -64,7 +65,6 @@ const User = Schema({
 //     }
 //     next()
 // })
-
 
 
 module.exports = mongoose.model('User', User)

@@ -10,8 +10,9 @@ const register = async (req, res, next) => {
     if (!resServices) return controller.sendSuccess(res, resServices.data, 300, resServices.message)
     console.log(resServices)
 
-    resServices.data.token = jwtServices.createToken(resServices.data._id)
-    return controller.sendSuccess(res, resServices.data, 200, resServices.message)
+    res.cookie("w_authExp",resServices.data.tokenExp)
+    res.cookie("w_auth",resServices.data.token)
+    return controller.sendSuccess(res, resServices.data._id, 200, resServices.message)
   } catch (err) {
     controller.sendError(res)
   }
@@ -24,14 +25,32 @@ const login = async (req, res, next) => {
       return controller.sendSuccess(res, resServices.data, 300, resServices.message)
     }
     console.log(resServices)
-    resServices.data.token = jwtServices.createToken(resServices.data._id)
-    return controller.sendSuccess(res, resServices.data, 200, resServices.message)
+    // const token = jwtServices.createToken(resServices.data._id)
+    res.cookie("w_authExp",resServices.data.tokenExp)
+    res.cookie("w_auth",resServices.data.token)
+    return controller.sendSuccess(res,{id:resServices.data._id}, 200, resServices.message)
 
   } catch (err) {
     return controller.sendError(res)
   }
 }
 
+const getAuth = async(req,res,next)=>{
+  try{
+    console.log("errr",req)
+    const body=req.value.body
+    const _id=body.decodeToken.data
+    const token=body.token
+    console.log(`LHA:  ===> file: auth.controller.js ===> line 42 ===> token`, token)
+    console.log(_id)
+    const resServices = await authServices.getAuth({_id,token})
+    console.log(`LHA:  ===> file: auth.controller.js ===> line 45 ===> resServices`, resServices)
+    return controller.sendSuccess(res, resServices.data, 300, resServices.message)
+  }catch{
+    console.log("??")
+    return controller.sendError(res)
+  }
+}
 const verify = async (req, res) => {
   const { username } = req.params
   const user = await User.findOne({ username: username })
@@ -49,5 +68,5 @@ const verify = async (req, res) => {
 module.exports = {
   register,
   login,
-  verify
+  verify,getAuth
 }

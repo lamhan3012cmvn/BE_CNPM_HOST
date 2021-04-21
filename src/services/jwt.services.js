@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken')
 const {ACCESS_TOKEN_SECRET} = require("../config/index")
-
+const cookieParser=require('cookie-parser')
 const verify=(req,res,next)=>{
   
-  const header = req.headers.authorization;
+  const header = req.headers.cookie;
 		if (!header) {
 			res.json({
 				data: {
@@ -12,7 +12,7 @@ const verify=(req,res,next)=>{
 			});
 			return;
 		}
-		const token = header.split(' ')[1];
+		const token = header.split('; ')[1].split('=')[1];
 		console.log('tokenService token: ' + token);
 		jwt.verify(token, ACCESS_TOKEN_SECRET, (err, decodedFromToken) => {
 			if (err) {
@@ -33,7 +33,7 @@ const verify=(req,res,next)=>{
 				// const decodedUser = <ISafeUser>decoded.user;
 				// // res.json({tokenVerificationData: { access: true, user: decodedUser } });
 				// req.verifiedUser = decodedUser;
-				req.value = { body: { token: decodedFromToken } };
+				req.value = { body: { decodeToken: decodedFromToken ,token} };
 				next();
 			}
 		});
