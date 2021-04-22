@@ -1,13 +1,12 @@
 const USER = require("../models/User")
 const bcrypt = require('bcryptjs')
 const { ACCESS_TOKEN_SECRET } = require("../config")
-const jwtServices =require("./jwt.services")
-const moment=require('moment')
+const jwtServices = require("./jwt.services")
+const moment = require('moment')
 const register = async (body) => {
   try {
     const { email, username } = body
     console.log("body", body)
-    console.log(email)
     //check if email is already in the database
     const emailExist = await USER.findOne({
       email: body.email
@@ -34,12 +33,12 @@ const register = async (body) => {
       password: hashedPassword
     })
 
-    const token=jwtServices.createToken(newUser._id);
-    const tokenExp=moment().add(30,'days')
+    const token = jwtServices.createToken(newUser._id);
+    const tokenExp = moment().add(30, 'days')
     console.log(`LHA:  ===> file: auth.services.js ===> line 39 ===> tokenExp`, tokenExp)
 
-    newUser.token=token
-    newUser.tokenExp=tokenExp
+    newUser.token = token
+    newUser.tokenExp = tokenExp
     console.log("save")
     await newUser.save()
     sendMail(email, username)
@@ -92,29 +91,68 @@ const login = async (body) => {
     }
   }
 }
-const getAuth=async(body)=>{
-  try{
-    console.log("body:",body)
-    const user=await USER.find({...body})
-  if(!user){
-    return {
-      message: 'Get Auth Fail',
-      success: false
+
+const getAuth = async (body) => {
+  try {
+    console.log("body:", body)
+    const user = await USER.find({ ...body })
+    if (!user) {
+      return {
+        message: 'Get Auth Fail',
+        success: false
+      }
     }
+    return {
+      message: 'Successfully Get Auth',
+      success: true,
+      data: user
+    };
   }
-  return {
-    message: 'Successfully Get Auth',
-    success: true,
-    data: user
-  };
-  }
-  catch(err){
+  catch (err) {
     return {
       message: 'An error occured',
       success: false
     }
   }
 }
+const findUserNameAndPass = async (_id) => {
+  try {
+    const user = await User.findById(_id)
+    const oldPassword = req.body.oldPassword
+    const isPasswordMatch = await bcrypt.compare(oldPassword, user.password)
+    if (isPasswordMatch) return user;
+    return null
+  } catch {
+    return null
+  }
+
+}
+const changePassword = async (body) => {
+  try {
+    const user = findUserNameAndPass()
+    if (!user) {
+      return {
+        message: 'Dont Found User',
+        success: false,
+        data: user
+      };
+    }
+    const newPassword = await bcrypt.hash(body.newPassword, 8)
+    user.password = newPassword
+    await user.save()
+
+    return {
+      message: 'Change Password Successfully',
+      success: true
+    };
+  } catch {
+    return {
+      message: 'An error occured',
+      success: false
+    }
+  }
+}
+
 const sendMail = (email, username) => {
   let transport = nodemailer.createTransport({
     service: 'hotmail',
@@ -124,12 +162,11 @@ const sendMail = (email, username) => {
     }
   })
 
-  let mailOptions
-  mailOptions = {
+  let mailOptions = {
     from: 'holmesz17@outlook.com',
     to: email,
     subject: 'Email confirmation',
-    html: `Press <a href=http://localhost:5000/verify/${username}> here </a> to verify your email.`
+    html: `Press <a href=http://localhost:3000/verify/${username}> here </a> to verify your email.`
   }
   transport.sendMail(mailOptions, function (err, res) {
     if (err) {
@@ -142,5 +179,5 @@ const sendMail = (email, username) => {
 
 module.exports = {
   register,
-  login,getAuth
+  login, getAuth, changePassword
 }

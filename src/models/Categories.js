@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const Categories = Schema({
+const Categories = new Schema({
     id: {
         type: String,
         required: true
@@ -17,8 +17,6 @@ const Categories = Schema({
     status: {
         type: String
     }
-}, {
-    collection: 'categories'
-})
+}, { timestamps: true })
 
 module.exports = mongoose.model('Categories', Categories)

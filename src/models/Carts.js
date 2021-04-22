@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const Carts = Schema({
+const Carts = new Schema({
     id: {
         type: String,
         required: true
@@ -20,8 +20,6 @@ const Carts = Schema({
     quantity: {
         type: Number
     }
-}, {
-    collection: 'carts'
-})
+}, { timestamps: true })
 
 module.exports = mongoose.model('Carts', Carts)
