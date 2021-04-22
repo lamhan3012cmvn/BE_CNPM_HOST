@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs')
 const register = async (req, res, next) => {
   try {
     console.log(req.value.body)
-    const resServices = await authServices.register({ ...req.value.body })
+    const resServices = await authServices.register(req.value.body)
 
     if (!resServices.success) return controller.sendSuccess(res, resServices.data, 300, resServices.message)
     console.log(resServices)
@@ -21,7 +21,7 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   try {
-    const resServices = await authServices.login({ ...req.value.body })
+    const resServices = await authServices.login(req.value.body)
     if (!resServices.success) {
       return controller.sendSuccess(res, resServices.data, 300, resServices.message)
     }
@@ -46,8 +46,8 @@ const getAuth = async (req, res, next) => {
     const resServices = await authServices.getAuth({ _id, token })
     console.log(`LHA:  ===> file: auth.controller.js ===> line 45 ===> resServices`, resServices)
     return controller.sendSuccess(res, resServices.data, 200, resServices.message)
-  } catch {
-    console.log("??")
+  } catch (error) { // bug
+    console.log(error)
     return controller.sendError(res)
   }
 }

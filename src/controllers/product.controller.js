@@ -14,7 +14,7 @@ const getProducts = async (req, res, next) => {
 const createProduct = async (req, res, next) => {
   console.log(req.body)
   try {
-    const resServices = await productServices.createNewProduct({ ...req.body })
+    const resServices = await productServices.createNewProduct(req.body)
     if (!resServices.success)
       return controller.sendSuccess(res, {}, 300, resServices.message)
     return controller.sendSuccess(res, resServices.data, 200, resServices.message)
