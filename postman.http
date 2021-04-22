@@ -22,11 +22,3 @@ content-type: application/json
 ###
 GET http://localhost:3333/auth/getAuth
 content-type: application/json
-<<<<<<< HEAD
-w_authExp: 1621597113969
-w_auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjA4MDBlYjk3Nzg0YWI3ZTlmZmU4MGYzIiwiaWF0IjoxNjE5MDA1MTEzOTY3LCJleHAiOjE2MTkwOTE1MTM5Njd9.JqO4NTPUz_v5qtXWZzrd5ZrtA1jWviXcEoIZJqyWG3E
-
-
-###
-=======
->>>>>>> c0b84c1540d72474ee934154386a7e850532995f
