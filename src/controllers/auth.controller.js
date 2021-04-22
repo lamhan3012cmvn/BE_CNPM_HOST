@@ -7,7 +7,7 @@ const register = async (req, res, next) => {
     console.log(req.value.body)
     const resServices = await authServices.register({ ...req.value.body })
 
-    if (!resServices) return controller.sendSuccess(res, resServices.data, 300, resServices.message)
+    if (!resServices.success) return controller.sendSuccess(res, resServices.data, 300, resServices.message)
     console.log(resServices)
 
     
