@@ -11,6 +11,7 @@ router.post('/register', Validate.body(SchemaValidate.register), Controller.regi
 router.get('/verify/:username', Controller.verify)
 
 router.get('/getAuth',jwtServices.verify,Controller.getAuth)
+router.get('/acb',jwtServices.verify)
 
 router.post('/login', Validate.body(SchemaValidate.login), Controller.login)
 

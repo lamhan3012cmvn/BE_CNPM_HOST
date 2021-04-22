@@ -27,12 +27,14 @@ const register = async (body) => {
     }
 
     const hashedPassword = await bcrypt.hash(body.password, 8);
+    console.log(`LHA:  ===> file: auth.services.js ===> line 30 ===> hashedPassword`, hashedPassword)
 
 
     const newUser = new USER({
       ...body,
       password: hashedPassword
     })
+    console.log(`LHA:  ===> file: auth.services.js ===> line 36 ===> newUser`, newUser)
 
     const token=jwtServices.createToken(newUser._id);
     const tokenExp=moment().add(30,'days')
@@ -46,7 +48,7 @@ const register = async (body) => {
     return {
       message: 'Successfully registered',
       success: true,
-      data: createdUser
+      data: newUser
     };
 
   } catch (err) {
@@ -95,7 +97,8 @@ const login = async (body) => {
 const getAuth=async(body)=>{
   try{
     console.log("body:",body)
-    const user=await USER.find({...body})
+    const user=(await USER.findOne({...body}))
+    
   if(!user){
     return {
       message: 'Get Auth Fail',
@@ -105,7 +108,7 @@ const getAuth=async(body)=>{
   return {
     message: 'Successfully Get Auth',
     success: true,
-    data: user
+    data: {user,isAuth:true}
   };
   }
   catch(err){

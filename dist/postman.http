@@ -1,20 +1,20 @@
-POST http://18.217.70.108:4000/auth/login
+POST http://localhost:3333/auth/login
 content-type: application/json
 
 {
-    "email": "sample5@gmail.com",
+    "email": "sample3@gmail.com",
     "password": "lamlamlam"
 }
 
 ###
 
-POST http://18.217.70.108:4000/auth/register
+POST http://localhost:3333/auth/register
 content-type: application/json
 
 {
-  "username": "sample8@gmail.com",
+  "username": "sample3@gmail.com",
   "password": "lamlamlam",
-  "email":"sample8@gmail.com",
+  "email":"sample3@gmail.com",
   "fullName":"Pham Tan Dat",
   "phone":"0947123456"
 }
