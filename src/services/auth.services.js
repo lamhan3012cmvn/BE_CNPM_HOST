@@ -26,12 +26,14 @@ const register = async (body) => {
     }
 
     const hashedPassword = await bcrypt.hash(body.password, 8);
+    console.log(`LHA:  ===> file: auth.services.js ===> line 30 ===> hashedPassword`, hashedPassword)
 
 
     const newUser = new USER({
       ...body,
       password: hashedPassword
     })
+    console.log(`LHA:  ===> file: auth.services.js ===> line 36 ===> newUser`, newUser)
 
     const token = jwtServices.createToken(newUser._id);
     const tokenExp = moment().add(30, 'days')
@@ -45,7 +47,7 @@ const register = async (body) => {
     return {
       message: 'Successfully registered',
       success: true,
-      data: createdUser
+      data: newUser
     };
 
   } catch (err) {
@@ -91,6 +93,7 @@ const login = async (body) => {
     }
   }
 }
+<<<<<<< HEAD
 
 const getAuth = async (body) => {
   try {
@@ -102,6 +105,14 @@ const getAuth = async (body) => {
         success: false
       }
     }
+=======
+const getAuth=async(body)=>{
+  try{
+    console.log("body:",body)
+    const user=(await USER.findOne({...body}))
+    
+  if(!user){
+>>>>>>> c0b84c1540d72474ee934154386a7e850532995f
     return {
       message: 'Successfully Get Auth',
       success: true,
@@ -114,6 +125,7 @@ const getAuth = async (body) => {
       success: false
     }
   }
+<<<<<<< HEAD
 }
 const findUserNameAndPass = async (_id) => {
   try {
@@ -124,6 +136,13 @@ const findUserNameAndPass = async (_id) => {
     return null
   } catch {
     return null
+=======
+  return {
+    message: 'Successfully Get Auth',
+    success: true,
+    data: {user,isAuth:true}
+  };
+>>>>>>> c0b84c1540d72474ee934154386a7e850532995f
   }
 
 }

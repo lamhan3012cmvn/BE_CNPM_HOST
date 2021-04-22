@@ -1,20 +1,20 @@
-POST http://localhost:3333/auth/login
+POST http://18.217.70.108:4000/auth/login
 content-type: application/json
 
 {
-    "email": "sample3@gmail.com",
+    "email": "sample5@gmail.com",
     "password": "lamlamlam"
 }
 
 ###
 
-POST http://localhost:3333/auth/register
+POST http://18.217.70.108:4000/auth/register
 content-type: application/json
 
 {
-  "username": "sample3@gmail.com",
+  "username": "sample8@gmail.com",
   "password": "lamlamlam",
-  "email":"sample3@gmail.com",
+  "email":"sample8@gmail.com",
   "fullName":"Pham Tan Dat",
   "phone":"0947123456"
 }
@@ -22,8 +22,11 @@ content-type: application/json
 ###
 GET http://localhost:3333/auth/getAuth
 content-type: application/json
+<<<<<<< HEAD
 w_authExp: 1621597113969
 w_auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjA4MDBlYjk3Nzg0YWI3ZTlmZmU4MGYzIiwiaWF0IjoxNjE5MDA1MTEzOTY3LCJleHAiOjE2MTkwOTE1MTM5Njd9.JqO4NTPUz_v5qtXWZzrd5ZrtA1jWviXcEoIZJqyWG3E
 
 
 ###
+=======
+>>>>>>> c0b84c1540d72474ee934154386a7e850532995f

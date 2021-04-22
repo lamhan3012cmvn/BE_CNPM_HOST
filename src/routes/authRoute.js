@@ -14,6 +14,7 @@ router.get('/getAuth', jwtServices.verify, Controller.getAuth)
 
 router.post('/changePassword', jwtServices.verify, Validate.body(SchemaValidate.changePassword), Controller.changePassword)
 
+
 router.post('/login', Validate.body(SchemaValidate.login), Controller.login)
 
 module.exports = router
