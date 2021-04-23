@@ -10,7 +10,7 @@ const getProducts = async () => {
     }
   } catch (err) {
     return {
-      message: 'An error occured',
+      message: 'An error occurred',
       success: false
     }
   }
@@ -18,22 +18,26 @@ const getProducts = async () => {
 
 const createNewProduct = async (body) => {
   try {
-    // console.log("body", body)
     const newProduct = new Product(body)
-    // console.log("new", newProduct)
-    //check
+
+    const existProduct = await Product.findOne({ productId: body.productId })
+    if (existProduct) {
+      return {
+        message: 'Product already exist',
+        success: false,
+        data: newProduct
+      }
+    }
+
     await newProduct.save()
-    // console.log('???')
     return {
       message: 'Successfully create products',
       success: true,
-      data: newProduct//looix day nek
+      data: newProduct
     }
-
   } catch (error) {
-    console.log('chay vao day an lz a` ???')
     return {
-      message: 'An error occured',
+      message: 'An error occurred',
       success: false
     }
   }

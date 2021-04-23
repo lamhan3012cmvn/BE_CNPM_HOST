@@ -1,15 +1,12 @@
 const express = require('express')
-
 const Controller = require('../controllers/auth.controller')
 const SchemaValidate = require("../validators/auth.validator")
 const Validate = require("../validators")
 const jwtServices = require("../services/jwt.services")
 const router = express.Router()
-const services = require('../services/auth.services')
+
 
 router.post('/register', Validate.body(SchemaValidate.register), Controller.register)
-
-router.post('/sendMail', services.sendMail)
 
 router.get('/verify/:username', Controller.verify)
 

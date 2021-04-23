@@ -4,6 +4,7 @@ const { ACCESS_TOKEN_SECRET } = require("../config")
 const jwtServices = require("./jwt.services")
 const moment = require('moment')
 const nodemailer = require('nodemailer')
+
 const register = async (body) => {
   try {
     const { email, username } = body
@@ -53,7 +54,7 @@ const register = async (body) => {
 
   } catch (err) {
     return {
-      message: 'An error occured',
+      message: 'An error occurred',
       success: false
     }
   }
@@ -89,7 +90,7 @@ const login = async (body) => {
     };
   } catch (err) {
     return {
-      message: 'An error occured',
+      message: 'An error occurred',
       success: false
     }
   }
@@ -113,7 +114,7 @@ const getAuth = async (body) => {
   }
   catch (err) {
     return {
-      message: 'An error occured',
+      message: 'An error occurred',
       success: false
     }
   }
@@ -135,7 +136,7 @@ const changePassword = async (body) => {
     const user = findUserNameAndPass()
     if (!user) {
       return {
-        message: 'Dont Found User',
+        message: 'Do not Found User',
         success: false,
         data: user
       };
@@ -150,7 +151,7 @@ const changePassword = async (body) => {
     };
   } catch {
     return {
-      message: 'An error occured',
+      message: 'An error occurred',
       success: false
     }
   }
@@ -158,7 +159,10 @@ const changePassword = async (body) => {
 
 const verifyUser = async (username) => {
   try {
-    const user = await User.findOne({ username: username })
+    console.log("???")
+    console.log(username)
+    const user = await USER.findOne({ username: username })
+    console.log("user")
     if (user) {
       user.isVerify = true
       await user.save()
@@ -177,42 +181,28 @@ const verifyUser = async (username) => {
 
   } catch (error) {
     return {
-      message: 'An error occured',
+      message: 'An error occurred',
       success: false
     }
   }
 }
 
-const sendMail = async (email, username) => {
-  // let transport = nodemailer.createTransport({
-  //   service: 'hotmail',
-  //   auth: {
-  //     user: 'holmesz17@outlook.com',
-  //     pass: 'phamtandat1712'
-  //   }
-  // })
-
-  //let transport = nodemailer.createTransport(`smtps://<username>%40gmail.com:<password>@smtp.gmail.com`)
-  let testAccount = await nodemailer.createTestAccount();
-
-  // create reusable transporter object using the default SMTP transport
+const sendMail = (email, username) => {
   let transport = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
-    port: 587,
-    secure: false, // true for 465, false for other ports
+    service: 'hotmail',
     auth: {
-      user: testAccount.user, // generated ethereal user
-      pass: testAccount.pass, // generated ethereal password
-    },
-  });
+      user: 'holmesz17@outlook.com',
+      pass: 'phamtandat1712'
+    }
+  })
 
   let mailOptions = {
-    from: 'phamtandat1479@gmail.com',
-    to: "208holmesz@gmail.com",
+    from: 'holmesz17@outlook.com',
+    to: email,
     subject: 'Email confirmation',
-    html: `Press <a href=http://localhost:3000/verify/${username}> here </a> to verify your email.`
+    html: `Press <a href=http://localhost:3000/auth/verify/${username}> here </a> to verify your email.`
   }
-  await transport.sendMail(mailOptions, function (err, res) {
+  transport.sendMail(mailOptions, function (err, res) {
     if (err) {
       console.log(err)
     } else {

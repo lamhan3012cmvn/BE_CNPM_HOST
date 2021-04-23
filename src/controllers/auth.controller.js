@@ -57,10 +57,10 @@ const verify = async (req, res) => {
     const { username } = req.params
     const resServices = await authServices.verifyUser(username)
     if (!resServices.success) {
-      return controller.sendSuccess(res, resServices.data, 300, resServices.message)
+      return controller.sendSuccess(res, resServices.success, 300, resServices.message)
     }
 
-    return controller.sendSuccess(res, resServices.success, 300, resServices.message)
+    return controller.sendSuccess(res, resServices.success, 200, resServices.message)
 
   } catch (error) {
     return controller.sendError(res)

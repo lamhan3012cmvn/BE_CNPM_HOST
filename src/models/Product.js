@@ -25,9 +25,11 @@ const Product = new Schema({
     },
     FK_Category: {
         type: String,
-        required: true,
+        required: false,
         match: /^[A-Fa-f-9]{24}$/
     }
-}, { timestamps: true })
+}, {
+    timestamps: true
+})
 
 module.exports = mongoose.model('Product', Product)
