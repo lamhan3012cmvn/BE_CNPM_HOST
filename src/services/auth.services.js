@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs')
 const { ACCESS_TOKEN_SECRET } = require("../config")
 const jwtServices = require("./jwt.services")
 const moment = require('moment')
+const nodemailer = require('nodemailer')
 const register = async (body) => {
   try {
     const { email, username } = body
@@ -155,22 +156,63 @@ const changePassword = async (body) => {
   }
 }
 
-const sendMail = (email, username) => {
-  let transport = nodemailer.createTransport({
-    service: 'hotmail',
-    auth: {
-      user: 'holmesz17@outlook.com',
-      pass: 'phamtandat1712'
+const verifyUser = async (username) => {
+  try {
+    const user = await User.findOne({ username: username })
+    if (user) {
+      user.isVerify = true
+      await user.save()
+
+      return {
+        message: 'Email Confirm',
+        success: true
+      }
+
+    } else {
+      return {
+        message: 'User not found',
+        success: false
+      }
     }
-  })
+
+  } catch (error) {
+    return {
+      message: 'An error occured',
+      success: false
+    }
+  }
+}
+
+const sendMail = async (email, username) => {
+  // let transport = nodemailer.createTransport({
+  //   service: 'hotmail',
+  //   auth: {
+  //     user: 'holmesz17@outlook.com',
+  //     pass: 'phamtandat1712'
+  //   }
+  // })
+
+  //let transport = nodemailer.createTransport(`smtps://<username>%40gmail.com:<password>@smtp.gmail.com`)
+  let testAccount = await nodemailer.createTestAccount();
+
+  // create reusable transporter object using the default SMTP transport
+  let transport = nodemailer.createTransport({
+    host: "smtp.ethereal.email",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: testAccount.user, // generated ethereal user
+      pass: testAccount.pass, // generated ethereal password
+    },
+  });
 
   let mailOptions = {
-    from: 'holmesz17@outlook.com',
-    to: email,
+    from: 'phamtandat1479@gmail.com',
+    to: "208holmesz@gmail.com",
     subject: 'Email confirmation',
     html: `Press <a href=http://localhost:3000/verify/${username}> here </a> to verify your email.`
   }
-  transport.sendMail(mailOptions, function (err, res) {
+  await transport.sendMail(mailOptions, function (err, res) {
     if (err) {
       console.log(err)
     } else {
@@ -181,5 +223,7 @@ const sendMail = (email, username) => {
 
 module.exports = {
   register,
-  login, getAuth, changePassword
+  login, getAuth, changePassword,
+  verifyUser,
+  sendMail
 }

@@ -11,12 +11,12 @@ const Categories = new Schema({
         type: String,
         required: true
     },
-    image: {
-        type: String
-    },
-    status: {
-        type: String
-    }
+    // image: {
+    //     type: String
+    // },
+    // status: {
+    //     type: String
+    // }
 }, { timestamps: true })
 
 module.exports = mongoose.model('Categories', Categories)

@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const Order = Schema({
+const Order = new Schema({
     id: {
         type: String,
         required: true
@@ -25,8 +25,6 @@ const Order = Schema({
     phone: {
         type: String
     }
-}, {
-    collection: 'order'
-})
+}, { timestamps: true })
 
 module.exports = mongoose.model('Order', Order)

@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const Product = Schema({
+const Product = new Schema({
     productId: {
         type: String,
         required: true
@@ -22,9 +22,12 @@ const Product = Schema({
     },
     image: {
         type: String
+    },
+    FK_Category: {
+        type: String,
+        required: true,
+        match: /^[A-Fa-f-9]{24}$/
     }
-}, {
-    collection: 'product'
-})
+}, { timestamps: true })
 
 module.exports = mongoose.model('Product', Product)
