@@ -1,21 +1,18 @@
 const controller = require("./controller");
 const authServices = require("../services/auth.services")
-const jwtServices = require("../services/jwt.services");
 const User = require("../models/User");
-const bcrypt = require('bcryptjs')
 
 const register = async (req, res, next) => {
   try {
-    console.log(req.value.body)
+
+    console.log("register")
     const resServices = await authServices.register(req.value.body)
 
     if (!resServices.success) return controller.sendSuccess(res, resServices.data, 300, resServices.message)
-    console.log(resServices)
-
 
     return controller.sendSuccess(res, resServices.data, 200, resServices.message)
   } catch (err) {
-    controller.sendError(res)
+    return controller.sendError(res)
   }
 }
 
@@ -23,9 +20,8 @@ const login = async (req, res, next) => {
   try {
     const resServices = await authServices.login(req.value.body)
     if (!resServices.success) {
-      return controller.sendSuccess(res, resServices.data, 300, resServices.message)
+      return controller.sendSuccess(res, {}, 300, resServices.message)
     }
-    console.log(resServices)
     // const token = jwtServices.createToken(resServices.data._id)
 
     return controller.sendSuccess(res, resServices.data, 200, resServices.message)
@@ -65,7 +61,6 @@ const verify = async (req, res) => {
     res.json('User not found')
   }
 }
-//Controller  tác động lên services
 const changePassword = async (req, res, next) => {
   try {
     const { newPassword, decodeToken } = req.value.body

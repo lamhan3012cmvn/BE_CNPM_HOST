@@ -5,42 +5,30 @@ const jwtServices = require("./jwt.services")
 const moment = require('moment')
 const register = async (body) => {
   try {
-    const { email, username } = body
-    console.log("body", body)
+    console.log("services register")
+    const { email, password } = body
     //check if email is already in the database
     const emailExist = await USER.findOne({
-      email: body.email
+      email: email
     })
+    console.log(`LHA:  ===> file: auth.services.js ===> line 14 ===> emailExist`, emailExist)
     if (emailExist) return {
       message: 'Email already exist !!',
       success: false
     }
+    const hashedPassword = await bcrypt.hash(password, 8);
+    console.log(`LHA:  ===> file: auth.services.js ===> line 20 ===> hashedPassword`, hashedPassword)
 
-    //check if username is already in the database
-    const usernameExist = await USER.findOne({
-      username: body.username
-    })
-    if (usernameExist) return {
-      message: 'Username already exist !!',
-      success: false
-    }
-
-    const hashedPassword = await bcrypt.hash(body.password, 8);
-    console.log(`LHA:  ===> file: auth.services.js ===> line 30 ===> hashedPassword`, hashedPassword)
-
-    body.password = hashedPassword
-    const newUser = new USER(body)
-    console.log(`LHA:  ===> file: auth.services.js ===> line 36 ===> newUser`, newUser)
-
+    const newUser = new USER({email,password:hashedPassword})
+    console.log(`LHA:  ===> file: auth.services.js ===> line 24 ===> newUser`, newUser)
+    console.log(`LHA:  ===> file: auth.services.js ===> line 22 ===> newUser`, newUser)
     const token = jwtServices.createToken(newUser._id);
     const tokenExp = moment().add(30, 'days')
-    console.log(`LHA:  ===> file: auth.services.js ===> line 39 ===> tokenExp`, tokenExp)
 
     newUser.token = token
     newUser.tokenExp = tokenExp
-    console.log("save")
     await newUser.save()
-    sendMail(email, username)
+    //sendMail(email, username)
     return {
       message: 'Successfully registered',
       success: true,

@@ -23,8 +23,6 @@ const Product = Schema({
     image: {
         type: String
     }
-}, {
-    collection: 'product'
-})
+},{timestamps:true})
 
 module.exports = mongoose.model('Product', Product)

@@ -1,36 +1,21 @@
 const mongoose = require('mongoose')
-const validator = require('validator')
-const bcrypt = require('bcryptjs')
-
-
 const Schema = mongoose.Schema
 
 
-const User = Schema({
-    username: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true
-    },
+const User = new Schema({
     email: {
         type: String,
         required: true,
         unique: true,
         lowercase: true,
-        validate: value => {
-            if (!validator.isEmail(value)) {
-                throw new Error({ error: 'Invalid Email address' })
-            }
-        }
     },
     fullName: {
         type: String,
-        required: true
+        default:""
     },
     phone: {
         type: String,
-        required: true
+        default:""
     },
     password: {
         type: String,
@@ -38,7 +23,6 @@ const User = Schema({
     },
     isAdmin: {
         type: Boolean,
-        required: true,
         default: false
     },
     isVerify: {
@@ -47,15 +31,14 @@ const User = Schema({
     },
     token: {
         type: String,
-        required: true
+        default:""
     },
     tokenExp:{
-        type:Number
+        type:Number,
+        default:0
     }
 
-}, {
-    collection: 'user'
-})
+},{timestamps:true})
 
 
 module.exports = mongoose.model('User', User)
