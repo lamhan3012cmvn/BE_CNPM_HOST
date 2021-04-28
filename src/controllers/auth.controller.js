@@ -49,17 +49,19 @@ const getAuth = async (req, res, next) => {
 }
 
 const verify = async (req, res) => {
-  const { username } = req.params
-  const user = await User.findOne({ username: username })
-  if (user) {
-    user.isVerify = true
-    await user.save()
+  try {
+    const { username } = req.params
+    const resServices = await authServices.verifyUser(username)
+    if (!resServices.success) {
+      return controller.sendSuccess(res, resServices.success, 300, resServices.message)
+    }
 
-    res.send('Thank for confirm email')
+    return controller.sendSuccess(res, resServices.success, 200, resServices.message)
 
-  } else {
-    res.json('User not found')
+  } catch (error) {
+    return controller.sendError(res)
   }
+
 }
 const changePassword = async (req, res, next) => {
   try {

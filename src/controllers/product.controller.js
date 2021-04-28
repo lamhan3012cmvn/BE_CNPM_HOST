@@ -12,7 +12,6 @@ const getProducts = async (req, res, next) => {
 }
 
 const createProduct = async (req, res, next) => {
-  console.log(req.body)
   try {
     const resServices = await productServices.createNewProduct(req.body)
     if (!resServices.success)

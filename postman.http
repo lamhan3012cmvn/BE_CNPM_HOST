@@ -1,21 +1,72 @@
-POST http://localhost:3333/auth/login
+
+POST http://18.217.70.108:3000/auth/login
 content-type: application/json
 
 {
-    "email": "sample5@gmail.com",
+    "email": "sample30@gmail.com",
     "password": "lamlamlam"
 }
 
 ###
 
-POST http://localhost:3333/auth/register
+POST http://18.217.70.108:3000/auth/register
 content-type: application/json
 
 {
-  "password": "abcd1234",
-  "email":"sample19@gmail.com",
+  "username": "208holmesz@gmail.com",
+  "password": "lamlamlam",
+  "email":"208holmesz@gmail.com",
+  "fullName":"Pham Tan Dat",
+  "phone":"0947123456"
+}
+
+###
+POST http://localhost:3000/auth/register
+content-type: application/json
+
+{
+  "username": "ptandat1",
+  "password": "lamlamlam",
+  "email":"208holmesz@gmail.com",
+  "fullName":"Pham Tan Dat",
+  "phone":"0947123456"
 }
 
 ###
 GET http://localhost:3333/auth/getAuth
+content-type: application/json
+
+###
+GET http://localhost:3000/auth/verify/ptandat2
+content-type: application/json
+
+
+###
+POST http://localhost:3000/product/create
+Content-Type: application/json
+
+{
+    "productId": "24",
+    "productName": "but",
+    "description": "but muc vang",
+    "price": "3000",
+    "total": 3,
+    "image": "dashdasjkdsa"
+}
+
+###
+GET http://localhost:3000/product/getProducts
+content-type: application/json
+
+###
+POST  http://localhost:3000/categories/createCategories
+content-type: application/json
+
+{
+    "categoriesId": "2",
+    "name": "den ngu"
+}
+
+###
+GET http://localhost:3000/categories/getCategories
 content-type: application/json

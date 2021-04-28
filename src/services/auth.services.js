@@ -3,6 +3,8 @@ const bcrypt = require('bcryptjs')
 const { ACCESS_TOKEN_SECRET } = require("../config")
 const jwtServices = require("./jwt.services")
 const moment = require('moment')
+const nodemailer = require('nodemailer')
+
 const register = async (body) => {
   try {
     console.log("services register")
@@ -37,7 +39,7 @@ const register = async (body) => {
 
   } catch (err) {
     return {
-      message: 'An error occured',
+      message: 'An error occurred',
       success: false
     }
   }
@@ -73,7 +75,7 @@ const login = async (body) => {
     };
   } catch (err) {
     return {
-      message: 'An error occured',
+      message: 'An error occurred',
       success: false
     }
   }
@@ -97,7 +99,7 @@ const getAuth = async (body) => {
   }
   catch (err) {
     return {
-      message: 'An error occured',
+      message: 'An error occurred',
       success: false
     }
   }
@@ -119,7 +121,7 @@ const changePassword = async (body) => {
     const user = findUserNameAndPass()
     if (!user) {
       return {
-        message: 'Dont Found User',
+        message: 'Do not Found User',
         success: false,
         data: user
       };
@@ -134,7 +136,37 @@ const changePassword = async (body) => {
     };
   } catch (error) {
     return {
-      message: 'An error occured',
+      message: 'An error occurred',
+      success: false
+    }
+  }
+}
+
+const verifyUser = async (username) => {
+  try {
+    console.log("???")
+    console.log(username)
+    const user = await USER.findOne({ username: username })
+    console.log("user")
+    if (user) {
+      user.isVerify = true
+      await user.save()
+
+      return {
+        message: 'Email Confirm',
+        success: true
+      }
+
+    } else {
+      return {
+        message: 'User not found',
+        success: false
+      }
+    }
+
+  } catch (error) {
+    return {
+      message: 'An error occurred',
       success: false
     }
   }
@@ -153,7 +185,7 @@ const sendMail = (email, username) => {
     from: 'holmesz17@outlook.com',
     to: email,
     subject: 'Email confirmation',
-    html: `Press <a href=http://localhost:3000/verify/${username}> here </a> to verify your email.`
+    html: `Press <a href=http://localhost:3000/auth/verify/${username}> here </a> to verify your email.`
   }
   transport.sendMail(mailOptions, function (err, res) {
     if (err) {
@@ -166,5 +198,7 @@ const sendMail = (email, username) => {
 
 module.exports = {
   register,
-  login, getAuth, changePassword
+  login, getAuth, changePassword,
+  verifyUser,
+  sendMail
 }
