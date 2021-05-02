@@ -21,7 +21,7 @@ const register = async (body) => {
     const hashedPassword = await bcrypt.hash(password, 8);
     console.log(`LHA:  ===> file: auth.services.js ===> line 20 ===> hashedPassword`, hashedPassword)
 
-    const newUser = new USER({email,password:hashedPassword})
+    const newUser = new USER({ email, password: hashedPassword })
     console.log(`LHA:  ===> file: auth.services.js ===> line 24 ===> newUser`, newUser)
     console.log(`LHA:  ===> file: auth.services.js ===> line 22 ===> newUser`, newUser)
     const token = jwtServices.createToken(newUser._id);
@@ -30,7 +30,7 @@ const register = async (body) => {
     newUser.token = token
     newUser.tokenExp = tokenExp
     await newUser.save()
-    //sendMail(email, username)
+    sendMail(email)
     return {
       message: 'Successfully registered',
       success: true,
@@ -104,10 +104,10 @@ const getAuth = async (body) => {
     }
   }
 }
-const findUserNameAndPass = async (_id) => {
+const findUserNameAndPass = async (_id, body) => {
   try {
     const user = await User.findById(_id)
-    const oldPassword = req.body.oldPassword
+    const oldPassword = body.oldPassword
     const isPasswordMatch = await bcrypt.compare(oldPassword, user.password)
     if (isPasswordMatch) return user;
     return null
@@ -116,15 +116,15 @@ const findUserNameAndPass = async (_id) => {
   }
 
 }
-const changePassword = async (body) => {
+const changePassword = async (id, body) => {
   try {
-    const user = findUserNameAndPass()
+    const user = findUserNameAndPass(id, body)
     if (!user) {
       return {
         message: 'Do not Found User',
         success: false,
         data: user
-      };
+      }
     }
     const newPassword = await bcrypt.hash(body.newPassword, 8)
     user.password = newPassword
@@ -133,7 +133,7 @@ const changePassword = async (body) => {
     return {
       message: 'Change Password Successfully',
       success: true
-    };
+    }
   } catch (error) {
     return {
       message: 'An error occurred',
@@ -142,12 +142,9 @@ const changePassword = async (body) => {
   }
 }
 
-const verifyUser = async (username) => {
+const verifyUser = async (email) => {
   try {
-    console.log("???")
-    console.log(username)
-    const user = await USER.findOne({ username: username })
-    console.log("user")
+    const user = await USER.findOne({ email: email })
     if (user) {
       user.isVerify = true
       await user.save()
@@ -172,7 +169,7 @@ const verifyUser = async (username) => {
   }
 }
 
-const sendMail = (email, username) => {
+const sendMail = (email) => {
   let transport = nodemailer.createTransport({
     service: 'hotmail',
     auth: {
@@ -185,7 +182,7 @@ const sendMail = (email, username) => {
     from: 'holmesz17@outlook.com',
     to: email,
     subject: 'Email confirmation',
-    html: `Press <a href=http://localhost:3000/auth/verify/${username}> here </a> to verify your email.`
+    html: `Press <a href=http://localhost:3000/auth/verify/${email}> here </a> to verify your email.`
   }
   transport.sendMail(mailOptions, function (err, res) {
     if (err) {
@@ -198,7 +195,8 @@ const sendMail = (email, username) => {
 
 module.exports = {
   register,
-  login, getAuth, changePassword,
-  verifyUser,
-  sendMail
+  login,
+  getAuth,
+  changePassword,
+  verifyUser
 }

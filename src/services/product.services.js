@@ -1,10 +1,10 @@
-const Product = require('../models/Product')
-const CATEGORY =require('../models/Categories')
-const ROOM =require('../models/Room')
+const PRODUCT = require('../models/Product')
+const CATEGORY = require('../models/Categories')
+const ROOM = require('../models/Room')
 
-const getProducts = async () => {
+const getAllProducts = async () => {
   try {
-    const product = await Product.find({})
+    const product = await PRODUCT.find({})
     return {
       message: 'Successfully get products',
       success: true,
@@ -20,16 +20,17 @@ const getProducts = async () => {
 
 const createNewProduct = async (body) => {
   try {
-    
-    const existProduct = await Product.find({ productId: body.productId })
+    const newProduct = new PRODUCT(body)
+
+    const existProduct = await PRODUCT.findOne({ productCode: body.productCode })
     if (existProduct) {
       return {
         message: 'Product already exist',
         success: false,
+        data: newProduct
       }
     }
-    
-    const newProduct = new Product(body)
+
     await newProduct.save()
     return {
       message: 'Successfully create products',
@@ -38,19 +39,84 @@ const createNewProduct = async (body) => {
     }
   } catch (error) {
     return {
-      message: 'An error occurred createNewProduct',
+      message: 'An error occurred',
       success: false
     }
   }
 }
 
+const getProduct = async (id) => {
+  try {
+    const product = await PRODUCT.findOne({ _id: id })
+    return {
+      message: 'Successfully get product',
+      success: true,
+      data: product
+    }
+  } catch (error) {
+    return {
+      message: 'An error occurred',
+      success: false
+    }
+  }
+}
 
-const createNewCategory= async (body)=>{
-  try{
-    const existCategory = await CATEGORY.find({name:body.name})
-    if(existCategory)
-    {
-      return{
+const updateProduct = async (id, body) => {
+  try {
+
+    //const newProduct = new Product(body)
+    const existProduct = await PRODUCT.findOne({ _id: id })
+    if (!existProduct) {
+      return {
+        message: 'Product not exist',
+        success: false
+      }
+    }
+    await PRODUCT.updateOne({ _id: id }, body)
+    return {
+      message: 'Successfully update product',
+      success: true,
+      data: body
+    }
+
+  } catch (error) {
+    return {
+      message: 'An error occurred',
+      success: false
+    }
+  }
+}
+
+const deleteProduct = async (id) => {
+  try {
+    const existProduct = await PRODUCT.findOne({ _id: id })
+    if (!existProduct) {
+      return {
+        message: 'Product not exist',
+        success: false
+      }
+    }
+
+    await PRODUCT.deleteOne({ _id: id })
+
+    return {
+      message: 'Successfully delete product',
+      success: true
+    }
+
+  } catch (error) {
+    return {
+      message: 'An error occurred',
+      success: false
+    }
+  }
+}
+
+const createNewCategory = async (body) => {
+  try {
+    const existCategory = await CATEGORY.findOne({ name: body.name })
+    if (existCategory) {
+      return {
         message: 'Category already exist',
         success: false,
       }
@@ -64,7 +130,7 @@ const createNewCategory= async (body)=>{
       success: true,
       data: newCategory
     }
-  }catch(error) {
+  } catch (error) {
     return {
       message: 'An error occurred createNewCategory',
       success: false
@@ -72,7 +138,7 @@ const createNewCategory= async (body)=>{
   }
 }
 
-const getCategories = async()=>{
+const getCategories = async () => {
   try {
     const category = await CATEGORY.find({})
     return {
@@ -88,13 +154,60 @@ const getCategories = async()=>{
   }
 }
 
+const updateCategory = async (id, body) => {
+  try {
+    const existCategory = await CATEGORY.findOne({ _id: id })
+    if (!existCategory) {
+      return {
+        message: 'Category not exist',
+        success: false
+      }
+    }
+    await CATEGORY.updateOne({ _id: id }, body)
+    return {
+      message: 'Successfully update category',
+      success: true,
+      data: body
+    }
 
-const createNewRoom= async (body)=>{
-  try{
-    const existRom = await ROOM.find({name:body.name})
-    if(existRom)
-    {
-      return{
+  } catch (error) {
+    return {
+      message: 'An error occurred',
+      success: false
+    }
+  }
+}
+
+const deleteCategory = async (id) => {
+  try {
+    const existCategory = await CATEGORY.findOne({ _id: id })
+    if (!existCategory) {
+      return {
+        message: 'Category not exist',
+        success: false
+      }
+    }
+
+    await CATEGORY.deleteOne({ _id: id })
+
+    return {
+      message: 'Successfully delete category',
+      success: true
+    }
+
+  } catch (error) {
+    return {
+      message: 'An error occurred',
+      success: false
+    }
+  }
+}
+
+const createNewRoom = async (body) => {
+  try {
+    const existRom = await ROOM.find({ name: body.name })
+    if (existRom) {
+      return {
         message: 'Rom already exist',
         success: false,
       }
@@ -102,13 +215,13 @@ const createNewRoom= async (body)=>{
 
     const newRoom = new ROOM(body)
     await newRoom.save()
-    
+
     return {
       message: 'Successfully create Room',
       success: true,
       data: newRoom
     }
-  }catch(error) {
+  } catch (error) {
     return {
       message: 'An error occurred createNewRoom',
       success: false
@@ -116,7 +229,7 @@ const createNewRoom= async (body)=>{
   }
 }
 
-const getRooms = async()=>{
+const getRooms = async () => {
   try {
     const room = await ROOM.find({})
     return {
@@ -135,11 +248,16 @@ const getRooms = async()=>{
 
 
 module.exports = {
-  getProducts,
+  getAllProducts,
   createNewProduct,
+  getProduct,
+  updateProduct,
+  deleteProduct,
 
   createNewCategory,
   getCategories,
+  updateCategory,
+  deleteCategory,
 
   createNewRoom,
   getRooms

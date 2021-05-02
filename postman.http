@@ -1,4 +1,4 @@
-
+// user
 POST http://18.217.70.108:3000/auth/login
 content-type: application/json
 
@@ -25,9 +25,8 @@ POST http://localhost:3000/auth/register
 content-type: application/json
 
 {
-  "username": "ptandat1",
-  "password": "lamlamlam",
   "email":"208holmesz@gmail.com",
+  "password": "lamlamlam",
   "fullName":"Pham Tan Dat",
   "phone":"0947123456"
 }
@@ -40,33 +39,66 @@ content-type: application/json
 GET http://localhost:3000/auth/verify/ptandat2
 content-type: application/json
 
-
+// product
 ###
 POST http://localhost:3000/product/create
 Content-Type: application/json
 
 {
-    "productId": "24",
+    "productCode": "1",
     "productName": "but",
-    "description": "but muc vang",
+    "description": "but muc hong",
     "price": "3000",
     "total": 3,
     "image": "dashdasjkdsa"
 }
 
 ###
-GET http://localhost:3000/product/getProducts
+GET http://localhost:3000/product/getAllProducts
 content-type: application/json
 
 ###
-POST  http://localhost:3000/categories/createCategories
+GET http://localhost:3000/product/getProduct/608b887b9c3497257cee401d
 content-type: application/json
 
+###
+PUT http://localhost:3000/product/updateProduct/608b88d8bff79f20cc0c8b37
+Content-Type: application/json
+
 {
-    "categoriesId": "2",
-    "name": "den ngu"
+  "productCode": "1",
+  "productName": "noi`",
+  "description": "noi` com dien",
+  "price": "50000",
+  "total": 100,
+  "image": "asidjasjdoaidjadkal"
 }
 
 ###
-GET http://localhost:3000/categories/getCategories
+DELETE http://localhost:3000/product/deleteProduct/608b94568e41fa1da4f29ae9
+Content-Type: application/json
+
+
+//category
+###
+POST  http://localhost:3000/category/createCategory
+content-type: application/json
+
+{
+    "name": "xe may"
+}
+
+###
+GET http://localhost:3000/category/getCategory
+content-type: application/json
+
+###
+PUT http://localhost:3000/category/updateCategory/608e3a100b7dde2c1cd4fcd8
+content-type: application/json
+
+{
+  "name": "xe may dien"
+}
+###
+DELETE http://localhost:3000/category/deleteCategory/608e3a100b7dde2c1cd4fcd8
 content-type: application/json

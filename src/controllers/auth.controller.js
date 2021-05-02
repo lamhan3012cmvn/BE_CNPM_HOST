@@ -50,8 +50,8 @@ const getAuth = async (req, res, next) => {
 
 const verify = async (req, res) => {
   try {
-    const { username } = req.params
-    const resServices = await authServices.verifyUser(username)
+    const { email } = req.params
+    const resServices = await authServices.verifyUser(email)
     if (!resServices.success) {
       return controller.sendSuccess(res, resServices.success, 300, resServices.message)
     }
@@ -66,7 +66,8 @@ const verify = async (req, res) => {
 const changePassword = async (req, res, next) => {
   try {
     const { newPassword, decodeToken } = req.value.body
-    const resServices = await authServices.changePassword({ id: decodeToken._id, newPassword })
+    const id = decodeToken._id
+    const resServices = await authServices.changePassword(id, req.body)
     return controller.sendSuccess(res, resServices.success, 200, resServices.message)
   } catch (error) {
     return controller.sendError(res)
@@ -76,6 +77,7 @@ const changePassword = async (req, res, next) => {
 module.exports = {
   register,
   login,
-  verify, getAuth,
+  verify,
+  getAuth,
   changePassword
 }

@@ -5,7 +5,7 @@ const categoriesRoute = require('./categoriesRoute')
 const router = express.Router()
 
 router.use('/product', productRoute)
-router.use('/categories', categoriesRoute)
+router.use('/category', categoriesRoute)
 router.use('/auth', authRoute)
 
 module.exports = router
