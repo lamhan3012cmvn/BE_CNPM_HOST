@@ -63,9 +63,26 @@ const verify = async (req, res) => {
   }
 
 }
+
+const getProfile = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const resServices = await authServices.getProfile(id)
+    if (!resServices.success) {
+      return controller.sendSuccess(res, resServices.success, 300, resServices.message)
+    }
+
+    return controller.sendSuccess(res, resServices.data, 200, resServices.message)
+
+  } catch (error) {
+    return controller.sendError(res)
+  }
+}
+
 const changePassword = async (req, res, next) => {
   try {
     const { newPassword, decodeToken } = req.value.body
+    console.log(req.value.body)
     const id = decodeToken._id
     const resServices = await authServices.changePassword(id, req.body)
     return controller.sendSuccess(res, resServices.success, 200, resServices.message)
@@ -74,6 +91,7 @@ const changePassword = async (req, res, next) => {
   }
 
 }
+
 module.exports = {
   register,
   login,

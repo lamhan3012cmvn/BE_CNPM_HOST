@@ -1,4 +1,4 @@
-const controller = require('./controller');
+const controller = require('./controller')
 const categoriesServices = require('../services/product.services')
 
 
@@ -22,6 +22,7 @@ const createCategories = async (req, res, next) => {
     }
 
 }
+
 
 const updateCategory = async (req, res, next) => {
     try {

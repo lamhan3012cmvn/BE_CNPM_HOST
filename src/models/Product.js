@@ -3,52 +3,53 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const Product = new Schema({
-    productCode:{
-        type:String,
-        required:true
-    },
-    productName: {
+    Code: {
         type: String,
         required: true
     },
-    description: {
+    Name: {
         type: String,
-        required:true
+        required: true
     },
-    price: {
+    Description: {
         type: String,
-        required:true
+        required: true
     },
-    total: {
-        type: Number,
-        default:0
+    Price: {
+        type: String,
+        required: true
     },
-    image: {
-        type: [{
-            type:String
-        }]
+    Quantity: {
+        type: String
     },
-    size:{
-        type:String,
-        default:''
+    Image: {
+        type: String
     },
-    meterial:{
-        type:String,
-        default:''
+    Size: {
+        type: String,
+        default: ''
     },
-    guarantee:{
-        type:String,
-        default:''
+    Material: {
+        type: String,
+        default: ''
+    },
+    Guarantee: {
+        type: String,
+        default: ''
+    },
+    isStatus: {
+        type: String,
+        default: ''
     },
     FK_Category: {
         type: String,
         required: false,
-        match: /^[A-Fa-f-9]{24}$/
+        match: /^[A-Fa-f0-9]{24}$/
     },
-    FK_Room:{
+    FK_Room: {
         type: String,
         required: false,
-        match: /^[A-Fa-f-9]{24}$/
+        match: /^[A-Fa-f0-9]{24}$/
     }
 }, {
     timestamps: true

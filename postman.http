@@ -1,24 +1,12 @@
 // user
-POST http://18.217.70.108:3000/auth/login
+POST http://localhost:3000/auth/login
 content-type: application/json
 
 {
-    "email": "sample30@gmail.com",
+    "email": "208holmesz@gmail.com",
     "password": "lamlamlam"
 }
 
-###
-
-POST http://18.217.70.108:3000/auth/register
-content-type: application/json
-
-{
-  "username": "208holmesz@gmail.com",
-  "password": "lamlamlam",
-  "email":"208holmesz@gmail.com",
-  "fullName":"Pham Tan Dat",
-  "phone":"0947123456"
-}
 
 ###
 POST http://localhost:3000/auth/register
@@ -32,7 +20,7 @@ content-type: application/json
 }
 
 ###
-GET http://localhost:3333/auth/getAuth
+GET http://localhost:3000/auth/getAuth
 content-type: application/json
 
 ###
@@ -41,16 +29,22 @@ content-type: application/json
 
 // product
 ###
-POST http://localhost:3000/product/create
+POST http://localhost:3000/product/createProduct
 Content-Type: application/json
 
 {
-    "productCode": "1",
-    "productName": "but",
-    "description": "but muc hong",
-    "price": "3000",
-    "total": 3,
-    "image": "dashdasjkdsa"
+  "Name": "Bàn trà mặt đá Trivia",
+        "Code": "81144029",
+        "Size": "100x100x42",
+        "Material": "Mặt đá, khung inox",
+        "Quantity": "1 bàn tròn",
+        "Guarantee": "Khung bảo hành 1 năm, mặt đá 2 năm",
+        "Price": "21.290.000",
+        "Description": "Dòng sản phẩm bàn trà cao cấp với mặt bàn bằng đá. Vân đá hài hòa, màu sắc trang nhã, kiểu dáng khung độc đáo, phù hợp với các không gian phòng khách cao cấp, sang trọng, thể hiện gu thẩm mỹ tinh tế của gia chủ.",
+        "Image": "https://firebasestorage.googleapis.com/v0/b/cnpm-e5af3.appspot.com/o/Product%2FBanTra%2Fban%20tra%2019.jpg?alt=media&token=e085f3f2-87cc-4844-99d0-2a618c29f16d",
+        "isStatus": "",
+    "FK_Room": "6094fce7285d634bc09451a8",
+    "FK_Category": "60954e8f53a0fb4b2c0e6a13"
 }
 
 ###
@@ -58,7 +52,15 @@ GET http://localhost:3000/product/getAllProducts
 content-type: application/json
 
 ###
-GET http://localhost:3000/product/getProduct/608b887b9c3497257cee401d
+GET http://localhost:3000/product/getProductsByRoom
+content-type: application/json
+
+###
+GET http://localhost:3000/product/getProductsByCategory/60954e8f53a0fb4b2c0e6a13
+content-type: application/json
+
+###
+GET http://localhost:3000/product/getProduct/6095506e53a0fb4b2c0e6a23
 content-type: application/json
 
 ###
@@ -66,17 +68,29 @@ PUT http://localhost:3000/product/updateProduct/608b88d8bff79f20cc0c8b37
 Content-Type: application/json
 
 {
-  "productCode": "1",
-  "productName": "noi`",
-  "description": "noi` com dien",
-  "price": "50000",
-  "total": 100,
-  "image": "asidjasjdoaidjadkal"
+  
 }
 
 ###
-DELETE http://localhost:3000/product/deleteProduct/608b94568e41fa1da4f29ae9
+DELETE http://localhost:3000/product/deleteProduct/6095509f53a0fb4b2c0e6a24
 Content-Type: application/json
+
+
+//Room
+###
+POST  http://localhost:3000/room/createRoom
+content-type: application/json
+
+{
+    "name": "Decoration and houseware"
+}
+
+
+###
+GET http://localhost:3000/room/getRooms
+content-type: application/json
+
+###
 
 
 //category
@@ -85,7 +99,8 @@ POST  http://localhost:3000/category/createCategory
 content-type: application/json
 
 {
-    "name": "xe may"
+    "name": "Ban an go",
+    "FK_Room": "6095465553a0fb4b2c0e6a0e"
 }
 
 ###
@@ -100,5 +115,5 @@ content-type: application/json
   "name": "xe may dien"
 }
 ###
-DELETE http://localhost:3000/category/deleteCategory/608e3a100b7dde2c1cd4fcd8
+DELETE http://localhost:3000/category/deleteCategory/6094fcfd285d634bc09451a9
 content-type: application/json

@@ -2,15 +2,12 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const Categories = new Schema({
+const Cart = new Schema({
     name: {
         type: String,
         required: true
     },
-    FK_Room: {
-        type: String,
-        required: true
-    }
+
 }, { timestamps: true })
 
-module.exports = mongoose.model('Categories', Categories)
+module.exports = mongoose.model('Cart', Cart)

@@ -20,9 +20,8 @@ const getAllProducts = async () => {
 
 const createNewProduct = async (body) => {
   try {
-    const newProduct = new PRODUCT(body)
 
-    const existProduct = await PRODUCT.findOne({ productCode: body.productCode })
+    const existProduct = await PRODUCT.findOne({ Code: body.Code })
     if (existProduct) {
       return {
         message: 'Product already exist',
@@ -31,6 +30,7 @@ const createNewProduct = async (body) => {
       }
     }
 
+    const newProduct = new PRODUCT(body)
     await newProduct.save()
     return {
       message: 'Successfully create products',
@@ -38,6 +38,7 @@ const createNewProduct = async (body) => {
       data: newProduct
     }
   } catch (error) {
+
     return {
       message: 'An error occurred',
       success: false
@@ -48,6 +49,38 @@ const createNewProduct = async (body) => {
 const getProduct = async (id) => {
   try {
     const product = await PRODUCT.findOne({ _id: id })
+    return {
+      message: 'Successfully get product',
+      success: true,
+      data: product
+    }
+  } catch (error) {
+    return {
+      message: 'An error occurred',
+      success: false
+    }
+  }
+}
+
+const getProductByRoom = async (fkRoom) => {
+  try {
+    const product = await PRODUCT.find({ FK_Room: fkRoom })
+    return {
+      message: 'Successfully get product',
+      success: true,
+      data: product
+    }
+  } catch (error) {
+    return {
+      message: 'An error occurred',
+      success: false
+    }
+  }
+}
+
+const getProductByCategory = async (fkCategory) => {
+  try {
+    const product = await PRODUCT.find({ FK_Category: fkCategory })
     return {
       message: 'Successfully get product',
       success: true,
@@ -205,10 +238,10 @@ const deleteCategory = async (id) => {
 
 const createNewRoom = async (body) => {
   try {
-    const existRom = await ROOM.find({ name: body.name })
-    if (existRom) {
+    const existRoom = await ROOM.findOne({ name: body.name })
+    if (existRoom) {
       return {
-        message: 'Rom already exist',
+        message: 'Room already exist',
         success: false,
       }
     }
@@ -223,7 +256,7 @@ const createNewRoom = async (body) => {
     }
   } catch (error) {
     return {
-      message: 'An error occurred createNewRoom',
+      message: 'An error occurred',
       success: false
     }
   }
@@ -251,6 +284,8 @@ module.exports = {
   getAllProducts,
   createNewProduct,
   getProduct,
+  getProductByRoom,
+  getProductByCategory,
   updateProduct,
   deleteProduct,
 

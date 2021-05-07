@@ -1,4 +1,4 @@
-const USER = require("../models/User")
+const USER = require('../models/User')
 const bcrypt = require('bcryptjs')
 const { ACCESS_TOKEN_SECRET } = require("../config")
 const jwtServices = require("./jwt.services")
@@ -142,6 +142,39 @@ const changePassword = async (id, body) => {
   }
 }
 
+const getProfile = async (id) => {
+  try {
+    const info = await USER.findOne({ _id: id })
+    return {
+      message: 'Successfully get information',
+      success: true,
+      data: info
+    }
+  } catch (error) {
+    return {
+      message: 'An error occurred',
+      success: false
+    }
+  }
+}
+
+const updateUserProfile = async (id, body) => {
+  try {
+    await USER.updateOne({ _id: id }, body)
+
+    return {
+      message: 'Successfully update user',
+      success: true,
+      data: body
+    }
+  } catch (error) {
+    return {
+      message: 'An error occurred',
+      success: false
+    }
+  }
+}
+
 const verifyUser = async (email) => {
   try {
     const user = await USER.findOne({ email: email })
@@ -198,5 +231,7 @@ module.exports = {
   login,
   getAuth,
   changePassword,
+  getProfile,
+  updateUserProfile,
   verifyUser
 }

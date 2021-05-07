@@ -15,7 +15,7 @@ const createProduct = async (req, res, next) => {
   try {
     const resServices = await productServices.createNewProduct(req.body)
     if (!resServices.success)
-      return controller.sendSuccess(res, {}, 300, resServices.message)
+      return controller.sendSuccess(res, resServices.success, 300, resServices.message)
     return controller.sendSuccess(res, resServices.data, 200, resServices.message)
   } catch (error) {
     return controller.sendError(res)
@@ -27,6 +27,30 @@ const getProduct = async (req, res, next) => {
   try {
     const { id } = req.params
     const resServices = await productServices.getProduct(id)
+    if (!resServices.success)
+      return controller.sendSuccess(res, {}, 300, resServices.message)
+    return controller.sendSuccess(res, resServices.data, 200, resServices.message)
+  } catch (error) {
+    return controller.sendError(res)
+  }
+}
+
+const getProductByRoom = async (req, res, next) => {
+  try {
+    const { FK_Room } = req.params
+    const resServices = await productServices.getProductByRoom(FK_Room)
+    if (!resServices.success)
+      return controller.sendSuccess(res, {}, 300, resServices.message)
+    return controller.sendSuccess(res, resServices.data, 200, resServices.message)
+  } catch (error) {
+    return controller.sendError(res)
+  }
+}
+
+const getProductByCategory = async (req, res, next) => {
+  try {
+    const { FK_Category } = req.params
+    const resServices = await productServices.getProductByCategory(FK_Category)
     if (!resServices.success)
       return controller.sendSuccess(res, {}, 300, resServices.message)
     return controller.sendSuccess(res, resServices.data, 200, resServices.message)
@@ -62,6 +86,8 @@ module.exports = Controller = {
   getAllProducts,
   createProduct,
   getProduct,
+  getProductByRoom,
+  getProductByCategory,
   updateProduct,
   deleteProduct
 }
