@@ -7,8 +7,8 @@ const router = express.Router()
 
 
 router.get('/getAuth', jwtServices.verify, Controller.getAuth)
-router.get('/verify/:email', Controller.verify)
-
+router.post('/verify', Controller.verify)
+router.get('/getAllUser', Controller.getAllUsers)
 router.post('/changePassword', jwtServices.verify, Validate.body(SchemaValidate.changePassword), Controller.changePassword)
 router.post('/login', Validate.body(SchemaValidate.login), Controller.login)
 router.post('/register', Validate.body(SchemaValidate.register), Controller.register)

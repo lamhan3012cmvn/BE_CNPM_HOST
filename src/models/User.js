@@ -11,11 +11,15 @@ const User = new Schema({
     },
     fullName: {
         type: String,
-        default:""
+        default: ''
+    },
+    avatar: {
+        type: String,
+        default: ''
     },
     phone: {
         type: String,
-        default:""
+        default: ''
     },
     password: {
         type: String,
@@ -29,16 +33,12 @@ const User = new Schema({
         type: Boolean,
         default: false
     },
-    token: {
+    otp: {
         type: String,
-        default:""
-    },
-    tokenExp:{
-        type:Number,
-        default:0
+        default: ''
     }
 
-},{timestamps:true})
+}, { timestamps: true })
 
 
 module.exports = mongoose.model('User', User)

@@ -18,19 +18,19 @@ const register = async (body) => {
       message: 'Email already exist !!',
       success: false
     }
-    const hashedPassword = await bcrypt.hash(password, 8);
+    const hashedPassword = await bcrypt.hash(password, 8)
     console.log(`LHA:  ===> file: auth.services.js ===> line 20 ===> hashedPassword`, hashedPassword)
-
-    const newUser = new USER({ email, password: hashedPassword })
+    const otp = await generateOTP()
+    const newUser = new USER({ email, password: hashedPassword, opt: otp })
     console.log(`LHA:  ===> file: auth.services.js ===> line 24 ===> newUser`, newUser)
     console.log(`LHA:  ===> file: auth.services.js ===> line 22 ===> newUser`, newUser)
-    const token = jwtServices.createToken(newUser._id);
+    const token = jwtServices.createToken(newUser._id)
     const tokenExp = moment().add(30, 'days')
-
-    newUser.token = token
-    newUser.tokenExp = tokenExp
+    newUser.otp = otp
+    // newUser.token = token
+    // newUser.tokenExp = tokenExp
     await newUser.save()
-    sendMail(email)
+    sendMail(email, otp)
     return {
       message: 'Successfully registered',
       success: true,
@@ -53,11 +53,23 @@ const login = async (body) => {
     } = body
     const user = await USER.findOne({
       email
-    }).lean()
+    })
     if (!user) {
       return {
         message: 'Invalid email !!',
         success: false
+      }
+    }
+    if (!user.isVerify) {
+      const otp = generateOTP()
+      user.otp = otp
+      sendMail(email, otp)
+      //await user.updateOne({ "email": email }, { $set: { "otp": otp } })
+      await user.save()
+      console.log("updateOne")
+      return {
+        message: 'Please verify your account',
+        success: false,
       }
     }
     const isPasswordMatch = await bcrypt.compare(password, user.password)
@@ -104,6 +116,7 @@ const getAuth = async (body) => {
     }
   }
 }
+
 const findUserNameAndPass = async (_id, body) => {
   try {
     const user = await User.findById(_id)
@@ -175,18 +188,23 @@ const updateUserProfile = async (id, body) => {
   }
 }
 
-const verifyUser = async (email) => {
+const verifyUser = async (email, otp) => {
   try {
     const user = await USER.findOne({ email: email })
     if (user) {
-      user.isVerify = true
-      await user.save()
+      if (user.otp === otp) {
+        user.isVerify = true
+        await user.save()
+        return {
+          message: 'Email Confirm',
+          success: true
+        }
 
-      return {
-        message: 'Email Confirm',
-        success: true
       }
-
+      return {
+        message: 'OTP Invalid',
+        success: false
+      }
     } else {
       return {
         message: 'User not found',
@@ -202,7 +220,7 @@ const verifyUser = async (email) => {
   }
 }
 
-const sendMail = (email) => {
+const sendMail = (email, otp) => {
   let transport = nodemailer.createTransport({
     service: 'hotmail',
     auth: {
@@ -215,7 +233,7 @@ const sendMail = (email) => {
     from: 'holmesz17@outlook.com',
     to: email,
     subject: 'Email confirmation',
-    html: `Press <a href=http://localhost:3000/auth/verify/${email}> here </a> to verify your email.`
+    html: `Your OTP is ${otp}`
   }
   transport.sendMail(mailOptions, function (err, res) {
     if (err) {
@@ -226,6 +244,31 @@ const sendMail = (email) => {
   })
 }
 
+const generateOTP = () => {
+  let digits = '0123456789';
+  let OTP = '';
+  for (let i = 0; i < 6; i++) {
+    OTP += digits[Math.floor(Math.random() * 10)];
+  }
+  return OTP;
+}
+
+const getAllUsers = async () => {
+  try {
+    const users = await USER.find({})
+    return {
+      message: 'Successfully get all users',
+      success: true,
+      data: users
+    }
+  } catch (error) {
+    return {
+      message: 'An error occurred',
+      success: false
+    }
+  }
+}
+
 module.exports = {
   register,
   login,
@@ -233,5 +276,6 @@ module.exports = {
   changePassword,
   getProfile,
   updateUserProfile,
-  verifyUser
+  verifyUser,
+  getAllUsers
 }

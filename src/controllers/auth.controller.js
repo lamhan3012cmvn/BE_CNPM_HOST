@@ -50,8 +50,8 @@ const getAuth = async (req, res, next) => {
 
 const verify = async (req, res) => {
   try {
-    const { email } = req.params
-    const resServices = await authServices.verifyUser(email)
+    const { email, otp } = req.body
+    const resServices = await authServices.verifyUser(email, otp)
     if (!resServices.success) {
       return controller.sendSuccess(res, resServices.success, 300, resServices.message)
     }
@@ -79,6 +79,15 @@ const getProfile = async (req, res, next) => {
   }
 }
 
+const getAllUsers = async (req, res, next) => {
+  try {
+    const resServices = await authServices.getAllUsers()
+    return controller.sendSuccess(res, resServices.data, 200, resServices.message)
+  } catch (err) {
+    return controller.sendError(res)
+  }
+}
+
 const changePassword = async (req, res, next) => {
   try {
     const { newPassword, decodeToken } = req.value.body
@@ -97,5 +106,6 @@ module.exports = {
   login,
   verify,
   getAuth,
-  changePassword
+  changePassword,
+  getAllUsers
 }
