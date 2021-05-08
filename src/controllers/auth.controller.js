@@ -50,8 +50,8 @@ const getAuth = async (req, res, next) => {
 
 const verify = async (req, res) => {
   try {
-    const { email, otp } = req.body
-    const resServices = await authServices.verifyUser(email, otp)
+    const { email, password,otp } = req.body
+    const resServices = await authServices.verifyUser(email, password,otp)
     if (!resServices.success) {
       return controller.sendSuccess(res, resServices.success, 300, resServices.message)
     }

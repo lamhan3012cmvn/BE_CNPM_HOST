@@ -13,28 +13,20 @@ const register = async (body) => {
     const emailExist = await USER.findOne({
       email: email
     })
-    console.log(`LHA:  ===> file: auth.services.js ===> line 14 ===> emailExist`, emailExist)
     if (emailExist) return {
       message: 'Email already exist !!',
       success: false
     }
     const hashedPassword = await bcrypt.hash(password, 8)
-    console.log(`LHA:  ===> file: auth.services.js ===> line 20 ===> hashedPassword`, hashedPassword)
-    const otp = await generateOTP()
-    const newUser = new USER({ email, password: hashedPassword, opt: otp })
-    console.log(`LHA:  ===> file: auth.services.js ===> line 24 ===> newUser`, newUser)
-    console.log(`LHA:  ===> file: auth.services.js ===> line 22 ===> newUser`, newUser)
-    const token = jwtServices.createToken(newUser._id)
-    const tokenExp = moment().add(30, 'days')
-    newUser.otp = otp
-    // newUser.token = token
-    // newUser.tokenExp = tokenExp
-    await newUser.save()
+    const otp =  generateOTP()
+
+    const newUser = new USER({ email, password: hashedPassword, otp: otp })
     sendMail(email, otp)
+    await newUser.save()
     return {
       message: 'Successfully registered',
       success: true,
-      data: newUser
+      data: {}
     };
 
   } catch (err) {
@@ -79,11 +71,11 @@ const login = async (body) => {
         success: false
       }
     }
-
+    const generateToken=jwtServices.createToken(user._id)
     return {
       message: 'Successfully login',
       success: true,
-      data: user
+      data: {token:generateToken}
     };
   } catch (err) {
     return {
@@ -96,7 +88,7 @@ const login = async (body) => {
 const getAuth = async (body) => {
   try {
     console.log("body:", body)
-    const user = await USER.find(body)
+    const user = await USER.findById(body)
     if (!user) {
       return {
         message: 'Get Auth Fail',
@@ -188,16 +180,29 @@ const updateUserProfile = async (id, body) => {
   }
 }
 
-const verifyUser = async (email, otp) => {
+const verifyUser = async (email, password,otp) => {
   try {
     const user = await USER.findOne({ email: email })
+    
     if (user) {
+      const isPasswordMatch = await bcrypt.compare(password, user.password)
+      if (!isPasswordMatch) {
+        return {
+          message: 'Invalid password !!',
+          success: false
+        }
+      }
       if (user.otp === otp) {
         user.isVerify = true
         await user.save()
+        const generateToken=jwtServices.createToken(user._id)
+    
         return {
           message: 'Email Confirm',
-          success: true
+          success: true,
+          data:{
+            token:generateToken
+          }
         }
 
       }
@@ -245,12 +250,7 @@ const sendMail = (email, otp) => {
 }
 
 const generateOTP = () => {
-  let digits = '0123456789';
-  let OTP = '';
-  for (let i = 0; i < 6; i++) {
-    OTP += digits[Math.floor(Math.random() * 10)];
-  }
-  return OTP;
+  return Math.floor(Math.random() * 1000000)+"";
 }
 
 const getAllUsers = async () => {

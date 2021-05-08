@@ -15,7 +15,7 @@ const verify=(req,res,next)=>{
 	console.log('tokenService token: ' + token);
 	jwt.verify(token, ACCESS_TOKEN_SECRET, (err, decodedFromToken) => {
 		if (err) {
-			res.json({
+			res.status(403).json({
 				data: {
 					tokenVerificationData: {
 						access: false,

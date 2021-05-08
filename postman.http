@@ -3,8 +3,8 @@ POST http://localhost:3000/auth/login
 content-type: application/json
 
 {
-    "email": "208holmesz@gmail.com",
-    "password": "lamlamlam"
+    "email":"lamhan3012@gmail.com",
+  "password": "lamlamlam"
 }
 
 
@@ -13,20 +13,24 @@ POST http://localhost:3000/auth/register
 content-type: application/json
 
 {
-  "email":"208holmesz@gmail.com",
-  "password": "lamlamlam",
-  "fullName":"Pham Tan Dat",
-  "phone":"0947123456"
+  "email":"lamhan3012@gmail.com",
+  "password": "lamlamlam"
 }
 
 ###
 GET http://localhost:3000/auth/getAuth
 content-type: application/json
+authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjA5NmFlYzM2YmMxMWEyNjg1N2MxYmZkIiwiaWF0IjoxNjIwNDg3OTk3NTQ3LCJleHAiOjE2MjA1NzQzOTc1NDd9.MzaJxAEvjEdPilRAANeDptjwQXglITqqDb4BfJ3mvsg
 
 ###
-GET http://localhost:3000/auth/verify/ptandat2
+POST http://localhost:3000/auth/verify
 content-type: application/json
 
+{
+  "email":"lamhan3012@gmail.com",
+  "password": "lamlamlam",
+  "otp":"143492"
+}
 // product
 ###
 POST http://localhost:3000/product/createProduct
