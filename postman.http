@@ -3,7 +3,7 @@ POST http://localhost:3000/auth/login
 content-type: application/json
 
 {
-    "email":"lamhan3012@gmail.com",
+  "email":"lamhan3012@gmail.com",
   "password": "lamlamlam"
 }
 
@@ -13,8 +13,9 @@ POST http://localhost:3000/auth/register
 content-type: application/json
 
 {
-  "email":"lamhan3012@gmail.com",
-  "password": "lamlamlam"
+  "email":"laman3012@gmail.com",
+  "password": "lamlamlam",
+  "fullName":"Lam Hoang An"
 }
 
 ###

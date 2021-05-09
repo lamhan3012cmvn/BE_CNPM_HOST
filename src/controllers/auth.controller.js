@@ -7,6 +7,7 @@ const register = async (req, res, next) => {
 
     console.log("register")
     const resServices = await authServices.register(req.value.body)
+    console.log(`LHA:  ===> file: auth.controller.js ===> line 10 ===> resServices`, resServices)
 
     if (!resServices.success) return controller.sendSuccess(res, resServices.data, 300, resServices.message)
 

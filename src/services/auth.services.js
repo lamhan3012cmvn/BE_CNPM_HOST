@@ -8,7 +8,7 @@ const nodemailer = require('nodemailer')
 const register = async (body) => {
   try {
     console.log("services register")
-    const { email, password } = body
+    const { email, password ,fullName} = body
     //check if email is already in the database
     const emailExist = await USER.findOne({
       email: email
@@ -20,7 +20,7 @@ const register = async (body) => {
     const hashedPassword = await bcrypt.hash(password, 8)
     const otp =  generateOTP()
 
-    const newUser = new USER({ email, password: hashedPassword, otp: otp })
+    const newUser = new USER({ email, password: hashedPassword, otp: otp ,fullName})
     sendMail(email, otp)
     await newUser.save()
     return {

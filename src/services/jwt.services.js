@@ -4,7 +4,7 @@ const verify=(req,res,next)=>{
 	const header = req.headers.authorization;
   
 	if (!header) {
-		res.json({
+		res.status(403).json({
 			data: {
 				tokenVerificationData: { access: false, message: 'No token provided' }
 			}
