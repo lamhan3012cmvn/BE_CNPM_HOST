@@ -16,5 +16,8 @@ router.get('/getProductsByCategory/:FK_Category', Controller.getProductByCategor
 
 router.get('/getAllProducts', Controller.getAllProducts)
 
+router.get('/filter', Controller.getFilter)
+
+
 
 module.exports = router

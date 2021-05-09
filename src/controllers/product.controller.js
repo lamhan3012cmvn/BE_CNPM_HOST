@@ -82,6 +82,16 @@ const deleteProduct = async (req, res, next) => {
     return controller.sendError(res)
   }
 }
+const getFilter =async (req,res,next)=>{
+  try {
+    const resServices = await productServices.getFilter()
+    if (!resServices.success)
+      return controller.sendSuccess(res, {}, 300, resServices.message)
+    return controller.sendSuccess(res, resServices.data, 200, resServices.message)
+  } catch (error) {
+    return controller.sendError(res)
+  }
+}
 module.exports = Controller = {
   getAllProducts,
   createProduct,
@@ -89,5 +99,6 @@ module.exports = Controller = {
   getProductByRoom,
   getProductByCategory,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  getFilter
 }

@@ -97,6 +97,8 @@ content-type: application/json
 
 ###
 
+GET http://localhost:3000/product/filter
+content-type: application/json
 
 //category
 ###

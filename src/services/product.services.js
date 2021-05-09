@@ -48,7 +48,11 @@ const createNewProduct = async (body) => {
 
 const getProduct = async (id) => {
   try {
-    const product = await PRODUCT.findOne({ _id: id })
+    const product = await (await PRODUCT.findById({ _id: id })).toJSON()
+    const room=await ROOM.findById(product.FK_Room,{_id:0,name:1})
+    product.FK_Room=room
+    const category=await CATEGORY.findById(product.FK_Category,{_id:0,name:1})
+    product.FK_Category=category
     return {
       message: 'Successfully get product',
       success: true,
@@ -278,6 +282,30 @@ const getRooms = async () => {
   }
 }
 
+const getCategoryByRoom=async(id,option)=>{
+  return await CATEGORY.find({FK_Room:id},option)
+}
+const getFilter= async ()=>{
+  try {
+    const room =await ROOM.find({})
+    const newRoom=await Promise.all(room.map(async (r)=>{
+      const objRoom=r.toJSON()
+      objRoom.Category=await getCategoryByRoom(objRoom._id,{_id:1,name:1})
+      return objRoom
+    }))
+
+    return {
+      message: 'Successfully get Filter',
+      success: true,
+      data: newRoom
+    }
+  } catch (err) {
+    return {
+      message: 'An error occurred getFillter',
+      success: false
+    }
+  }
+}
 
 
 module.exports = {
@@ -295,5 +323,6 @@ module.exports = {
   deleteCategory,
 
   createNewRoom,
-  getRooms
+  getRooms,
+  getFilter
 }
