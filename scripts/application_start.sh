@@ -11,4 +11,4 @@ echo "build docker image..."
 sudo docker build -t lambiengcode/be-cnpm:latest .
 
 # Run docker container
-sudo docker run -d --name cnpm -p 3000:3000 --env-file .env lambiengcode/be-cnpm:latest
+sudo docker run -d --name be-cnpm -p 3000:3000 --env-file .env lambiengcode/be-cnpm:latest
