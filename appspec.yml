@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ubuntu/file/ec-2021
+    destination: /home/ubuntu/file/be-cnpm
 permissions:
   - object: /home/ubuntu/file/be-cnpm
     owner: ubuntu
