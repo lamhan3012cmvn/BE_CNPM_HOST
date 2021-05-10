@@ -1,0 +1,24 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ubuntu/file/ec-2021
+permissions:
+  - object: /home/ubuntu/file/be-cnpm
+    owner: ubuntu
+    mode: 777
+    type:
+      - directory
+hooks:
+  ApplicationStop:
+    - location: scripts/application_stop.sh
+      timeout: 300
+      runas: ubuntu
+  BeforeInstall:
+    - location: scripts/before_install.sh
+      timeout: 300
+      runas: ubuntu
+  ApplicationStart:
+    - location: scripts/application_start.sh
+      timeout: 300
+      runas: ubuntu
