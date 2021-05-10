@@ -13,7 +13,7 @@ const getCategories = async (req, res, next) => {
 
 const createCategories = async (req, res, next) => {
     try {
-        const resServices = await categoriesServices.createNewCategory({ ...req.body })
+        const resServices = await categoriesServices.createNewCategory(req.body )
         if (!resServices.success)
             return controller.sendSuccess(res, {}, 300, resServices.message)
         return controller.sendSuccess(res, resServices.data, 200, resServices.message)
