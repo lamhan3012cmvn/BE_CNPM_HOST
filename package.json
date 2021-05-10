@@ -7,7 +7,9 @@
     "start": "env-cmd -f ./.env nodemon --inspect src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-console.log.log --copy-files",
+    "build:prod": "babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-console.log.log --copy-files",
     "start:dev": "npm run build && node dist/src/server.js",
+    "start:prod": "node dist/src/server.js",
     "dev": "nodemon --exec babel-node src/server.js",
     "pm2": "yarn build && yarn pm2:start",
     "pm2:start": "pm2 start ecosystem.config.js"
