@@ -12,11 +12,11 @@ router.get('/getProductsByRoom/:FK_Room', Controller.getProductByRoom)
 
 router.get('/getProduct/:id', Controller.getProduct)
 
-router.get('/getProductsByCategory/:FK_Category', Controller.getProductByCategory)
-
 router.get('/getAllProducts', Controller.getAllProducts)
 
 router.get('/filter', Controller.getFilter)
+
+router.get('/getProductsByCategory', Controller.getProductByCategory)
 
 
 
