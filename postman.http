@@ -61,7 +61,7 @@ GET http://localhost:3000/product/getProductsByRoom
 content-type: application/json
 
 ###
-GET http://localhost:3000/product/getProductsByCategory/60954e8f53a0fb4b2c0e6a13
+GET http://localhost:3000/product/getProductsByCategory?idCategory=60954e8f53a0fb4b2c0e6a13&limit=12&page=1
 content-type: application/json
 
 ###
@@ -124,3 +124,8 @@ content-type: application/json
 ###
 DELETE http://localhost:3000/category/deleteCategory/6094fcfd285d634bc09451a9
 content-type: application/json
+
+
+
+# /product/getProductsByCategory?idCategory=60954e8f53a0fb4b2c0e6a13&limit=12&page=1
+# /product/getProductsByCategory?idCategory=60954e8f53a0fb4b2c0e6a13&limit=12&page=1

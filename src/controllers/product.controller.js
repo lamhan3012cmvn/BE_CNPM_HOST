@@ -4,7 +4,6 @@ const productServices = require('../services/product.services')
 
 const getAllProducts = async (req, res, next) => {
   try {
-    console.log(req.query.page);
     const resServices = await productServices.getAllProducts(req.query)
     return controller.sendSuccess(res, resServices.data, 200, resServices.message)
   } catch (err) {
@@ -49,42 +48,25 @@ const getProductByRoom = async (req, res, next) => {
   }
 }
 
-const getProductByCategory = async (query) => {
+const getProductByCategory=async (req, res, next) => {
   try {
-    let idCategory = query.idCategory;
-    let perPage = query.limit || 12;
-    let page = query.page || 1;
-    let asc = query.asc == 'true' || true;
-    let bodySort = (query.sortByName == 'true')
-      ? {
-          Name: 1,
-        }
-      : {
-          Price: asc ? 1 : -1,
-        } || {};
-    const result = await PRODUCT.find({ FK_Category: idCategory })
-      .sort(bodySort)
-      .skip(perPage * page - perPage)
-      .limit(perPage);
-    return {
-      message: "Successfully get product",
-      success: true,
-      data: result,
-    };
+    const resServices = await productServices.getProductByCategory(req.query)
+    if (!resServices.success)
+      return controller.sendSuccess(res, {}, 300, resServices.message)
+    return controller.sendSuccess(res, resServices.data, 200, resServices.message)
   } catch (error) {
-    return {
-      message: "An error occurred",
-      success: false,
-    };
+    console.log(error)
+    return controller.sendError(res)
   }
-};
+
+}
 
 const updateProduct = async (req, res, next) => {
   try {
     const { _id } = req.params
     const resServices = await productServices.updateProduct(_id, req.body)
     if (!resServices.success)
-      return controller.sendSuccess(res, {}, 300, resServices.message)
+       return controller.sendSuccess(res, {}, 300, resServices.message)
     return controller.sendSuccess(res, resServices.data, 200, resServices.message)
   } catch (error) {
     return controller.sendError(res)

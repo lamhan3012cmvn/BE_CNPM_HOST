@@ -99,21 +99,37 @@ const getProductByRoom = async fkRoom => {
 	}
 };
 
-const getProductByCategory = async fkCategory => {
-	try {
-		const product = await PRODUCT.find({ FK_Category: fkCategory });
-		return {
-			message: 'Successfully get product',
-			success: true,
-			data: product
-		};
-	} catch (error) {
-		return {
-			message: 'An error occurred',
-			success: false
-		};
-	}
-};
+
+const getProductByCategory = async (query) => {
+		try {
+			let idCategory = query.idCategory;
+			let perPage = ~~query.limit || 12;
+			let page = ~~query.page || 1;
+			let asc = query.asc == 'true' || true;
+			let bodySort = (query.sortByName == 'true')
+				? {
+						Name: 1,
+					}
+				: {
+						Price: asc ? 1 : -1,
+					} || {};
+			const result = await PRODUCT.find({ FK_Category: idCategory })
+			.sort(bodySort)
+			.skip(perPage * page - perPage)
+			.limit(perPage);
+			
+			return {  
+				message: "Successfully get product",
+				success: true,
+				data: result,
+			};
+		} catch (error) {
+			return {
+				message: "An error occurred",
+				success: false,
+			};
+		}
+	};
 
 const updateProduct = async (id, body) => {
 	try {
@@ -295,11 +311,20 @@ const getRooms = async () => {
 };
 
 const getCategoryByRoom = async (id, option) => {
-	return await CATEGORY.find({ FK_Room: id }, option);
+	const category=await CATEGORY.find({ FK_Room: id }, option);
+	const newCate= await Promise.all(category.map(async cate=>{
+		const objCate=cate.toJSON()
+		objCate.total=await (await PRODUCT.find({FK_Category:cate._id})).length
+		return objCate
+	}))
+	return newCate
 };
 const getFilter = async () => {
 	try {
-		const room = await ROOM.find({});
+		const room = await ROOM.find({},{
+			_id: 1,
+			name: 1
+		});
 		const newRoom = await Promise.all(
 			room.map(async r => {
 				const objRoom = r.toJSON();
@@ -307,6 +332,7 @@ const getFilter = async () => {
 					_id: 1,
 					name: 1
 				});
+				
 				return objRoom;
 			})
 		);
@@ -317,6 +343,7 @@ const getFilter = async () => {
 			data: newRoom
 		};
 	} catch (err) {
+		console.log(err)
 		return {
 			message: 'An error occurred getFillter',
 			success: false
