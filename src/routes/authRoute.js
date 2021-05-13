@@ -7,7 +7,7 @@ const router = express.Router()
 
 
 router.get('/getAuth', jwtServices.verify, Controller.getAuth)
-router.post('/verify', Validate.body(SchemaValidate.verify),Controller.verify)
+router.post('/verify', Validate.body(SchemaValidate.verify), Controller.verify)
 // router.get('/getAllUser', Controller.getAllUsers)
 router.post('/changePassword', jwtServices.verify, Validate.body(SchemaValidate.changePassword), Controller.changePassword)
 router.post('/login', Validate.body(SchemaValidate.login), Controller.login)
