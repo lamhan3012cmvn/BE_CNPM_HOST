@@ -1,4 +1,4 @@
-const controller = require('./controller');
+const controller = require('./controller')
 const productServices = require('../services/product.services')
 
 
@@ -48,7 +48,7 @@ const getProductByRoom = async (req, res, next) => {
   }
 }
 
-const getProductByCategory=async (req, res, next) => {
+const getProductByCategory = async (req, res, next) => {
   try {
     const resServices = await productServices.getProductByCategory(req.query)
     if (!resServices.success)
@@ -66,7 +66,7 @@ const updateProduct = async (req, res, next) => {
     const { _id } = req.params
     const resServices = await productServices.updateProduct(_id, req.body)
     if (!resServices.success)
-       return controller.sendSuccess(res, {}, 300, resServices.message)
+      return controller.sendSuccess(res, {}, 300, resServices.message)
     return controller.sendSuccess(res, resServices.data, 200, resServices.message)
   } catch (error) {
     return controller.sendError(res)
@@ -84,7 +84,7 @@ const deleteProduct = async (req, res, next) => {
     return controller.sendError(res)
   }
 }
-const getFilter =async (req,res,next)=>{
+const getFilter = async (req, res, next) => {
   try {
     const resServices = await productServices.getFilter()
     if (!resServices.success)

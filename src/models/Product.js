@@ -41,6 +41,10 @@ const Product = new Schema({
         type: String,
         default: ''
     },
+    Total:{
+        type:Number,
+        default:0
+    },
     FK_Category: {
         type: String,
         required: false,
