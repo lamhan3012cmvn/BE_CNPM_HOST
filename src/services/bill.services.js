@@ -1,4 +1,4 @@
-const BILL = require('../models/Cart')
+const BILL = require('../models/Bill')
 
 
 const createNewBill = async body => {

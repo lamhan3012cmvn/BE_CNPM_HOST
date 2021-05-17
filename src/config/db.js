@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const {MONGO_URI} =require('./index')
-console.log(MONGO_URI)
+const { MONGO_URI } = require('./index')
+
 async function connect() {
     try {
         await mongoose.connect(MONGO_URI, {

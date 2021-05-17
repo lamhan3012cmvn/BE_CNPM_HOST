@@ -3,7 +3,7 @@ POST http://localhost:3000/auth/login
 content-type: application/json
 
 {
-  "email":"lamhan3012@gmail.com",
+  "email":"208holmesz@gmail.com",
   "password": "lamlamlam"
 }
 
@@ -13,9 +13,9 @@ POST http://localhost:3000/auth/register
 content-type: application/json
 
 {
-  "email":"laman3012@gmail.com",
+  "email":"208holmesz@gmail.com",
   "password": "lamlamlam",
-  "fullName":"Lam Hoang An"
+  "fullName":"Pham Tan Dat"
 }
 
 ###
@@ -28,9 +28,9 @@ POST http://localhost:3000/auth/verify
 content-type: application/json
 
 {
-  "email":"lamhan3012@gmail.com",
+  "email":"208holmesz@gmail.com",
   "password": "lamlamlam",
-  "otp":"143492"
+  "otp":"422204"
 }
 // product
 ###
@@ -129,3 +129,20 @@ content-type: application/json
 
 # /product/getProductsByCategory?idCategory=60954e8f53a0fb4b2c0e6a13&limit=12&page=1
 # /product/getProductsByCategory?idCategory=60954e8f53a0fb4b2c0e6a13&limit=12&page=1
+###
+POST  http://localhost:3000/cart/createCart
+content-type: application/json
+authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjBhMjdkNDg4NWQxY2UxYjg4NzljZjAxIiwiaWF0IjoxNjIxMjYxNjk5NzU1LCJleHAiOjE2MjEzNDgwOTk3NTV9.j551q27Zw72NwtAmmIS0XtA52ieCVoF38sk4aZhzWyI
+
+{
+  "products": [{
+    "idProduct": "60a0bd243e3689468e6b366d",
+    "total": 10
+  },
+  {
+    "idProduct": "60a0bd243e3689468e6b366d",
+    "total": 5
+  }
+  ],
+  "FK_CreateAt": ""
+}

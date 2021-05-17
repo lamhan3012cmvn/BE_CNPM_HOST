@@ -1,18 +1,18 @@
-const controller = require('./controller')
-const cartServices = require('../services/cart.services')
+const controller = require('./controller');
+const interiorDesignServices = require('../services/interiorDesign.services')
 
-const getCarts = async (req, res, next) => {
+const getInteriorDesign = async (req, res, next) => {
     try {
-        const resServices = await cartServices.getCarts()
+        const resServices = await interiorDesignServices.getInteriorDesign()
         return controller.sendSuccess(res, resServices.data, 200, resServices.message)
     } catch (err) {
         return controller.sendError(res)
     }
 }
 
-const createNewCart = async (req, res, next) => {
+const createNewInteriorDesign = async (req, res, next) => {
     try {
-        const resServices = await cartServices.createNewCart(req.value.body)
+        const resServices = await interiorDesignServices.createNewInteriorDesign(req.value.body)
         if (!resServices.success)
             return controller.sendSuccess(res, {}, 300, resServices.message)
         return controller.sendSuccess(res, resServices.data, 200, resServices.message)
@@ -23,9 +23,9 @@ const createNewCart = async (req, res, next) => {
 }
 
 
-const updateCart = async (req, res, next) => {
+const updateInteriorDesign = async (req, res, next) => {
     try {
-        const resServices = await cartServices.updateCart(req.value.body)
+        const resServices = await interiorDesignServices.updateInteriorDesign(req.value.body)
         if (!resServices.success)
             return controller.sendSuccess(res, {}, 300, resServices.message)
         return controller.sendSuccess(res, resServices.data, 200, resServices.message)
@@ -34,10 +34,10 @@ const updateCart = async (req, res, next) => {
     }
 }
 
-const deleteCart = async (req, res, next) => {
+const deleteInteriorDesign = async (req, res, next) => {
     try {
         const { id } = req.params
-        const resServices = await cartServices.deleteCart(id)
+        const resServices = await interiorDesignServices.deleteInteriorDesign(id)
         if (!resServices.success)
             return controller.sendSuccess(res, {}, 300, resServices.message)
         return controller.sendSuccess(res, {}, 200, resServices.message)
@@ -47,10 +47,10 @@ const deleteCart = async (req, res, next) => {
 }
 
 module.exports = {
-    getCarts,
-    createNewCart,
-    updateCart,
-    deleteCart
+    getInteriorDesign,
+    createNewInteriorDesign,
+    updateInteriorDesign,
+    deleteInteriorDesign
 }
 
 
