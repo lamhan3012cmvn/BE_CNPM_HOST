@@ -2,12 +2,13 @@ const joi = require("@hapi/joi")
 
 const schemas = {
     create: joi.object().keys({
-        idCustomer: joi.string().required(),
-        products: joi.object()
+        idProduct: joi.string().required(),
+        total:joi.number()
     }),
     update: joi.object().keys({
-        idCustomer: joi.string().required(),
-        products: joi.object()
+        idProduct: joi.string().required(),
+        total:joi.number(),
+        status:joi.string()
     })
 }
 

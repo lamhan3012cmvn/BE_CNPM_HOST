@@ -12,7 +12,7 @@ const getCarts = async (req, res, next) => {
 
 const createNewCart = async (req, res, next) => {
     try {
-        const resServices = await cartServices.createNewCart(req.body)
+        const resServices = await cartServices.createNewCart(req.value.body)
         if (!resServices.success)
             return controller.sendSuccess(res, {}, 300, resServices.message)
         return controller.sendSuccess(res, resServices.data, 200, resServices.message)
@@ -25,8 +25,7 @@ const createNewCart = async (req, res, next) => {
 
 const updateCart = async (req, res, next) => {
     try {
-        const { id } = req.params
-        const resServices = await cartServices.updateCart(id, req.body)
+        const resServices = await cartServices.updateCart(req.value.body)
         if (!resServices.success)
             return controller.sendSuccess(res, {}, 300, resServices.message)
         return controller.sendSuccess(res, resServices.data, 200, resServices.message)

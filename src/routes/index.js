@@ -6,6 +6,7 @@ const roomRoute = require('./roomRoute')
 const cartRoute = require('./cartRoute')
 const pendingCartRoute = require('./pendingCartRoute')
 const billRoute = require('./billRoute')
+
 const router = express.Router()
 
 router.use('/product', productRoute)

@@ -3,21 +3,40 @@ const CART = require('../models/Cart')
 
 const createNewCart = async body => {
     try {
-        const existCart = await CART.findOne({ idCustomer: body.idCustomer })
-        if (existCart) {
-            return {
-                message: 'Cart already exist',
-                success: false
+        const {decodeToken,total,idProduct} = body
+        const existCart = await CART.findOne({ FK_CreateAt:decodeToken.data  })
+        if (!existCart) {
+            const data={
+                products: [{
+                    idProduct:idProduct,
+                    total:total||1
+                }],
+                FK_CreateAt: decodeToken.data
             }
-        }
-
-        const newCart = new CART(body)
-        await newCart.save()
-
-        return {
-            message: 'Successfully create Cart',
-            success: true,
-            data: newCart
+            const newCart = new CART(data)
+            await newCart.save()
+            return {
+                message: 'Create Cart Success',
+                success: true,
+            }
+        }else{
+            const someProduct=existCart.products.findIndex((elm)=>elm.idProduct===idProduct)
+            if(someProduct===-1)
+            {
+                const product={
+                    idProduct:idProduct,
+                    total:total||1
+                }
+                existCart.products.push(product)
+            }
+            else{
+                existCart.products[someProduct].total+=total
+            }
+            await existCart.save()
+            return {
+                message: 'Create Cart Success',
+                success: true,
+            }
         }
     } catch (error) {
         return {
@@ -43,20 +62,37 @@ const getCarts = async () => {
     }
 }
 
-const updateCart = async (id, body) => {
+const updateCart = async (body) => {
+console.log(`LHA:  ===> file: cart.services.js ===> line 66 ===> body`, body)
     try {
-        const existCart = await CART.findOne({ _id: id })
+        const {decodeToken,total,idProduct,status} = body
+        console.log(`LHA:  ===> file: cart.services.js ===> line 68 ===> body`, body)
+        const existCart = await CART.findOne({ FK_CreateAt:decodeToken.data  })
+        console.log(`LHA:  ===> file: cart.services.js ===> line 69 ===> existCart`, existCart)
         if (!existCart) {
             return {
-                message: 'Cart not exist',
+                message: 'Dont find cart update',
                 success: false
             }
-        }
-        await CART.updateOne({ _id: id }, body)
-        return {
-            message: 'Successfully update cart',
-            success: true,
-            data: body
+        }else{
+            const someProduct=existCart.products.findIndex((elm)=>elm.idProduct===idProduct)
+            console.log(`LHA:  ===> file: cart.services.js ===> line 76 ===> someProduct`, someProduct)
+            if(someProduct===-1)
+            {
+                return {
+                    message: 'Dont find product update cart',
+                    success: false
+                }
+            }
+            else{
+                existCart.products[someProduct].total=total||0
+                existCart.products[someProduct].isActive=status||'INACTIVE'
+            }
+            await existCart.save()
+            return {
+                message: 'Create Cart Success',
+                success: true,
+            }
         }
     } catch (error) {
         return {
@@ -64,6 +100,26 @@ const updateCart = async (id, body) => {
             success: false
         }
     }
+    // try {
+    //     const existCart = await CART.findOne({ _id: id })
+    //     if (!existCart) {
+    //         return {
+    //             message: 'Cart not exist',
+    //             success: false
+    //         }
+    //     }
+    //     await CART.updateOne({ _id: id }, body)
+    //     return {
+    //         message: 'Successfully update cart',
+    //         success: true,
+    //         data: body
+    //     }
+    // } catch (error) {
+    //     return {
+    //         message: 'An error occurred',
+    //         success: false
+    //     }
+    // }
 }
 
 const deleteCart = async id => {

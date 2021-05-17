@@ -3,14 +3,24 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const Cart = new Schema({
-    idCustomer: {
+    products: [{
+        idProduct:{
+            type:String,
+            required:true
+        },
+        total:{
+            type:Number,
+            default:1
+        },
+        isActive:{
+            type:String,
+            default:"INACTIVE"
+        }
+    }],
+    FK_CreateAt: {
         type: String,
         required: true
-    },
-    products: {
-        type: [Object]
     }
-
 }, { timestamps: true })
 
 module.exports = mongoose.model('Cart', Cart)
