@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken')
 const {ACCESS_TOKEN_SECRET} = require("../config/index")
 const verify=(req,res,next)=>{
 	const header = req.headers.authorization;
+  console.log(`LHA:  ===> file: jwt.services.js ===> line 5 ===> header`, header)
   
 	if (!header) {
 		res.status(403).json({

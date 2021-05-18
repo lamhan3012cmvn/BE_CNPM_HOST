@@ -3,7 +3,7 @@ const cartServices = require('../services/cart.services')
 
 const getCarts = async (req, res, next) => {
     try {
-        const resServices = await cartServices.getCarts()
+        const resServices = await cartServices.getCarts(req.value.body)
         return controller.sendSuccess(res, resServices.data, 200, resServices.message)
     } catch (err) {
         return controller.sendError(res)
@@ -12,6 +12,7 @@ const getCarts = async (req, res, next) => {
 
 const createNewCart = async (req, res, next) => {
     try {
+        console.log(req.value)
         const resServices = await cartServices.createNewCart(req.value.body)
         if (!resServices.success)
             return controller.sendSuccess(res, {}, 300, resServices.message)

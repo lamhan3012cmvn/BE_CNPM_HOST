@@ -1,9 +1,11 @@
 const CART = require('../models/Cart')
+const PRODUCT = require('../models/Product')
 
 
 const createNewCart = async body => {
     try {
         const {decodeToken,total,idProduct} = body
+        console.log(`LHA:  ===> file: cart.services.js ===> line 8 ===> body`, body)
         const existCart = await CART.findOne({ FK_CreateAt:decodeToken.data  })
         if (!existCart) {
             const data={
@@ -46,13 +48,33 @@ const createNewCart = async body => {
     }
 }
 
-const getCarts = async () => {
+const getCarts = async (body) => {
     try {
-        const cart = await CART.find({})
+        const{decodeToken}=body
+        const cartUser = await CART.findOne({ FK_CreateAt:decodeToken.data  })
+        if (!cartUser) {
+            const data={
+                products: [],
+                FK_CreateAt: decodeToken.data
+            }
+            const newCart = new CART(data)
+            await newCart.save()
+            return {
+                message: 'Successfully get carts',
+                success: true,
+                data:[]
+            }
+        }
+        let returnData={...cartUser.toObject()}
+        await Promise.all(returnData.products.map(async (elm)=>{
+            const currentProduct=await PRODUCT.findById(elm.idProduct)
+            elm.product=currentProduct||{}
+            return elm
+        }))
         return {
             message: 'Successfully get carts',
             success: true,
-            data: cart
+            data: returnData
         }
     } catch (err) {
         return {
@@ -63,12 +85,9 @@ const getCarts = async () => {
 }
 
 const updateCart = async (body) => {
-console.log(`LHA:  ===> file: cart.services.js ===> line 66 ===> body`, body)
     try {
         const {decodeToken,total,idProduct,status} = body
-        console.log(`LHA:  ===> file: cart.services.js ===> line 68 ===> body`, body)
         const existCart = await CART.findOne({ FK_CreateAt:decodeToken.data  })
-        console.log(`LHA:  ===> file: cart.services.js ===> line 69 ===> existCart`, existCart)
         if (!existCart) {
             return {
                 message: 'Dont find cart update',
@@ -76,7 +95,6 @@ console.log(`LHA:  ===> file: cart.services.js ===> line 66 ===> body`, body)
             }
         }else{
             const someProduct=existCart.products.findIndex((elm)=>elm.idProduct===idProduct)
-            console.log(`LHA:  ===> file: cart.services.js ===> line 76 ===> someProduct`, someProduct)
             if(someProduct===-1)
             {
                 return {
@@ -100,26 +118,7 @@ console.log(`LHA:  ===> file: cart.services.js ===> line 66 ===> body`, body)
             success: false
         }
     }
-    // try {
-    //     const existCart = await CART.findOne({ _id: id })
-    //     if (!existCart) {
-    //         return {
-    //             message: 'Cart not exist',
-    //             success: false
-    //         }
-    //     }
-    //     await CART.updateOne({ _id: id }, body)
-    //     return {
-    //         message: 'Successfully update cart',
-    //         success: true,
-    //         data: body
-    //     }
-    // } catch (error) {
-    //     return {
-    //         message: 'An error occurred',
-    //         success: false
-    //     }
-    // }
+   
 }
 
 const deleteCart = async id => {

@@ -12,7 +12,7 @@ router.post('/updateCart', jwtServices.verify,Validate.body(SchemaValidate.updat
 
 router.delete('/deleteCart/:id', Controller.deleteCart)
 
-router.get('/getCart', Controller.getCarts)
+router.get('/getCart', jwtServices.verify,Controller.getCarts)
 
 
 module.exports = router

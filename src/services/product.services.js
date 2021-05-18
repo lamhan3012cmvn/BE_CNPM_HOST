@@ -62,7 +62,13 @@ const createNewProduct = async body => {
 
 const getProduct = async id => {
 	try {
-		const product = await (await PRODUCT.findById({ _id: id })).toJSON()
+		const resProduct =  await PRODUCT.findById(id)
+		if(!resProduct) return {
+			message: 'Successfully get product',
+			success: true,
+			data: {}
+		}
+		const product=resProduct.toObject()
 		const room = await ROOM.findById(product.FK_Room, { _id: 0, name: 1 })
 		product.FK_Room = room
 		const category = await CATEGORY.findById(product.FK_Category, {
@@ -76,6 +82,8 @@ const getProduct = async id => {
 			data: product
 		}
 	} catch (error) {
+
+	console.log(error)
 		return {
 			message: 'An error occurred',
 			success: false

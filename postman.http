@@ -4,7 +4,7 @@ content-type: application/json
 
 {
   "email":"lamhan3012@gmail.com",
-  "password": "lamlamlam"
+  "password": "abcd1234"
 }
 
 
@@ -14,14 +14,14 @@ content-type: application/json
 
 {
   "email":"laman3012@gmail.com",
-  "password": "lamlamlam",
+  "password": "abcd1234",
   "fullName":"Lam Hoang An"
 }
 
 ###
 GET http://localhost:3000/auth/getAuth
 content-type: application/json
-authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjA5NmFlYzM2YmMxMWEyNjg1N2MxYmZkIiwiaWF0IjoxNjIwNDg3OTk3NTQ3LCJleHAiOjE2MjA1NzQzOTc1NDd9.MzaJxAEvjEdPilRAANeDptjwQXglITqqDb4BfJ3mvsg
+authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjA5ZmFiMmY0ZjQ2ZDkwMDEyN2MxODJlIiwiaWF0IjoxNjIxMjQwNjkyODMzLCJleHAiOjE2MjEzMjcwOTI4MzN9.78owfx4KMjSZPu-NsiquKfYrvAm4NQOtt1SaxbUXag8
 
 ###
 POST http://localhost:3000/auth/verify
@@ -29,8 +29,8 @@ content-type: application/json
 
 {
   "email":"lamhan3012@gmail.com",
-  "password": "lamlamlam",
-  "otp":"143492"
+  "password": "abcd1234",
+  "otp":"694545"
 }
 // product
 ###
@@ -65,7 +65,7 @@ GET http://localhost:3000/product/getProductsByCategory?idCategory=60954e8f53a0f
 content-type: application/json
 
 ###
-GET http://localhost:3000/product/getProduct/6095506e53a0fb4b2c0e6a23
+GET http://localhost:3000/product/getProduct/60a0bd8183d4831570267ba4
 content-type: application/json
 
 ###
