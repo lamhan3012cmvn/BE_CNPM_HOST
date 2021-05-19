@@ -94,6 +94,18 @@ const getFilter = async (req, res, next) => {
     return controller.sendError(res)
   }
 }
+
+const searchProduct = async (req, res, next) => {
+  try {
+    const searchField = req.query.tags
+    const resServices = await productServices.searchProduct(searchField)
+    if (!resServices.success)
+      return controller.sendSuccess(res, {}, 300, resServices.message)
+    return controller.sendSuccess(res, resServices.data, 200, resServices.message)
+  } catch (error) {
+    return controller.sendError(res)
+  }
+}
 module.exports = Controller = {
   getAllProducts,
   createProduct,
@@ -102,5 +114,6 @@ module.exports = Controller = {
   getProductByCategory,
   updateProduct,
   deleteProduct,
-  getFilter
+  getFilter,
+  searchProduct
 }

@@ -371,6 +371,58 @@ const getFilter = async () => {
 	}
 }
 
+const searchProduct = async (searchField) => {
+	try {
+		console.log(searchField)
+		const products = await PRODUCT.find({ tags: { $regex: searchField, $options: '$i' } })
+		// .then(data => {
+		// 	return {
+		// 		message: 'Successfully get Filter',
+		// 		success: true,
+		// 		data: data
+		// 	}
+		// })
+
+		//console.log(products)
+		return {
+			message: 'Successfully search',
+			success: true,
+			data: products
+		}
+	} catch (error) {
+		return {
+			message: 'An error occurred',
+			success: false
+		}
+	}
+}
+
+const filterByPrice = (price) => {
+	try {
+		console.log(price)
+		const products = await PRODUCT.find({ Price: { $regex: price, $options: '$i' } })
+		// .then(data => {
+		// 	return {
+		// 		message: 'Successfully get Filter',
+		// 		success: true,
+		// 		data: data
+		// 	}
+		// })
+
+		//console.log(products)
+		return {
+			message: 'Successfully search',
+			success: true,
+			data: products
+		}
+	} catch (error) {
+		return {
+			message: 'An error occurred',
+			success: false
+		}
+	}
+}
+
 module.exports = {
 	getAllProducts,
 	createNewProduct,
@@ -379,6 +431,7 @@ module.exports = {
 	getProductByCategory,
 	updateProduct,
 	deleteProduct,
+	searchProduct,
 
 	createNewCategory,
 	getCategories,
