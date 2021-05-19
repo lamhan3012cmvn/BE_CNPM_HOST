@@ -22,7 +22,7 @@ const Product = new Schema({
     Quantity: {
         type: String
     },
-    Image: [{type:String}]
+    Image: [{ type: String }]
     ,
     Size: {
         type: String,
@@ -40,9 +40,18 @@ const Product = new Schema({
         type: String,
         default: ''
     },
-    Total:{
-        type:Number,
-        default:0
+    Total: {
+        type: Number,
+        default: 0
+    },
+    Tags: [{
+        type: String
+    }],
+    Rate: [
+        { type: String }
+    ],
+    Heart: {
+        type: String
     },
     FK_Category: {
         type: String,

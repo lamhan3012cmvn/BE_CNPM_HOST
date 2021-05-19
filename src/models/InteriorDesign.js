@@ -29,7 +29,10 @@ const InteriorDesign = new Schema({
             type: String,
             default: ''
         }
-    }]
+    }],
+    FK_TypeInteriorDesign: {
+        type: String
+    }
 
 }, { timestamps: true })
 

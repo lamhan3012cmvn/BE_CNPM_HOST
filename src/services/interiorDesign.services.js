@@ -35,16 +35,47 @@ const createNewInteriorDesign = async body => {
 
 const getInteriorDesign = async () => {
     try {
-        const cart = await INTERIORDESIGN.find({})
+        const interiorDesign = await INTERIORDESIGN.find({})
         return {
             message: 'Successfully get InteriorDesign',
             success: true,
-            data: cart
+            data: interiorDesign
         }
     } catch (err) {
         return {
             message: 'An error occurred',
             success: false
+        }
+    }
+}
+
+const getAllInteriorDesignByType = async (query) => {
+    try {
+        let idInteriorDesign = query.idInteriorDesign
+        let perPage = ~~query.limit || 12
+        let page = ~~query.page || 1
+        let asc = query.asc == 'true' || true
+        let bodySort = (query.sortByName == 'true')
+            ? {
+                Name: 1,
+            }
+            : {
+                Price: asc ? 1 : -1,
+            } || {}
+        const result = await INTERIORDESIGN.find({ FK_TypeInteriorDesign: idInteriorDesign })
+            .sort(bodySort)
+            .skip(perPage * page - perPage)
+            .limit(perPage)
+
+        return {
+            message: "Successfully get product",
+            success: true,
+            data: result,
+        }
+    } catch (error) {
+        return {
+            message: "An error occurred",
+            success: false,
         }
     }
 }
