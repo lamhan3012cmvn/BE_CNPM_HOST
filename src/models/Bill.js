@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const Cart = new Schema({
+const Bill = new Schema({
     idCustomer: {
         type: String,
         required: true
@@ -13,4 +13,4 @@ const Cart = new Schema({
 
 }, { timestamps: true })
 
-module.exports = mongoose.model('Cart', Cart)
+module.exports = mongoose.model('Bill', Bill)

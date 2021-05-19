@@ -1,14 +1,17 @@
 const express = require('express')
 const path = require('path')
-const {PORT} =require('./config')
+const { PORT } = require('./config')
 const app = express()
-const db =require('./config/db')
+const db = require('./config/db')
+const paypal = require('./config/paypal.config')
 const route = require('./routes')
-const morgan=require("morgan")
-const cookieParser=require("cookie-parser")
-const cors=require("cors")
+const morgan = require("morgan")
+const cookieParser = require("cookie-parser")
+const cors = require("cors")
 //connect db
 db.connect()
+
+paypal.connect()
 
 app.use(express.urlencoded({
     extended: true

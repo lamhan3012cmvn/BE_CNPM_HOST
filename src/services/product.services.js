@@ -15,15 +15,26 @@ const getAllProducts = async query => {
 				: {
 					Price: asc ? 1 : -1
 				} || {}
+		
+		let totalPage=0
 		const result = await PRODUCT.find()
-			.sort(bodySort)
-			.skip(perPage * page - perPage)
-			.limit(perPage)
+		.sort(bodySort)
+		.skip(perPage * page - perPage)
+		.limit(perPage)
+		
+		const total=await PRODUCT.countDocuments()
+    // console.log(`LHA:  ===> file: product.services.js ===> line 26 ===> total`, total)
 
+		// console.log(`LHA:  ===> file: product.services.js ===> line 21 ===> result`, result)
+		
 		return {
 			message: 'Successfully get products',
 			success: true,
-			data: result
+			data: {
+				products:result,
+				pages:Math.ceil(total/perPage),
+				total
+			}
 		}
 	} catch (err) {
 		console.log(err)
