@@ -53,7 +53,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/product/getAllProducts?limit=12&page=2
+GET http://18.217.70.108/product/getAllProducts?limit=12&page=1
 content-type: application/json
 
 ###
@@ -101,7 +101,7 @@ GET http://localhost:3000/product/filter
 content-type: application/json
 
 ###
-GET http://localhost:3000/product/search?tags=bÀN
+GET http://localhost:3005/product/search?tags=
 content-type: application/json
 
 ###

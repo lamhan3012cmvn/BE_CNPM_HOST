@@ -6,7 +6,9 @@ const getAllProducts = async query => {
 	try {
 		let perPage = ~~query.limit || 12
 		let page = ~~query.page || 1
-		let asc = query.asc == 'true' || true
+		// let asc = query.asc == 'true' || true
+		let strSearch=removeVietnameseTones(query.search||"")
+		let idCategory=query.idCategory||""
 		// let bodySort =
 		// 	(query.sortByName == 'true')
 		// 		? {
@@ -15,17 +17,17 @@ const getAllProducts = async query => {
 		// 		: {
 		// 			Price: asc ? 1 : -1
 		// 		} || {}s
-		const result = await PRODUCT.find()
+		const result = await PRODUCT.find({ tags: { $regex: strSearch, $options: '$i' }, FK_Category:{ $regex: idCategory, $options: '$i' }})
 			.sort({ Heart: -1 })
 			.skip(perPage * page - perPage)
 			.limit(perPage)
 
 		// console.log(`LHA:  ===> file: product.services.js ===> line 21 ===> result`, result)
-		const total=await PRODUCT.countDocuments()
+		const total=await PRODUCT.countDocuments({ tags: { $regex: strSearch, $options: '$i' }, FK_Category:{ $regex: idCategory, $options: '$i' }})
+		console.log(`LHA:  ===> file: product.services.js ===> line 30 ===> total`, total)
 		const resData={products:result,
 			pages:Math.ceil(total/perPage),
 			total}
-    console.log(`LHA:  ===> file: product.services.js ===> line 28 ===> resData`, resData)
 		return {
 			message: 'Successfully get products',
 			success: true,
@@ -375,7 +377,8 @@ function removeVietnameseTones(str) {
 const searchProduct = async (searchField) => {
 	try {
 
-		const newSearch = removeVietnameseTones(searchField)
+		const newSearch = removeVietnameseTones("")
+		
 		console.log(newSearch)
 		const products = await PRODUCT.find({ tags: { $regex: newSearch, $options: '$i' } })
 		// .then(data => {
@@ -386,7 +389,7 @@ const searchProduct = async (searchField) => {
 		// 	}
 		// })
 
-		//console.log(products)
+		console.log(products.length)
 		return {
 			message: 'Successfully search',
 			success: true,
