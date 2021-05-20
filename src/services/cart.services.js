@@ -64,7 +64,7 @@ const getCarts = async (body) => {
                 data:[]
             }
         }
-        let returnData={...cartUser.toObject()}
+        let returnData=cartUser.toObject()
         await Promise.all(returnData.products.map(async (elm)=>{
             const currentProduct=await PRODUCT.findById(elm.idProduct)
             elm.product=currentProduct||{}
