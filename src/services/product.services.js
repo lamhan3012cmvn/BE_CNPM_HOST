@@ -14,7 +14,7 @@ const getAllProducts = async query => {
 		// 		}
 		// 		: {
 		// 			Price: asc ? 1 : -1
-		// 		} || {}
+		// 		} || {}s
 		const result = await PRODUCT.find()
 			.sort({ Heart: -1 })
 			.skip(perPage * page - perPage)
