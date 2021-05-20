@@ -19,7 +19,8 @@ const body = (schema) => {
     else {
       if (!req.value) req.value = {};
       if (!req.value['body']) req.value.body = {};
-      req.value.body = {...req.value.body,...validatorResult.value};
+      const obj=Object.assign(req.value.body,validatorResult.value)
+      req.value.body=obj
       next();
     }
   };
