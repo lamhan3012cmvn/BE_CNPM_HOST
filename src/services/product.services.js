@@ -22,14 +22,14 @@ const getAllProducts = async query => {
 
 		// console.log(`LHA:  ===> file: product.services.js ===> line 21 ===> result`, result)
 		const total=await PRODUCT.countDocuments()
+		const resData={products:result,
+			pages:Math.ceil(total/perPage),
+			total}
+    console.log(`LHA:  ===> file: product.services.js ===> line 28 ===> resData`, resData)
 		return {
 			message: 'Successfully get products',
 			success: true,
-			data: {
-				products:result,
-				pages:Math.ceil(total/perPage),
-				total
-			}
+			data: resData
 		}
 	} catch (err) {
 		console.log(err)
