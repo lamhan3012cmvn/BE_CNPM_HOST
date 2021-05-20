@@ -21,7 +21,7 @@ const getAllProducts = async query => {
 			.limit(perPage)
 
 		// console.log(`LHA:  ===> file: product.services.js ===> line 21 ===> result`, result)
-		
+		const total=await PRODUCT.countDocuments()
 		return {
 			message: 'Successfully get products',
 			success: true,
