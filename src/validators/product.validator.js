@@ -2,9 +2,10 @@ const joi = require("@hapi/joi")
 
 const schemas = {
     search: joi.object().keys({
-        name: joi.string(),
-        material: joi.string(),
-        code: joi.string()
+        tags: joi.string()
+    }),
+    filter: joi.object().keys({
+        price: joi.number()
     })
 }
 

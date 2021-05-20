@@ -101,7 +101,11 @@ GET http://localhost:3000/product/filter
 content-type: application/json
 
 ###
-GET http://localhost:3000/product/search?tags=an
+GET http://localhost:3000/product/search?tags=bÀN
+content-type: application/json
+
+###
+GET http://localhost:3000/product/filterByPrice?price=15967500
 content-type: application/json
 
 //category
@@ -133,20 +137,55 @@ content-type: application/json
 
 # /product/getProductsByCategory?idCategory=60954e8f53a0fb4b2c0e6a13&limit=12&page=1
 # /product/getProductsByCategory?idCategory=60954e8f53a0fb4b2c0e6a13&limit=12&page=1
+
+
 ###
 POST  http://localhost:3000/cart/createCart
 content-type: application/json
-authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjBhMjdkNDg4NWQxY2UxYjg4NzljZjAxIiwiaWF0IjoxNjIxMjYxNjk5NzU1LCJleHAiOjE2MjEzNDgwOTk3NTV9.j551q27Zw72NwtAmmIS0XtA52ieCVoF38sk4aZhzWyI
+authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjBhMjdkNDg4NWQxY2UxYjg4NzljZjAxIiwiaWF0IjoxNjIxNDM1MzM0MDg1LCJleHAiOjE2MjE1MjE3MzQwODV9.qzPj6BKd9YHjBjsDQ8RqridXDx5YQy4H9efN1dnlQZE
 
 {
-  "products": [{
-    "idProduct": "60a0bd243e3689468e6b366d",
-    "total": 10
-  },
-  {
-    "idProduct": "60a0bd243e3689468e6b366d",
-    "total": 5
-  }
-  ],
-  "FK_CreateAt": ""
+  
+  "idProduct": "60a0bd243e3689468e6b366e",
+  "total": 10
+  
 }
+
+// Interior Design
+###
+POST  http://localhost:3000/interiorDesign/createTypeInteriorDesign
+content-type: application/json
+authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjBhMjdkNDg4NWQxY2UxYjg4NzljZjAxIiwiaWF0IjoxNjIxNDM1MzM0MDg1LCJleHAiOjE2MjE1MjE3MzQwODV9.qzPj6BKd9YHjBjsDQ8RqridXDx5YQy4H9efN1dnlQZE
+
+{
+  
+  "name": "Biet thu"
+}
+
+
+###
+POST  http://localhost:3000/interiorDesign/createInteriorDesign
+content-type: application/json
+authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjBhMjdkNDg4NWQxY2UxYjg4NzljZjAxIiwiaWF0IjoxNjIxNDM1MzM0MDg1LCJleHAiOjE2MjE1MjE3MzQwODV9.qzPj6BKd9YHjBjsDQ8RqridXDx5YQy4H9efN1dnlQZE
+
+{
+  "title": "Thiết kế nội thất căn hộ 77m2 chung cư Smart City",
+
+    "project":  "Chung cư 2 phòng ngủ",
+    "style": "Scandinavian",
+    "S": "77m2",
+  "description": "Mỗi gia chủ lại có những nhu cầu thiết kế nội thất khác nhau khi tìm đến Nhà Đẹp. Với các khách hàng có kế hoạch cụ thể về ngân sách, Nhà Đẹp sẽ nghiên cứu và đưa ra giải pháp, phù hợp cả về chi phí lẫn đảm bảo công năng và sự tiện nghi cho căn hộ.",
+  
+      "img": "https://firebasestorage.googleapis.com/v0/b/cnpm-e5af3.appspot.com/o/Category%2FDuAn%2FchungCu%2Fsmartcity%2FBEP-PKHACH.jpg?alt=media&token=f1453db2-4642-448e-934d-bdcb2881d511",
+      "content": "213212233",
+
+  "FK_TypeInteriorDesign": "60a544536e6ee6238c0bcf0d"
+}
+
+###
+GET http://localhost:3000/interiorDesign/getInteriorDesign
+content-type: application/json
+
+###
+GET http://localhost:3000/interiorDesign/getInteriorDesignByType?idInteriorDesign=60a544536e6ee6238c0bcf0d&limit=12&page=1
+content-type: application/json

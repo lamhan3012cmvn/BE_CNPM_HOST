@@ -8,7 +8,11 @@ const schemas = {
         S: joi.string(),
         description: joi.string(),
         img: joi.string(),
-        content: joi.string()
+        content: joi.string(),
+        FK_TypeInteriorDesign: joi.string()
+    }),
+    createType: joi.object().keys({
+        name: joi.string()
     }),
     update: joi.object().keys({
         title: joi.string().required(),

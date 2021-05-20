@@ -8,9 +8,13 @@ const router = express.Router()
 
 router.post('/createInteriorDesign', jwtServices.verify, Validate.body(SchemaValidate.create), Controller.createNewInteriorDesign)
 
+router.post('/createTypeInteriorDesign', jwtServices.verify, Validate.body(SchemaValidate.createType), Controller.createTypeInteriorDesign)
+
 router.post('/updateInteriorDesign', jwtServices.verify, Validate.body(SchemaValidate.update), Controller.updateInteriorDesign)
 
 router.delete('/deleteInteriorDesign/:id', Controller.deleteInteriorDesign)
+
+router.get('/getInteriorDesignByType', Controller.getAllInteriorDesignByType)
 
 router.get('/getInteriorDesign', Controller.getInteriorDesign)
 

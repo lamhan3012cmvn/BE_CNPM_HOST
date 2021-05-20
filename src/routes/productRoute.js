@@ -20,6 +20,8 @@ router.get('/filter', Controller.getFilter)
 
 router.get('/search', Validate.body(SchemaValidate.search), Controller.searchProduct)
 
+router.get('/filterByPrice', Controller.filterByPrice)
+
 router.get('/getProductsByCategory', Controller.getProductByCategory)
 
 

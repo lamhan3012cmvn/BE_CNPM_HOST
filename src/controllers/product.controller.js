@@ -106,6 +106,19 @@ const searchProduct = async (req, res, next) => {
     return controller.sendError(res)
   }
 }
+
+const filterByPrice = async (req, res, next) => {
+  try {
+    const price = req.query.price
+    const resServices = await productServices.filterByPrice(price)
+    if (!resServices.success)
+      return controller.sendSuccess(res, {}, 300, resServices.message)
+    return controller.sendSuccess(res, resServices.data, 200, resServices.message)
+  } catch (error) {
+    return controller.sendError(res)
+  }
+}
+
 module.exports = Controller = {
   getAllProducts,
   createProduct,
@@ -115,5 +128,6 @@ module.exports = Controller = {
   updateProduct,
   deleteProduct,
   getFilter,
-  searchProduct
+  searchProduct,
+  filterByPrice
 }

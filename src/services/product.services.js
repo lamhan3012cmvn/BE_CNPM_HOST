@@ -7,23 +7,18 @@ const getAllProducts = async query => {
 		let perPage = ~~query.limit || 12
 		let page = ~~query.page || 1
 		let asc = query.asc == 'true' || true
-		let bodySort =
-			query.sortByName == 'true'
-				? {
-					Name: 1
-				}
-				: {
-					Price: asc ? 1 : -1
-				} || {}
-		
-		let totalPage=0
+		// let bodySort =
+		// 	(query.sortByName == 'true')
+		// 		? {
+		// 			Name: 1
+		// 		}
+		// 		: {
+		// 			Price: asc ? 1 : -1
+		// 		} || {}
 		const result = await PRODUCT.find()
-		.sort(bodySort)
-		.skip(perPage * page - perPage)
-		.limit(perPage)
-		
-		const total=await PRODUCT.countDocuments()
-    // console.log(`LHA:  ===> file: product.services.js ===> line 26 ===> total`, total)
+			.sort({ Heart: -1 })
+			.skip(perPage * page - perPage)
+			.limit(perPage)
 
 		// console.log(`LHA:  ===> file: product.services.js ===> line 21 ===> result`, result)
 		
@@ -371,10 +366,18 @@ const getFilter = async () => {
 	}
 }
 
+function removeVietnameseTones(str) {
+	let newStr = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D")
+
+	return newStr
+}
+
 const searchProduct = async (searchField) => {
 	try {
-		console.log(searchField)
-		const products = await PRODUCT.find({ tags: { $regex: searchField, $options: '$i' } })
+
+		const newSearch = removeVietnameseTones(searchField)
+		console.log(newSearch)
+		const products = await PRODUCT.find({ tags: { $regex: newSearch, $options: '$i' } })
 		// .then(data => {
 		// 	return {
 		// 		message: 'Successfully get Filter',
@@ -397,21 +400,17 @@ const searchProduct = async (searchField) => {
 	}
 }
 
-const filterByPrice = (price) => {
+const filterByPrice = async (price) => {
 	try {
-		console.log(price)
-		const products = await PRODUCT.find({ Price: { $regex: price, $options: '$i' } })
-		// .then(data => {
-		// 	return {
-		// 		message: 'Successfully get Filter',
-		// 		success: true,
-		// 		data: data
-		// 	}
-		// })
+		//console.log(price)
+		const priceMax = parseInt(price, 10)
+		console.log(priceMax)
+		const products = await PRODUCT.find({ Price: { $lte: priceMax } })
 
 		//console.log(products)
+
 		return {
-			message: 'Successfully search',
+			message: 'Successfully filter Price',
 			success: true,
 			data: products
 		}
@@ -432,6 +431,7 @@ module.exports = {
 	updateProduct,
 	deleteProduct,
 	searchProduct,
+	filterByPrice,
 
 	createNewCategory,
 	getCategories,
