@@ -2,29 +2,27 @@ const paypal = require('paypal-rest-sdk')
 
 const payment = (body) => {
     try {
-        const { price, quantity } = body
+        const { price, quantity, items } = body
+        let total = 0
+        for (let i = 0; i < items.length; i++) {
+            total += parseFloat(items[i].price) * items[i].quantity
+        }
         var create_payment_json = {
             "intent": "sale",
             "payer": {
                 "payment_method": "paypal"
             },
             "redirect_urls": {
-                "return_url": "http://localhost:3000/payment-paypal/success",
+                "return_url": `http://localhost:3000/payment-paypal/success?total=${total.toString()}`,
                 "cancel_url": "http://localhost:3000/payment-paypal/cancel"
             },
             "transactions": [{
                 "item_list": {
-                    "items": [{
-                        "name": "Ban go",
-                        "sku": "1",
-                        "price": `${price}`,
-                        "currency": "USD",
-                        "quantity": `${quantity}`
-                    }]
+                    "items": items
                 },
                 "amount": {
                     "currency": "USD",
-                    "total": (parseFloat(`${price}`) * parseFloat(`${quantity}`)).toString()
+                    "total": total.toString()
                 },
                 "description": "This is the payment description."
             }]

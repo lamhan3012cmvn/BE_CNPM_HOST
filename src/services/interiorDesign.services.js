@@ -1,9 +1,11 @@
 const INTERIORDESIGN = require('../models/InteriorDesign')
+const TYPEINTERIORDESIGN = require('../models/TypeInteriorDesign')
+
 
 
 const createNewInteriorDesign = async body => {
     try {
-        const { title, project, style, S, description, img, content } = body
+        const { title, project, style, S, description, img, content, FK_TypeInteriorDesign } = body
         const data = {
             title: title,
             info: {
@@ -15,7 +17,8 @@ const createNewInteriorDesign = async body => {
             images: [{
                 img: img,
                 content: content
-            }]
+            }],
+            FK_TypeInteriorDesign: FK_TypeInteriorDesign
         }
         const newInteriorDesign = new INTERIORDESIGN(data)
         await newInteriorDesign.save()
@@ -127,10 +130,31 @@ const deleteInteriorDesign = async id => {
     }
 }
 
+const createTypeInteriorDesign = async body => {
+    try {
+
+        const newTypeInteriorDesign = new TYPEINTERIORDESIGN(body)
+        await newTypeInteriorDesign.save()
+
+        return {
+            message: 'Successfully create TypeInteriorDesign',
+            success: true,
+            data: newTypeInteriorDesign
+        }
+    } catch (error) {
+        return {
+            message: 'An error occurred',
+            success: false
+        }
+    }
+}
+
 
 module.exports = {
     createNewInteriorDesign,
     getInteriorDesign,
     updateInteriorDesign,
-    deleteInteriorDesign
+    deleteInteriorDesign,
+    createTypeInteriorDesign,
+    getAllInteriorDesignByType
 }

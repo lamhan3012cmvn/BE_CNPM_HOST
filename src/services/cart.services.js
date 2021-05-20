@@ -4,7 +4,7 @@ const CART = require('../models/Cart')
 const createNewCart = async body => {
     try {
         const { decodeToken, total, idProduct } = body
-        console.log(decodeToken.data)
+        //console.log(decodeToken.data)
         const existCart = await CART.findOne({ FK_CreateAt: decodeToken.data })
         if (!existCart) {
             const data = {
@@ -27,7 +27,7 @@ const createNewCart = async body => {
                     idProduct: idProduct,
                     total: total || 1
                 }
-                existCart.products.push(product)
+                existCart.products.push(products)
             }
             else {
                 existCart.products[someProduct].total += total
@@ -39,6 +39,7 @@ const createNewCart = async body => {
             }
         }
     } catch (error) {
+        console.log(error)
         return {
             message: 'An error occurred',
             success: false
@@ -85,7 +86,7 @@ const updateCart = async (body) => {
             }
             await existCart.save()
             return {
-                message: 'Create Cart Success',
+                message: 'Update Cart Success',
                 success: true,
             }
         }
