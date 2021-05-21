@@ -4,7 +4,7 @@ const Validate = require("../validators")
 const SchemaValidate = require("../validators/product.validator")
 const router = express.Router()
 
-router.post('/createProduct', Controller.createProduct)
+router.post('/createProduct',Validate.body(SchemaValidate.create), Controller.createProduct)
 
 router.put('/updateProduct/:_id', Controller.updateProduct)
 

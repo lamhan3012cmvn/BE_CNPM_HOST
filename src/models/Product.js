@@ -38,18 +38,21 @@ const Product = new Schema({
     },
     isStatus: {
         type: String,
-        default: ''
+        default: 'ACTIVE'
     },
     Total: {
         type: Number,
-        default: 0
+        default: 1
     },
-    Tags: [{
+    tags: [{
         type: String
     }],
-    Rate: [
-        { type: String }
-    ],
+    Rate: {
+        type:[
+            { type: String }
+        ],
+        default:[]
+    },
     Heart: {
         type: String
     },
