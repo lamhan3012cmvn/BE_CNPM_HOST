@@ -241,6 +241,21 @@ const getCategories = async () => {
 		}
 	}
 }
+const getSelectCategoryByRoom = async (id) => {
+	try {
+		const category = await CATEGORY.find({FK_Room:id},{_id:1,name:1})
+		return {
+			message: 'Successfully get category select',
+			success: true,
+			data: category
+		}
+	} catch (err) {
+		return {
+			message: 'An error occurred getProducts',
+			success: false
+		}
+	}
+}
 
 const updateCategory = async (id, body) => {
 	try {
@@ -331,6 +346,22 @@ const getRooms = async () => {
 	}
 }
 
+const getSelectRooms = async () => {
+	try {
+		const room = await ROOM.find({},{_id:1,name:1})
+		return {
+			message: 'Successfully get Room',
+			success: true,
+			data: room
+		}
+	} catch (err) {
+		return {
+			message: 'An error occurred getRooms',
+			success: false
+		}
+	}
+}
+
 const getCategoryByRoom = async (id, option) => {
 	const category = await CATEGORY.find({ FK_Room: id }, option)
 	const newCate = await Promise.all(category.map(async cate => {
@@ -350,7 +381,7 @@ const getFilter = async () => {
 		const newRoom = await Promise.all(
 			room.map(async r => {
 				const objRoom = r.toJSON()
-				objRoom.Category = await getCategoryByRoom(objRoom._id, {
+				objRoom.CateSelectgory = await getCategoryByRoom(objRoom._id, {
 					_id: 1,
 					name: 1
 				})
@@ -448,5 +479,8 @@ module.exports = {
 
 	createNewRoom,
 	getRooms,
-	getFilter
+	getFilter,
+
+	getSelectCategoryByRoom,
+	getSelectRooms
 }

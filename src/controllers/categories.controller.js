@@ -11,6 +11,16 @@ const getCategories = async (req, res, next) => {
     }
 }
 
+const getSelectCategoryByRoom = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const resServices = await categoriesServices.getSelectCategoryByRoom(id)
+        controller.sendSuccess(res, resServices.data, 200, resServices.message)
+    } catch (err) {
+        return controller.sendError(res)
+    }
+}
+
 const createCategories = async (req, res, next) => {
     try {
         const resServices = await categoriesServices.createNewCategory(req.body )
@@ -52,5 +62,6 @@ module.exports = Controller = {
     getCategories,
     createCategories,
     updateCategory,
-    deleteCategory
+    deleteCategory,
+    getSelectCategoryByRoom
 }

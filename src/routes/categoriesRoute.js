@@ -11,4 +11,5 @@ router.delete('/deleteCategory/:id', Controller.deleteCategory)
 
 router.get('/getCategory', Controller.getCategories)
 
+router.get('/getSelectCategoryByRoom/:id', Controller.getSelectCategoryByRoom)
 module.exports = router

@@ -22,7 +22,16 @@ const getRooms = async (req, res, next) => {
     }
 }
 
+const getSelectRoom = async (req, res, next) => {
+    try {
+        const resServices = await roomServices.getSelectRooms()
+        controller.sendSuccess(res, resServices.data, 200, resServices.message)
+    } catch (err) {
+        return controller.sendError(res)
+    }
+}
 module.exports = {
     createRoom,
-    getRooms
+    getRooms,
+    getSelectRoom
 }
