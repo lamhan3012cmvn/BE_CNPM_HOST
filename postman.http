@@ -38,18 +38,18 @@ POST http://localhost:3000/product/createProduct
 Content-Type: application/json
 
 {
-  "Name": "Bàn trà mặt đá Trivia",
-        "Code": "81144029",
-        "Size": "100x100x42",
-        "Material": "Mặt đá, khung inox",
-        "Quantity": "1 bàn tròn",
-        "Guarantee": "Khung bảo hành 1 năm, mặt đá 2 năm",
-        "Price": "21.290.000",
-        "Description": "Dòng sản phẩm bàn trà cao cấp với mặt bàn bằng đá. Vân đá hài hòa, màu sắc trang nhã, kiểu dáng khung độc đáo, phù hợp với các không gian phòng khách cao cấp, sang trọng, thể hiện gu thẩm mỹ tinh tế của gia chủ.",
-        "Image": "https://firebasestorage.googleapis.com/v0/b/cnpm-e5af3.appspot.com/o/Product%2FBanTra%2Fban%20tra%2019.jpg?alt=media&token=e085f3f2-87cc-4844-99d0-2a618c29f16d",
-        "isStatus": "",
-    "FK_Room": "6094fce7285d634bc09451a8",
-    "FK_Category": "60954e8f53a0fb4b2c0e6a13"
+// Code: "a"
+// Description: "a"
+// Guarantee: "a"
+// Image: (3) ["a", "a", "a"]
+// Material: "a"
+// Name: "a"
+// Price: "100"
+// Quantity: 1
+// Size: "a"
+// Total: 1
+// tags: (3) ["ban an mo rong freya van da", "71304044", "mat ban mat gom van da"]
+ 
 }
 
 ###

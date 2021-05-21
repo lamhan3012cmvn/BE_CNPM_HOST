@@ -43,6 +43,7 @@ const getAllProducts = async query => {
 }
 
 const createNewProduct = async body => {
+console.log(`LHA:  ===> file: product.services.js ===> line 46 ===> body`, body)
 	try {
 		const existProduct = await PRODUCT.findOne({ Code: body.Code })
 		if (existProduct) {
@@ -55,6 +56,7 @@ const createNewProduct = async body => {
 
 		const newProduct = new PRODUCT(body)
 		await newProduct.save()
+    console.log(`LHA:  ===> file: product.services.js ===> line 60 ===> newProduct`, newProduct)
 		return {
 			message: 'Successfully create products',
 			success: true,
