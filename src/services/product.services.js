@@ -223,11 +223,16 @@ const createNewCategory = async body => {
 
 const getCategories = async () => {
 	try {
-		const category = await CATEGORY.find({})
+		const category = await CATEGORY.find({},{_id:1,name:1,createdAt:1,FK_Room:1})
+		const objCate= await Promise.all(category.map(async elm=>{
+			const obj=elm.toObject()
+			obj.FK_Room= await ROOM.findById(obj.FK_Room,{_id:1,name:1,createdAt:1})
+			return obj
+		}))
 		return {
 			message: 'Successfully get products',
 			success: true,
-			data: category
+			data: objCate
 		}
 	} catch (err) {
 		return {
