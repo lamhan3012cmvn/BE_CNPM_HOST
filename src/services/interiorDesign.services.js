@@ -38,7 +38,25 @@ const createNewInteriorDesign = async body => {
 
 const getInteriorDesign = async () => {
     try {
-        const interiorDesign = await INTERIORDESIGN.find({})
+        const interiorDesign = await INTERIORDESIGN.find({},{_id:1,Images:1,title:1})
+        
+        return {
+            message: 'Successfully get InteriorDesign',
+            success: true,
+            data: interiorDesign
+        }
+    } catch (err) {
+        return {
+            message: 'An error occurred',
+            success: false
+        }
+    }
+}
+
+const getInteriorDesignDetail = async (id) => {
+    try {
+        const interiorDesign = await INTERIORDESIGN.findById(id)
+        
         return {
             message: 'Successfully get InteriorDesign',
             success: true,
@@ -156,5 +174,6 @@ module.exports = {
     updateInteriorDesign,
     deleteInteriorDesign,
     createTypeInteriorDesign,
-    getAllInteriorDesignByType
+    getAllInteriorDesignByType,
+    getInteriorDesignDetail
 }

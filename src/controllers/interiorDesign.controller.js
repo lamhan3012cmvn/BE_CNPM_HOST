@@ -4,12 +4,24 @@ const interiorDesignServices = require('../services/interiorDesign.services')
 const getInteriorDesign = async (req, res, next) => {
     try {
         const resServices = await interiorDesignServices.getInteriorDesign()
-        return controller.sendSuccess(res, resServices.data, 200, resServices.message)
+        if(resServices.success)
+            return controller.sendSuccess(res, resServices.data, 200, resServices.message)
+        else return controller.sendSuccess(res, {}, 200, resServices.message)
     } catch (err) {
         return controller.sendError(res)
     }
 }
-
+const getInteriorDesignDetail = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const resServices = await interiorDesignServices.getInteriorDesignDetail(id)
+        if(resServices.success)
+            return controller.sendSuccess(res, resServices.data, 200, resServices.message)
+        else return controller.sendSuccess(res, {}, 200, resServices.message)
+    } catch (err) {
+        return controller.sendError(res)
+    }
+}
 const getAllInteriorDesignByType = async (req, res, next) => {
     try {
         const resServices = await interiorDesignServices.getAllInteriorDesignByType(req.query)
@@ -72,7 +84,7 @@ module.exports = {
     createNewInteriorDesign,
     updateInteriorDesign,
     deleteInteriorDesign,
-
+    getInteriorDesignDetail,
     createTypeInteriorDesign,
     getAllInteriorDesignByType
 }

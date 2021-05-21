@@ -18,5 +18,7 @@ router.get('/getInteriorDesignByType', Controller.getAllInteriorDesignByType)
 
 router.get('/getInteriorDesign', Controller.getInteriorDesign)
 
+router.get('/getInteriorDesignDetail/:id', Controller.getInteriorDesignDetail)
+
 
 module.exports = router
