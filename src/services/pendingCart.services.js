@@ -27,6 +27,31 @@ const createNewPendingCart = async body => {
     }
 }
 
+const changeStatusPendingCart = async (idCustomer, status) => {
+    try {
+        const existPendingCart = await PENDINGCART.findOne({ idCustomer: idCustomer })
+        if (existPendingCart) {
+            existPendingCart.status = status
+            await existPendingCart.save()
+
+            return {
+                message: `Success change status to ${status}`,
+                success: true
+            }
+        } else {
+            return {
+                message: 'Pending Cart not exist',
+                success: false
+            }
+        }
+    } catch (error) {
+        return {
+            message: 'An error occurred',
+            success: false
+        }
+    }
+}
+
 const getPendingCarts = async () => {
     try {
         const cart = await PENDINGCART.find({})
@@ -95,5 +120,6 @@ module.exports = {
     createNewPendingCart,
     getPendingCarts,
     updatePendingCart,
-    deletePendingCart
+    deletePendingCart,
+    changeStatusPendingCart
 }

@@ -32,7 +32,7 @@ const paymentCancel = async (req, res, next) => {
         const resServices = await paypalServices.PaymentCancel()
         if (!resServices.success)
             return controller.sendSuccess(res, {}, 300, resServices.message)
-        return controller.sendSuccess(res, resServices.data, 200, resServices.message)
+        return controller.sendSuccess(res, {}, 200, resServices.message)
     } catch (err) {
         return controller.sendError(res)
     }

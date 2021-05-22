@@ -19,9 +19,19 @@ const createNewPendingCart = async (req, res, next) => {
     } catch (error) {
         return controller.sendError(res)
     }
-
 }
 
+const changeStatusPendingCart = async (req, res, next) => {
+    try {
+        const { idCustomer, status } = req.body
+        const resServices = await pendingCartServices.changeStatusPendingCart(idCustomer, status)
+        if (!resServices.success)
+            return controller.sendSuccess(res, {}, 300, resServices.message)
+        return controller.sendSuccess(res, {}, 200, resServices.message)
+    } catch (error) {
+        return controller.sendError(res)
+    }
+}
 
 const updatePendingCart = async (req, res, next) => {
     try {
@@ -51,7 +61,8 @@ module.exports = {
     getPendingCarts,
     createNewPendingCart,
     updatePendingCart,
-    deletePendingCart
+    deletePendingCart,
+    changeStatusPendingCart
 }
 
 
