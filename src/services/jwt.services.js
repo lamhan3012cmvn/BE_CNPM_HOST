@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken')
 const {ACCESS_TOKEN_SECRET} = require("../config/index")
 const verify=(req,res,next)=>{
 	const header = req.headers.authorization;
-  console.log(`LHA:  ===> file: jwt.services.js ===> line 5 ===> header`, header)
   
 	if (!header) {
 		res.status(403).json({
@@ -13,7 +12,6 @@ const verify=(req,res,next)=>{
 		return;
 	}
 	const token = header.split(' ')[1];
-	console.log('tokenService token: ' + token);
 	jwt.verify(token, ACCESS_TOKEN_SECRET, (err, decodedFromToken) => {
 		if (err) {
 			res.status(403).json({
@@ -26,7 +24,6 @@ const verify=(req,res,next)=>{
 			});
 			return;
 		} else {
-			// console.log(decodedFromToken);
 			// there's decodedFromToken.user that can only be reached with casting
 			// that's why it is wrapped in <{user: object}>
 			// const decoded = <{user: object}>decodedFromToken;

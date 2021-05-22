@@ -1,10 +1,10 @@
 // user
-POST http://localhost:3000/auth/login
+POST http://localhost:3005/auth/login
 content-type: application/json
 
 {
-  "email":"208holmesz@gmail.com",
-  "password": "lamlamlam"
+  "email":"lamhan3012@gmail.com",
+  "password": "abcd1234"
 }
 
 
@@ -141,19 +141,20 @@ content-type: application/json
 
 
 ###
-POST  http://localhost:3000/cart/createCart
+POST  http://localhost:3005/cart/createCart
 content-type: application/json
 authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjBhMjdkNDg4NWQxY2UxYjg4NzljZjAxIiwiaWF0IjoxNjIxNDM1MzM0MDg1LCJleHAiOjE2MjE1MjE3MzQwODV9.qzPj6BKd9YHjBjsDQ8RqridXDx5YQy4H9efN1dnlQZE
 
 {
   
-  "idProduct": "60a0bd243e3689468e6b366e",
+  "idProduct": "60a0bd243e3689464e6b366e",
   "total": 10
   
 }
-
-GET  http://localhost:3005/cart/getCart
+###
+GET  http://18.217.70.108/cart/getCart
 content-type: application/json
+authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjA5ZmFiMmY0ZjQ2ZDkwMDEyN2MxODJlIiwiaWF0IjoxNjIxNjQ3OTg0MTUxLCJleHAiOjE2MjE3MzQzODQxNTF9.vJlHjCa8GQyhYwypVRcga7Fu11Vv8knosucBUiBC_U8
 
 // Interior Design
 ###
@@ -191,5 +192,5 @@ GET http://localhost:3000/interiorDesign/getInteriorDesign
 content-type: application/json
 
 ###
-GET http://localhost:3000/interiorDesign/getInteriorDesignByType?idInteriorDesign=60a544536e6ee6238c0bcf0d&limit=12&page=1
+GET http://18.217.70.108/interiorDesign/getInteriorDesignByType?idInteriorDesign=60a71c99869c300012a6193e
 content-type: application/json

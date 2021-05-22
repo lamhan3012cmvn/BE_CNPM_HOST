@@ -22,9 +22,7 @@ const getAllProducts = async query => {
 			.skip(perPage * page - perPage)
 			.limit(perPage)
 
-		// console.log(`LHA:  ===> file: product.services.js ===> line 21 ===> result`, result)
 		const total=await PRODUCT.countDocuments({ tags: { $regex: strSearch, $options: '$i' }, FK_Category:{ $regex: idCategory, $options: '$i' }})
-		console.log(`LHA:  ===> file: product.services.js ===> line 30 ===> total`, total)
 		const resData={products:result,
 			pages:Math.ceil(total/perPage),
 			total}
@@ -34,7 +32,6 @@ const getAllProducts = async query => {
 			data: resData
 		}
 	} catch (err) {
-		console.log(err)
 		return {
 			message: 'An error occurred getProducts',
 			success: false
@@ -43,7 +40,6 @@ const getAllProducts = async query => {
 }
 
 const createNewProduct = async body => {
-console.log(`LHA:  ===> file: product.services.js ===> line 46 ===> body`, body)
 	try {
 		const existProduct = await PRODUCT.findOne({ Code: body.Code })
 		if (existProduct) {
@@ -56,7 +52,6 @@ console.log(`LHA:  ===> file: product.services.js ===> line 46 ===> body`, body)
 
 		const newProduct = new PRODUCT(body)
 		await newProduct.save()
-    console.log(`LHA:  ===> file: product.services.js ===> line 60 ===> newProduct`, newProduct)
 		return {
 			message: 'Successfully create products',
 			success: true,
@@ -93,7 +88,6 @@ const getProduct = async id => {
 		}
 	} catch (error) {
 
-	console.log(error)
 		return {
 			message: 'An error occurred',
 			success: false
@@ -398,7 +392,6 @@ const getFilter = async () => {
 			data: newRoom
 		}
 	} catch (err) {
-		console.log(err)
 		return {
 			message: 'An error occurred getFilter',
 			success: false
@@ -417,7 +410,6 @@ const searchProduct = async (searchField) => {
 
 		const newSearch = removeVietnameseTones("")
 		
-		console.log(newSearch)
 		const products = await PRODUCT.find({ tags: { $regex: newSearch, $options: '$i' } })
 		// .then(data => {
 		// 	return {
@@ -427,7 +419,6 @@ const searchProduct = async (searchField) => {
 		// 	}
 		// })
 
-		console.log(products.length)
 		return {
 			message: 'Successfully search',
 			success: true,
@@ -443,12 +434,9 @@ const searchProduct = async (searchField) => {
 
 const filterByPrice = async (price) => {
 	try {
-		//console.log(price)
 		const priceMax = parseInt(price, 10)
-		console.log(priceMax)
 		const products = await PRODUCT.find({ Price: { $lte: priceMax } })
 
-		//console.log(products)
 
 		return {
 			message: 'Successfully filter Price',

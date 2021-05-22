@@ -12,7 +12,6 @@ const getCarts = async (req, res, next) => {
 
 const createNewCart = async (req, res, next) => {
     try {
-        console.log(req.value)
         const resServices = await cartServices.createNewCart(req.value.body)
         if (!resServices.success)
             return controller.sendSuccess(res, {}, 300, resServices.message)

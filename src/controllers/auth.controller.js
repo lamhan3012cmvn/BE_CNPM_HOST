@@ -5,9 +5,7 @@ const User = require("../models/User");
 const register = async (req, res, next) => {
   try {
 
-    console.log("register")
     const resServices = await authServices.register(req.value.body)
-    console.log(`LHA:  ===> file: auth.controller.js ===> line 10 ===> resServices`, resServices)
 
     if (!resServices.success) return controller.sendSuccess(res, resServices.data, 300, resServices.message)
 
@@ -34,14 +32,10 @@ const login = async (req, res, next) => {
 
 const getAuth = async (req, res, next) => {
   try {
-    console.log("errr", req)
     const body = req.value.body
     const _id = body.decodeToken.data
     const token = body.token
-    console.log(`LHA:  ===> file: auth.controller.js ===> line 42 ===> token`, token)
-    console.log(_id)
     const resServices = await authServices.getAuth({ _id, token })
-    console.log(`LHA:  ===> file: auth.controller.js ===> line 45 ===> resServices`, resServices)
     return controller.sendSuccess(res, resServices.data, 200, resServices.message)
   } catch (error) { // bug
     console.log(error)
@@ -92,7 +86,6 @@ const getAllUsers = async (req, res, next) => {
 const changePassword = async (req, res, next) => {
   try {
     const { newPassword, decodeToken } = req.value.body
-    console.log(req.value.body)
     const id = decodeToken._id
     const resServices = await authServices.changePassword(id, req.body)
     return controller.sendSuccess(res, resServices.success, 200, resServices.message)

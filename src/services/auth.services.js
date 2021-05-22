@@ -7,7 +7,6 @@ const nodemailer = require('nodemailer')
 
 const register = async (body) => {
   try {
-    console.log("services register")
     const { email, password ,fullName} = body
     //check if email is already in the database
     const emailExist = await USER.findOne({
@@ -58,7 +57,6 @@ const login = async (body) => {
       sendMail(email, otp)
       //await user.updateOne({ "email": email }, { $set: { "otp": otp } })
       await user.save()
-      console.log("updateOne")
       return {
         message: 'Please verify your account',
         success: false,
@@ -87,7 +85,6 @@ const login = async (body) => {
 
 const getAuth = async (body) => {
   try {
-    console.log("body:", body)
     const user = await USER.findById(body)
     if (!user) {
       return {
