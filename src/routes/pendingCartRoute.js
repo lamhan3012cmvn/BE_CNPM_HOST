@@ -13,7 +13,9 @@ router.put('/updatePendingCart/:id', jwtServices.verify, Validate.body(SchemaVal
 
 router.delete('/deletePendingCart/:id', jwtServices.verify, Controller.deletePendingCart)
 
-router.get('/getPendingCart', jwtServices.verify, Controller.getPendingCarts)
+router.post('/admin/getPendingCart', jwtServices.verify, Controller.getPendingCartsByStatus)
+
+router.post('/customer/getPendingCart', jwtServices.verify, Controller.getPendingCartsByIdCus)
 
 
 module.exports = router

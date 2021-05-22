@@ -189,3 +189,47 @@ content-type: application/json
 ###
 GET http://localhost:3000/interiorDesign/getInteriorDesignByType?idInteriorDesign=60a544536e6ee6238c0bcf0d&limit=12&page=1
 content-type: application/json
+
+//pending cart
+###
+POST  http://localhost:3000/pendingCart/createPendingCart
+content-type: application/json
+authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjBhMjdkNDg4NWQxY2UxYjg4NzljZjAxIiwiaWF0IjoxNjIxNDM1MzM0MDg1LCJleHAiOjE2MjE1MjE3MzQwODV9.qzPj6BKd9YHjBjsDQ8RqridXDx5YQy4H9efN1dnlQZE
+
+{
+  "idCustomer": "60a27d4885d1ce1b8879cf01",
+  "products": [{
+    "name": "Ban an",
+    "price": "10000000"
+  }]
+}
+
+###
+POST  http://localhost:3000/pendingCart/changeStatus
+content-type: application/json
+authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjBhMjdkNDg4NWQxY2UxYjg4NzljZjAxIiwiaWF0IjoxNjIxNDM1MzM0MDg1LCJleHAiOjE2MjE1MjE3MzQwODV9.qzPj6BKd9YHjBjsDQ8RqridXDx5YQy4H9efN1dnlQZE
+
+
+{
+  "status": "Đang giao hàng"
+}
+
+###
+POST  http://localhost:3000/pendingCart/admin/getPendingCart
+content-type: application/json
+authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjBhMjdkNDg4NWQxY2UxYjg4NzljZjAxIiwiaWF0IjoxNjIxNDM1MzM0MDg1LCJleHAiOjE2MjE1MjE3MzQwODV9.qzPj6BKd9YHjBjsDQ8RqridXDx5YQy4H9efN1dnlQZE
+
+
+{
+  "status": "Đang giao hàng"
+}
+
+###
+POST  http://localhost:3000/pendingCart/customer/getPendingCart
+content-type: application/json
+authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjBhMjdkNDg4NWQxY2UxYjg4NzljZjAxIiwiaWF0IjoxNjIxNDM1MzM0MDg1LCJleHAiOjE2MjE1MjE3MzQwODV9.qzPj6BKd9YHjBjsDQ8RqridXDx5YQy4H9efN1dnlQZE
+
+
+{
+  "status": "Đang giao hàng"
+}

@@ -3,13 +3,13 @@ const PENDINGCART = require('../models/PendingCart')
 
 const createNewPendingCart = async body => {
     try {
-        const existPendingCart = await PENDINGCART.findOne({ idCustomer: body.idCustomer })
-        if (existPendingCart) {
-            return {
-                message: 'PendingCart already exist',
-                success: false
-            }
-        }
+        // const existPendingCart = await PENDINGCART.findOne({ idCustomer: body.idCustomer })
+        // if (existPendingCart) {
+        //     return {
+        //         message: 'PendingCart already exist',
+        //         success: false
+        //     }
+        // }
 
         const newCart = new PENDINGCART(body)
         await newCart.save()
@@ -52,9 +52,25 @@ const changeStatusPendingCart = async (idCustomer, status) => {
     }
 }
 
-const getPendingCarts = async () => {
+const getAllPendingCartsByIdCus = async (idCustomer, status) => {
     try {
-        const cart = await PENDINGCART.find({})
+        const cart = await PENDINGCART.find({ idCustomer: idCustomer, status: status })
+        return {
+            message: 'Successfully get PendingCarts',
+            success: true,
+            data: cart
+        }
+    } catch (err) {
+        return {
+            message: 'An error occurred',
+            success: false
+        }
+    }
+}
+
+const getPendingCartByStatus = async (status) => {
+    try {
+        const cart = await PENDINGCART.find({ status: status })
         return {
             message: 'Successfully get PendingCarts',
             success: true,
@@ -118,7 +134,8 @@ const deletePendingCart = async id => {
 
 module.exports = {
     createNewPendingCart,
-    getPendingCarts,
+    getAllPendingCartsByIdCus,
+    getPendingCartByStatus,
     updatePendingCart,
     deletePendingCart,
     changeStatusPendingCart
