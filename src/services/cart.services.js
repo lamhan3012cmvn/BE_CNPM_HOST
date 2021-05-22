@@ -27,7 +27,7 @@ const createNewCart = async body => {
                     idProduct: idProduct,
                     total: total || 1
                 }
-                existCart.products.push(products)
+                existCart.products.push(product)
             }
             else {
                 existCart.products[someProduct].total += total
