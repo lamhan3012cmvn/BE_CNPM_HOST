@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { defaultStatusPending } = require('../config/default')
 
 const Schema = mongoose.Schema
 
@@ -8,11 +9,20 @@ const PendingCart = new Schema({
         required: true
     },
     products: {
-        type: [Object]
+        type: [{
+            idProduct:{
+                type:String,
+                required:true
+            },
+            total:{
+                type:Number,
+                default:1
+            },
+        }]
     },
     status: {
         type: String,
-        default: ''
+        default: defaultStatusPending.waitForConfirmation
     }
 
 }, { timestamps: true })

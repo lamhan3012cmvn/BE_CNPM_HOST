@@ -21,7 +21,7 @@ const InteriorDesign = new Schema({
     description: {
         type: String
     },
-    images: [{
+    Images: [{
         img: {
             type: String
         },

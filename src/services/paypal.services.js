@@ -2,7 +2,7 @@ const paypal = require('paypal-rest-sdk')
 
 const payment = (body) => {
     try {
-        const { price, quantity, items } = body
+        const { items } = body
         let total = 0
         for (let i = 0; i < items.length; i++) {
             total += parseFloat(items[i].price) * items[i].quantity

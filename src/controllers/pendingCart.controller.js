@@ -1,27 +1,57 @@
 const controller = require('./controller');
 const pendingCartServices = require('../services/pendingCart.services')
 
-const getPendingCarts = async (req, res, next) => {
+const getPendingCartsByStatus = async (req, res, next) => {
     try {
-        const resServices = await pendingCartServices.getPendingCarts()
+        const { status } = req.body
+        const resServices = await pendingCartServices.getPendingCartByStatus(status)
+        if (!resServices.success)
+            return controller.sendSuccess(res, {}, 300, resServices.message)
         return controller.sendSuccess(res, resServices.data, 200, resServices.message)
     } catch (err) {
         return controller.sendError(res)
     }
 }
 
+const getPendingCartsByIdCus = async (req, res, next) => {
+    try {
+        const { decodeToken } = req.value.body
+        const { status } = req.body
+        const idCustomer = decodeToken.data
+        const resServices = await pendingCartServices.getAllPendingCartsByIdCus(idCustomer, status)
+        if (!resServices.success)
+            return controller.sendSuccess(res, {}, 300, resServices.message)
+        return controller.sendSuccess(res, resServices.data, 200, resServices.message)
+    } catch (err) {
+        return controller.sendError(res)
+    }
+}
+
+
 const createNewPendingCart = async (req, res, next) => {
     try {
-        const resServices = await pendingCartServices.createNewPendingCart(req.body)
+        const resServices = await pendingCartServices.createNewPendingCart({idCustomer:req.value.body})
         if (!resServices.success)
             return controller.sendSuccess(res, {}, 300, resServices.message)
         return controller.sendSuccess(res, resServices.data, 200, resServices.message)
     } catch (error) {
         return controller.sendError(res)
     }
-
 }
 
+const changeStatusPendingCart = async (req, res, next) => {
+    try {
+        const { decodeToken } = req.value.body
+        const { status } = req.body
+        const idCustomer = decodeToken.data
+        const resServices = await pendingCartServices.changeStatusPendingCart(idCustomer, status)
+        if (!resServices.success)
+            return controller.sendSuccess(res, {}, 300, resServices.message)
+        return controller.sendSuccess(res, {}, 200, resServices.message)
+    } catch (error) {
+        return controller.sendError(res)
+    }
+}
 
 const updatePendingCart = async (req, res, next) => {
     try {
@@ -48,10 +78,12 @@ const deletePendingCart = async (req, res, next) => {
 }
 
 module.exports = {
-    getPendingCarts,
+    getPendingCartsByStatus,
+    getPendingCartsByIdCus,
     createNewPendingCart,
     updatePendingCart,
-    deletePendingCart
+    deletePendingCart,
+    changeStatusPendingCart
 }
 
 

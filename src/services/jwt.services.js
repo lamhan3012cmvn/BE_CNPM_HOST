@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
-const {ACCESS_TOKEN_SECRET} = require("../config/index")
-const verify=(req,res,next)=>{
+const { ACCESS_TOKEN_SECRET } = require("../config/index")
+const verify = (req, res, next) => {
 	const header = req.headers.authorization;
   
 	if (!header) {
@@ -30,25 +30,25 @@ const verify=(req,res,next)=>{
 			// const decodedUser = <ISafeUser>decoded.user;
 			// // res.json({tokenVerificationData: { access: true, user: decodedUser } });
 			// req.verifiedUser = decodedUser;
-			req.value = { body: { decodeToken: decodedFromToken ,token} };
+			req.value = { body: { decodeToken: decodedFromToken, token } };
 			next();
 		}
 	});
 
-  
+
 }
-const createToken=(data)=>{
-  return jwt.sign(
-    {
-      iss: 'Pham Tan Dat',
-      data: data,
-      iat: new Date().getTime(),
-      exp: new Date().setDate(new Date().getDate() + 1)
-    },
-    ACCESS_TOKEN_SECRET
-  );
+const createToken = (data) => {
+	return jwt.sign(
+		{
+			iss: 'Pham Tan Dat',
+			data: data,
+			iat: new Date().getTime(),
+			exp: new Date().setDate(new Date().getDate() + 1)
+		},
+		ACCESS_TOKEN_SECRET
+	);
 }
 
-module.exports={
-  verify,createToken
+module.exports = {
+	verify, createToken
 }

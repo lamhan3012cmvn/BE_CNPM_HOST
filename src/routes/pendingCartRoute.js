@@ -2,16 +2,20 @@ const express = require('express')
 const Controller = require('../controllers/pendingCart.controller')
 const Validate = require("../validators")
 const SchemaValidate = require("../validators/cart.validator")
-
+const jwtServices = require("../services/jwt.services")
 const router = express.Router()
 
-router.post('/createPendingCart', Validate.body(SchemaValidate.create), Controller.createNewPendingCart)
+router.post('/createPendingCart', jwtServices.verify, Controller.createNewPendingCart)
 
-router.put('/updatePendingCart/:id', Validate.body(SchemaValidate.update), Controller.updatePendingCart)
+router.post('/changeStatus', jwtServices.verify, Controller.changeStatusPendingCart)
 
-router.delete('/deletePendingCart/:id', Controller.deletePendingCart)
+router.put('/updatePendingCart/:id', jwtServices.verify, Validate.body(SchemaValidate.update), Controller.updatePendingCart)
 
-router.get('/getPendingCart', Controller.getPendingCarts)
+router.delete('/deletePendingCart/:id', jwtServices.verify, Controller.deletePendingCart)
+
+router.post('/admin/getPendingCart', jwtServices.verify, Controller.getPendingCartsByStatus)
+
+router.post('/customer/getPendingCart', jwtServices.verify, Controller.getPendingCartsByIdCus)
 
 
 module.exports = router
