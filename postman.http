@@ -1,10 +1,10 @@
 // user
-POST http://localhost:3000/auth/login
+POST http://localhost:3005/auth/login
 content-type: application/json
 
 {
-  "email":"208holmesz@gmail.com",
-  "password": "lamlamlam"
+  "email":"lamhan3012@gmail.com",
+  "password": "abcd1234"
 }
 
 
@@ -194,38 +194,30 @@ content-type: application/json
 ###
 POST  http://localhost:3005/pendingCart/createPendingCart
 content-type: application/json
-authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjBhMjdkNDg4NWQxY2UxYjg4NzljZjAxIiwiaWF0IjoxNjIxNDM1MzM0MDg1LCJleHAiOjE2MjE1MjE3MzQwODV9.qzPj6BKd9YHjBjsDQ8RqridXDx5YQy4H9efN1dnlQZE
+authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjA5ZmFiMmY0ZjQ2ZDkwMDEyN2MxODJlIiwiaWF0IjoxNjIxNjkzOTQ0MjU4LCJleHAiOjE2MjE3ODAzNDQyNTh9.GParLcPS5oEM9dpdTbJF0w-Yzj1-OrpKQqSRYtZosBE
 
 {
   
 }
 
 ###
-POST  http://localhost:3000/pendingCart/changeStatus
+POST  http://localhost:3005/pendingCart/changeStatus
 content-type: application/json
-authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjBhMjdkNDg4NWQxY2UxYjg4NzljZjAxIiwiaWF0IjoxNjIxNDM1MzM0MDg1LCJleHAiOjE2MjE1MjE3MzQwODV9.qzPj6BKd9YHjBjsDQ8RqridXDx5YQy4H9efN1dnlQZE
+authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjA5ZmFiMmY0ZjQ2ZDkwMDEyN2MxODJlIiwiaWF0IjoxNjIxNjkzOTQ0MjU4LCJleHAiOjE2MjE3ODAzNDQyNTh9.GParLcPS5oEM9dpdTbJF0w-Yzj1-OrpKQqSRYtZosBE
 
 
 {
-  "status": "Đang giao hàng"
+  "status": "ON_GOING",
+  "idPackage":"60a916e202a2dfe4ba149943"
 }
 
 ###
-POST  http://localhost:3000/pendingCart/admin/getPendingCart
+GET  http://localhost:3005/pendingCart/admin/getPendingCart?status=AWAIT_FOR_CONFIRMATION
 content-type: application/json
 authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjBhMjdkNDg4NWQxY2UxYjg4NzljZjAxIiwiaWF0IjoxNjIxNDM1MzM0MDg1LCJleHAiOjE2MjE1MjE3MzQwODV9.qzPj6BKd9YHjBjsDQ8RqridXDx5YQy4H9efN1dnlQZE
 
-
-{
-  "status": "Đang giao hàng"
-}
 
 ###
-POST  http://localhost:3000/pendingCart/customer/getPendingCart
+GET  http://localhost:3005/pendingCart/customer/getPendingCart?status=ON_GOING
 content-type: application/json
-authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjBhMjdkNDg4NWQxY2UxYjg4NzljZjAxIiwiaWF0IjoxNjIxNDM1MzM0MDg1LCJleHAiOjE2MjE1MjE3MzQwODV9.qzPj6BKd9YHjBjsDQ8RqridXDx5YQy4H9efN1dnlQZE
-
-
-{
-  "status": "Đang giao hàng"
-}
+authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjA5ZmFiMmY0ZjQ2ZDkwMDEyN2MxODJlIiwiaWF0IjoxNjIxNjk5OTMzMDQxLCJleHAiOjE2MjE3ODYzMzMwNDF9.KMBM_3AUmE8kVte1PKj2CFGFmJ43ov6_X8OrVYm-GE0

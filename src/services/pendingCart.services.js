@@ -39,15 +39,23 @@ const createNewPendingCart = async body => {
     }
 }
 
-const changeStatusPendingCart = async (idCustomer, status) => {
+const changeStatusPendingCart = async (idPackage,idCustomer, status) => {
     try {
-        const existPendingCart = await PENDINGCART.findOne({ idCustomer: idCustomer })
+        const id=idPackage
+        const existPendingCart = await PENDINGCART.findById(id)
         if (existPendingCart) {
-            existPendingCart.status = status
-            await existPendingCart.save()
-
+            if(existPendingCart.idCustomer===idCustomer)
+            {
+                existPendingCart.status = status
+                await existPendingCart.save()
+    
+                return {
+                    message: `Success change status to ${status}`,
+                    success: true
+                }
+            }
             return {
-                message: `Success change status to ${status}`,
+                message: `User dont confirm`,
                 success: true
             }
         } else {
@@ -67,12 +75,18 @@ const changeStatusPendingCart = async (idCustomer, status) => {
 const getAllPendingCartsByIdCus = async (idCustomer, status) => {
     try {
         const cart = await PENDINGCART.find({ idCustomer: idCustomer, status: status })
+        
+        // const products=await Promise.all(cart.products.map(async elm=>{
+        //     elm.Products=await PRODUCT.findById(elm.idProduct,{Image:1,Name:1,_id:1,Price:1})
+        //     return elm
+        // }))
         return {
             message: 'Successfully get PendingCarts',
             success: true,
             data: cart
         }
     } catch (err) {
+        console.log(err)
         return {
             message: 'An error occurred',
             success: false
@@ -85,7 +99,6 @@ const getPendingCartByStatus = async (status) => {
         const carts = await PENDINGCART.find({ status: status })
         const newCarts=await Promise.all(carts.map(async cart=>{
             const objCart=cart.toObject()
-            console.log(`LHA:  ===> file: pendingCart.services.js ===> line 89 ===> objCart`, objCart)
             const products=await Promise.all(objCart.products.map(async elm=>{
             
                 
