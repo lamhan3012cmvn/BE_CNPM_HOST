@@ -1,7 +1,6 @@
 const CART = require('../models/Cart')
 const PENDINGCART = require('../models/PendingCart')
 const PRODUCT = require('../models/Product')
-const USER =require('../models/User')
 
 const createNewPendingCart = async body => {
     try {
@@ -23,9 +22,11 @@ const createNewPendingCart = async body => {
         const newCart = new PENDINGCART(data)
         await newCart.save()
 
-        resCart.products.length=0
+        resCart.products=[]
         await resCart.save()
-        
+        console.log(`LHA:  ===> file: pendingCart.services.js ===> line 26 ===> resCart`, resCart)
+        const resCart1= await CART.findOne({FK_CreateAt:id})
+        console.log(`LHA:  ===> file: pendingCart.services.js ===> line 29 ===> resCart1`, resCart1)
         return {
             message: 'Successfully create PendingCart',
             success: true,

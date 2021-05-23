@@ -51,6 +51,7 @@ const getCarts = async (body) => {
     try {
         const{decodeToken}=body
         const cartUser = await CART.findOne({ FK_CreateAt:decodeToken.data  })
+        console.log(`LHA:  ===> file: cart.services.js ===> line 54 ===> cartUser`, cartUser)
         if (!cartUser) {
             const data={
                 products: [],
