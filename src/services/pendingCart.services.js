@@ -74,7 +74,19 @@ const changeStatusPendingCart = async (idPackage,idCustomer, status) => {
 
 const getAllPendingCartsByIdCus = async (idCustomer, status) => {
     try {
-        const cart = await PENDINGCART.find({ idCustomer: idCustomer, status: status })
+        const carts = await PENDINGCART.find({ idCustomer: idCustomer, status: status })
+        
+        const newCarts=await Promise.all(carts.map(async cart=>{
+            const objCart=cart.toObject()
+            const products=await Promise.all(objCart.products.map(async elm=>{
+            
+                
+                elm.Products=await PRODUCT.findById(elm.idProduct,{Image:1,Name:1,_id:1,Price:1})
+                return elm
+            }))
+            objCart.products=products
+            return objCart
+        }))
         
         // const products=await Promise.all(cart.products.map(async elm=>{
         //     elm.Products=await PRODUCT.findById(elm.idProduct,{Image:1,Name:1,_id:1,Price:1})
@@ -83,7 +95,7 @@ const getAllPendingCartsByIdCus = async (idCustomer, status) => {
         return {
             message: 'Successfully get PendingCarts',
             success: true,
-            data: cart
+            data: newCarts
         }
     } catch (err) {
         console.log(err)
