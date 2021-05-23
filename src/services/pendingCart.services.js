@@ -72,7 +72,7 @@ const changeStatusPendingCart = async (idPackage,idCustomer, status) => {
 
 const getAllPendingCartsByIdCus = async (idCustomer, status) => {
     try {
-        const carts = await PENDINGCART.find({ idCustomer: idCustomer, status: status })
+        const carts = await PENDINGCART.find({ idCustomer: idCustomer, status: { $regex: status, $options: 'i' } })
         
         const newCarts=await Promise.all(carts.map(async cart=>{
             const objCart=cart.toObject()
@@ -106,7 +106,7 @@ const getAllPendingCartsByIdCus = async (idCustomer, status) => {
 
 const getPendingCartByStatus = async (status) => {
     try {
-        const carts = await PENDINGCART.find({ status: status })
+        const carts = await PENDINGCART.find({ status: { $regex: status, $options: 'i' } })
         const newCarts=await Promise.all(carts.map(async cart=>{
             const objCart=cart.toObject()
             const products=await Promise.all(objCart.products.map(async elm=>{
