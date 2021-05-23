@@ -54,6 +54,18 @@ const changeStatusPendingCart = async (req, res, next) => {
     }
 }
 
+const changeStatusAdminPendingCart = async (req, res, next) => {
+    try {
+        const { idPackage ,status} = req.value.body
+        const resServices = await pendingCartServices.changeStatusAdminPendingCart(idPackage, status)
+        if (!resServices.success)
+            return controller.sendSuccess(res, {}, 300, resServices.message)
+        return controller.sendSuccess(res, {}, 200, resServices.message)
+    } catch (error) {
+        return controller.sendError(res)
+    }
+}
+
 const updatePendingCart = async (req, res, next) => {
     try {
         const { id } = req.params
@@ -84,7 +96,8 @@ module.exports = {
     createNewPendingCart,
     updatePendingCart,
     deletePendingCart,
-    changeStatusPendingCart
+    changeStatusPendingCart,
+    changeStatusAdminPendingCart
 }
 
 

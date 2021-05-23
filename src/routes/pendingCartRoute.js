@@ -9,6 +9,8 @@ router.post('/createPendingCart', jwtServices.verify, Controller.createNewPendin
 
 router.post('/changeStatus',jwtServices.verify,Validate.body(SchemaValidate.changeStatus) , Controller.changeStatusPendingCart)
 
+router.post('/admin/changeStatus',jwtServices.verify,Validate.body(SchemaValidate.changeStatus) , Controller.changeStatusAdminPendingCart)
+
 router.put('/updatePendingCart/:id', jwtServices.verify, Validate.body(SchemaValidate.update), Controller.updatePendingCart)
 
 router.delete('/deletePendingCart/:id', jwtServices.verify, Controller.deletePendingCart)

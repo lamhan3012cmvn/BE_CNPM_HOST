@@ -70,6 +70,32 @@ const changeStatusPendingCart = async (idPackage,idCustomer, status) => {
     }
 }
 
+const changeStatusAdminPendingCart = async (idPackage, status) => {
+    try {
+        const id=idPackage
+        const existPendingCart = await PENDINGCART.findById(id)
+        if (existPendingCart) {
+                existPendingCart.status = status
+                await existPendingCart.save()
+    
+                return {
+                    message: `Success change status to ${status}`,
+                    success: true
+                }
+        } else {
+            return {
+                message: 'Pending Cart not exist',
+                success: false
+            }
+        }
+    } catch (error) {
+        return {
+            message: 'An error occurred',
+            success: false
+        }
+    }
+}
+
 const getAllPendingCartsByIdCus = async (idCustomer, status) => {
     try {
         const carts = await PENDINGCART.find({ idCustomer: idCustomer, status: { $regex: status, $options: 'i' } })
@@ -77,8 +103,6 @@ const getAllPendingCartsByIdCus = async (idCustomer, status) => {
         const newCarts=await Promise.all(carts.map(async cart=>{
             const objCart=cart.toObject()
             const products=await Promise.all(objCart.products.map(async elm=>{
-            
-                
                 elm.Products=await PRODUCT.findById(elm.idProduct,{Image:1,Name:1,_id:1,Price:1})
                 return elm
             }))
