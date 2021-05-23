@@ -211,5 +211,6 @@ module.exports = {
     getPendingCartByStatus,
     updatePendingCart,
     deletePendingCart,
-    changeStatusPendingCart
+    changeStatusPendingCart,
+    changeStatusAdminPendingCart
 }

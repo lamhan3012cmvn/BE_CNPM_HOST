@@ -201,16 +201,26 @@ authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhb
 }
 
 ###
-POST  http://localhost:3005/pendingCart/changeStatus
+POST  http://18.217.70.108/pendingCart/changeStatus
 content-type: application/json
-authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjA5ZmFiMmY0ZjQ2ZDkwMDEyN2MxODJlIiwiaWF0IjoxNjIxNjkzOTQ0MjU4LCJleHAiOjE2MjE3ODAzNDQyNTh9.GParLcPS5oEM9dpdTbJF0w-Yzj1-OrpKQqSRYtZosBE
-
+authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjBhMjdkNDg4NWQxY2UxYjg4NzljZjAxIiwiaWF0IjoxNjIxNDM1MzM0MDg1LCJleHAiOjE2MjE1MjE3MzQwODV9.qzPj6BKd9YHjBjsDQ8RqridXDx5YQy4H9efN1dnlQZE
 
 {
   "status": "ON_GOING",
-  "idPackage":"60a916e202a2dfe4ba149943"
+  "idPackage":"60a9fde6debcc54d6538884c"
 }
 
+###
+POST  http://localhost:3005/pendingCart/admin/changeStatus
+content-type: application/json
+authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjBhMjdkNDg4NWQxY2UxYjg4NzljZjAxIiwiaWF0IjoxNjIxNDM1MzM0MDg1LCJleHAiOjE2MjE1MjE3MzQwODV9.qzPj6BKd9YHjBjsDQ8RqridXDx5YQy4H9efN1dnlQZE
+
+{
+  "status": "ON_GOING",
+  "idPackage":"60a9fde6debcc54d6538884c"
+}
+
+///admin/changeStatus
 ###
 GET  http://localhost:3005/pendingCart/admin/getPendingCart?status=AWAIT_FOR_CONFIRMATION
 content-type: application/json
@@ -218,6 +228,6 @@ authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhb
 
 
 ###
-GET  http://localhost:3005/pendingCart/customer/getPendingCart?status=ON_GOING
+GET  http://localhost:3005/pendingCart/customer/getPendingCart?status=
 content-type: application/json
 authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjA5ZmFiMmY0ZjQ2ZDkwMDEyN2MxODJlIiwiaWF0IjoxNjIxNjk5OTMzMDQxLCJleHAiOjE2MjE3ODYzMzMwNDF9.KMBM_3AUmE8kVte1PKj2CFGFmJ43ov6_X8OrVYm-GE0
