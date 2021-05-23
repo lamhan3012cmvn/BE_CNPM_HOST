@@ -24,9 +24,6 @@ const createNewPendingCart = async body => {
 
         resCart.products=[]
         await resCart.save()
-        console.log(`LHA:  ===> file: pendingCart.services.js ===> line 26 ===> resCart`, resCart)
-        const resCart1= await CART.findOne({FK_CreateAt:id})
-        console.log(`LHA:  ===> file: pendingCart.services.js ===> line 29 ===> resCart1`, resCart1)
         return {
             message: 'Successfully create PendingCart',
             success: true,
