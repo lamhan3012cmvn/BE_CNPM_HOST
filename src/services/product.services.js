@@ -1,6 +1,7 @@
 const PRODUCT = require('../models/Product')
 const CATEGORY = require('../models/Categories')
 const ROOM = require('../models/Room')
+const { promises } = require('stream')
 
 const getAllProducts = async query => {
 	try {
@@ -95,13 +96,35 @@ const getProduct = async id => {
 	}
 }
 
-const getProductByRoom = async fkRoom => {
+const getProductRoom = async () => {
 	try {
-		const product = await PRODUCT.find({ FK_Room: fkRoom })
+		let perPage = 24
+		let page = 1
+		
+		const awesome = await PRODUCT.find({},{_id:1,Image:1,Name:1,Price:1})
+			.sort({ Heart: -1 })
+			.skip(perPage * page - perPage)
+			.limit(perPage)
+		const results=[{
+			roomName:"Awesome",
+			products:awesome
+		}]
+		const rooms=await ROOM.find({},{_id:1,name:1})
+    console.log(`LHA:  ===> file: product.services.js ===> line 107 ===> rooms`, rooms)
+		const resultRoom=await Promise.all(rooms.map(async room=>{
+			const productByRoom= await PRODUCT.find({ FK_Room: room._id},{_id:1,Image:1,Name:1,Price:1})
+			return {
+				roomName:room.name,
+				products:productByRoom,
+			}
+
+		}) )
+		results.push(...resultRoom)
+		
 		return {
-			message: 'Successfully get product',
+			message: 'Successfully get product Home Page',
 			success: true,
-			data: product
+			data: results
 		}
 	} catch (error) {
 		return {
@@ -455,7 +478,7 @@ module.exports = {
 	getAllProducts,
 	createNewProduct,
 	getProduct,
-	getProductByRoom,
+	getProductRoom,
 	getProductByCategory,
 	updateProduct,
 	deleteProduct,

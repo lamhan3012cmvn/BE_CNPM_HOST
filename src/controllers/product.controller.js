@@ -36,10 +36,9 @@ const getProduct = async (req, res, next) => {
   }
 }
 
-const getProductByRoom = async (req, res, next) => {
+const getProductsRoom = async (req, res, next) => {
   try {
-    const { FK_Room } = req.params
-    const resServices = await productServices.getProductByRoom(FK_Room)
+    const resServices = await productServices.getProductRoom()
     if (!resServices.success)
       return controller.sendSuccess(res, {}, 300, resServices.message)
     return controller.sendSuccess(res, resServices.data, 200, resServices.message)
@@ -123,7 +122,7 @@ module.exports = Controller = {
   getAllProducts,
   createProduct,
   getProduct,
-  getProductByRoom,
+  getProductsRoom,
   getProductByCategory,
   updateProduct,
   deleteProduct,

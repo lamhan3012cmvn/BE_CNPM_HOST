@@ -10,11 +10,13 @@ router.put('/updateProduct/:_id', Controller.updateProduct)
 
 router.delete('/deleteProduct/:id', Controller.deleteProduct)
 
-router.get('/getProductsByRoom/:FK_Room', Controller.getProductByRoom)
+// router.get('/getProductsByRoom/:FK_Room', Controller.getProductByRoom)
 
 router.get('/getProduct/:id', Controller.getProduct)
 
 router.get('/getAllProducts', Controller.getAllProducts)
+
+router.get('/getAllProductsHome', Controller.getProductsRoom)
 
 router.get('/filter', Controller.getFilter)
 
