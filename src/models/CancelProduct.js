@@ -8,13 +8,12 @@ const Cancel = new Schema(
 			type: String,
 			required: true
 		},
-		products: {
-			total: {
-				type: Number,
-				default: 0
-			},
-			product: [
-				{
+		products: [{
+			total:{
+					type: Number,
+					default: 0
+				},
+				product: {
 					Code: {
 						type: String,
 						default: ''
@@ -29,7 +28,7 @@ const Cancel = new Schema(
 					},
 					Price: {
 						type: Number,
-						default: ''
+						default: 0
 					},
 					Quantity: {
 						type: String
@@ -56,8 +55,8 @@ const Cancel = new Schema(
 						required: false
 					}
 				}
-			]
-		},
+			}
+		],
 		totalPrice: {
 			type: Number,
 			default: 0
