@@ -5,7 +5,7 @@ const SchemaValidate = require("../validators/pending.validator")
 const jwtServices = require("../services/jwt.services")
 const router = express.Router()
 
-router.post('/createPendingCart', jwtServices.verify, Controller.createNewPendingCart)
+router.post('/createPendingCart', jwtServices.verify, Validate.body(SchemaValidate.createPending), Controller.createNewPendingCart)
 
 router.post('/changeStatus',jwtServices.verify,Validate.body(SchemaValidate.changeStatus) , Controller.changeStatusPendingCart)
 

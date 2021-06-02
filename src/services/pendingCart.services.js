@@ -9,28 +9,24 @@ const CancelProduct = require('../models/CancelProduct');
 
 const createNewPendingCart = async body => {
 	try {
-		const id = body.idCustomer.decodeToken.data;
-		const resCart = await CART.findOne({ FK_CreateAt: id });
+		const idUser = body.idCustomer;
+		let resCart = await CART.findOne({ FK_CreateAt: idUser });
 
 		if (!resCart)
 			return {
-				message: 'Dont find Cart by User',
-				success: false
+				message: 'Cannot found cart',
+				success: false,
 			};
 
-		const data = {
-			idCustomer: id,
-			products: resCart.products
-		};
+		body.products = resCart.products;
 
-		const newCart = new PENDINGCART(data);
-		await newCart.save();
-
+		const pendingCart = await PENDINGCART.create(body);
 		resCart.products = [];
 		await resCart.save();
 		return {
 			message: 'Successfully create PendingCart',
-			success: true
+			success: true,
+			data: pendingCart,
 		};
 	} catch (error) {
 		console.log(error);
@@ -68,8 +64,14 @@ const changeStatusPendingCart = async (idPackage, idCustomer, status) => {
 						newProduct.Total -= (+p.total);
 						newProduct.save();
 						prices+=product.Price*(+p.total)
-						const {Total, isStatus, tags,_id,Rate,Heart,...data}=product
-						return { total: p.total, product:data} 
+						delete product.isStatus;
+						delete product.Total;
+						delete product.tags;
+						delete product._id;
+						delete product.Rate;
+						delete product.Heart;
+						console.log(product);
+						return { total: p.total, product: product} 
 					})
 				);
 				
@@ -102,9 +104,14 @@ const changeStatusPendingCart = async (idPackage, idCustomer, status) => {
 						});
 						product.FK_Category = category;
 						prices+=product.Price*(+p.total)
-						const {Total, isStatus, tags,_id,Rate,Heart,...data}=product
-						
-						return { total: (+p.total), product:data };
+						delete product.isStatus;
+						delete product.Total;
+						delete product.tags;
+						delete product._id;
+						delete product.Rate;
+						delete product.Heart;
+						console.log(product);
+						return { total: (+p.total), product: product };
 					})
 				);
 					

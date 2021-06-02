@@ -29,10 +29,15 @@ const getPendingCartsByIdCus = async (req, res, next) => {
     }
 }
 
-
 const createNewPendingCart = async (req, res, next) => {
     try {
-        const resServices = await pendingCartServices.createNewPendingCart({idCustomer:req.value.body})
+        const { decodeToken } = req.value.body;
+        const pendingCart = req.value.body;
+        console.log(pendingCart);
+        const idCustomer = decodeToken.data;
+        pendingCart.idCustomer = idCustomer;
+        console.log(pendingCart);
+        const resServices = await pendingCartServices.createNewPendingCart(pendingCart);
         if (!resServices.success)
             return controller.sendSuccess(res, {}, 300, resServices.message)
         return controller.sendSuccess(res, resServices.data, 200, resServices.message)

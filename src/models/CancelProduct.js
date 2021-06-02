@@ -60,7 +60,11 @@ const Cancel = new Schema(
 		totalPrice: {
 			type: Number,
 			default: 0
-		}
+		},
+		address: {
+			type: String,
+			default: '',
+		},
 	},
 	{ timestamps: true }
 );

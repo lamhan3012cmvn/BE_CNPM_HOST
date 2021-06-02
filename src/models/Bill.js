@@ -59,8 +59,12 @@ const Bill = new Schema(
 		],
 		totalPrice: {
 			type: Number,
-			default: 0
-		}
+			default: 0,
+		},
+		totalPrice: {
+			type: String,
+			default: '',
+		},
 	},
 	{ timestamps: true }
 );

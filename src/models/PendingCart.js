@@ -23,8 +23,11 @@ const PendingCart = new Schema({
     status: {
         type: String,
         default: defaultStatusPending.waitForConfirmation
-    }
-
+    },
+    address: {
+        type: String,
+        default: '',
+    },
 }, { timestamps: true })
 
 module.exports = mongoose.model('PendingCart', PendingCart)

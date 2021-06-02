@@ -5,7 +5,7 @@ const payment = (body) => {
         const { items } = body
         let total = 0
         for (let i = 0; i < items.length; i++) {
-            total += parseFloat(items[i].price) * items[i].quantity
+            total += parseFloat(items[i].price) * items[i].quantity;
         }
         var create_payment_json = {
             "intent": "sale",
@@ -35,7 +35,6 @@ const payment = (body) => {
                     message: 'Cannot payment',
                     success: false
                 }
-                throw error;
             } else {
                 console.log("Create Payment Response");
                 console.log(payment);
@@ -76,7 +75,6 @@ const PaymentSuccess = (payerID, paymentId, price) => {
                     message: 'Payment Fail',
                     success: false
                 }
-                throw error;
             } else {
                 console.log(JSON.stringify(payment));
                 //res.send('Success');
