@@ -8,7 +8,7 @@ const pendingCartRoute = require('./pendingCartRoute')
 const billRoute = require('./billRoute')
 const interiorDesignRoute = require('./interiorDesignRoute')
 const paypalRoute = require('./paypalRoute')
-
+const statisticsRoute=require('./statisticsRoute')
 const router = express.Router()
 
 router.use('/product', productRoute)
@@ -20,7 +20,8 @@ router.use('/bill', billRoute)
 router.use('/interiorDesign', interiorDesignRoute)
 router.use('/payment-paypal', paypalRoute)
 router.use('/auth', authRoute)
+router.use('/statistics',statisticsRoute)
 
-router.get('/info', (req, res) => res.status(200).send('Welcome to server aws'))
+router.get('/info', (req, res) => res.status(200).send('Welcome to server aws v3'))
 
 module.exports = router

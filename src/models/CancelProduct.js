@@ -2,18 +2,19 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const Bill = new Schema(
+const Cancel = new Schema(
 	{
 		idCustomer: {
 			type: String,
 			required: true
 		},
-		products: [{
-			total:{
-					type: Number,
-					default: 0
-				},
-				product: {
+		products: {
+			total: {
+				type: Number,
+				default: 0
+			},
+			product: [
+				{
 					Code: {
 						type: String,
 						default: ''
@@ -28,7 +29,7 @@ const Bill = new Schema(
 					},
 					Price: {
 						type: Number,
-						default: 0
+						default: ''
 					},
 					Quantity: {
 						type: String
@@ -55,8 +56,8 @@ const Bill = new Schema(
 						required: false
 					}
 				}
-			}
-		],
+			]
+		},
 		totalPrice: {
 			type: Number,
 			default: 0
@@ -65,5 +66,4 @@ const Bill = new Schema(
 	{ timestamps: true }
 );
 
-module.exports = mongoose.model('Bill', Bill);
-
+module.exports = mongoose.model('CancelProduct', Cancel);

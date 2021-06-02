@@ -10,7 +10,7 @@ router.put('/updateProduct/:_id', Controller.updateProduct)
 
 router.delete('/deleteProduct/:id', Controller.deleteProduct)
 
-// router.get('/getProductsByRoom/:FK_Room', Controller.getProductByRoom)
+router.post('/rateProduct', Validate.body(SchemaValidate.rateProduct),Controller.rateProduct)
 
 router.get('/getProduct/:id', Controller.getProduct)
 

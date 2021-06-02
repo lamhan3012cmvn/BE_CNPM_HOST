@@ -205,10 +205,10 @@ POST  http://18.217.70.108/pendingCart/changeStatus
 content-type: application/json
 authorization: baszer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJQaGFtIFRhbiBEYXQiLCJkYXRhIjoiNjBhMjdkNDg4NWQxY2UxYjg4NzljZjAxIiwiaWF0IjoxNjIxNDM1MzM0MDg1LCJleHAiOjE2MjE1MjE3MzQwODV9.qzPj6BKd9YHjBjsDQ8RqridXDx5YQy4H9efN1dnlQZE
 
-{
-  "status": "ON_GOING",
-  "idPackage":"60a9fde6debcc54d6538884c"
-}
+  {
+    "status": "ON_GOING",
+    "idPackage":"60a9fde6debcc54d6538884c"
+  }
 
 ###
 POST  http://localhost:3005/pendingCart/admin/changeStatus

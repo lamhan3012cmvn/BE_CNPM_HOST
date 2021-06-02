@@ -2,6 +2,17 @@ const controller = require('./controller')
 const productServices = require('../services/product.services')
 
 
+
+const rateProduct=async (req,res,next)=>{
+  try {
+    const resServices = await productServices.rateProduct(req.value.body)
+    if (!resServices.success)
+      return controller.sendSuccess(res, resServices.success, 300, resServices.message)
+    return controller.sendSuccess(res, resServices.data, 200, resServices.message)
+  } catch (error) {
+    return controller.sendError(res)
+  }
+}
 const getAllProducts = async (req, res, next) => {
   try {
     const resServices = await productServices.getAllProducts(req.query)
@@ -128,5 +139,6 @@ module.exports = Controller = {
   deleteProduct,
   getFilter,
   searchProduct,
-  filterByPrice
+  filterByPrice,
+  rateProduct
 }
