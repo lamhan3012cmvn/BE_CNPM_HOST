@@ -73,7 +73,7 @@ const login = async (body) => {
     return {
       message: 'Successfully login',
       success: true,
-      data: {token:generateToken}
+      data: {token:generateToken, isAdmin: user.isAdmin,},
     };
   } catch (err) {
     return {
