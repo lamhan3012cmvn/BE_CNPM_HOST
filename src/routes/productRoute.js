@@ -2,6 +2,7 @@ const express = require('express')
 const Controller = require('../controllers/product.controller')
 const Validate = require("../validators")
 const SchemaValidate = require("../validators/product.validator")
+const jwtServices = require("../services/jwt.services")
 const router = express.Router()
 
 router.post('/createProduct',Validate.body(SchemaValidate.create), Controller.createProduct)
@@ -10,7 +11,7 @@ router.put('/updateProduct/:_id', Controller.updateProduct)
 
 router.delete('/deleteProduct/:id', Controller.deleteProduct)
 
-router.post('/rateProduct', Validate.body(SchemaValidate.rateProduct),Controller.rateProduct)
+router.post('/rateProduct', jwtServices.verify, Validate.body(SchemaValidate.rateProduct),Controller.rateProduct)
 
 router.get('/getProduct/:id', Controller.getProduct)
 

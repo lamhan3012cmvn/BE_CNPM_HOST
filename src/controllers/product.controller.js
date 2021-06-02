@@ -5,7 +5,10 @@ const productServices = require('../services/product.services')
 
 const rateProduct=async (req,res,next)=>{
   try {
-    const resServices = await productServices.rateProduct(req.value.body)
+    const idUser = req.value.body.decodeToken.data;
+    const rate = req.value.body;
+    rate.idUser = idUser;
+    const resServices = await productServices.rateProduct(rate);
     if (!resServices.success)
       return controller.sendSuccess(res, resServices.success, 300, resServices.message)
     return controller.sendSuccess(res, resServices.data, 200, resServices.message)

@@ -30,7 +30,6 @@ const schemas = {
 		idProduct: joi.string().required().empty(),
 		value: joi.string().required().empty(),
 		content: joi.string().required().empty(),
-		idUser: joi.string().required().empty()
 	})
 };
 
