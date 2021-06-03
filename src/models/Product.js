@@ -6,22 +6,23 @@ const Product = new Schema(
 	{
 		Code: {
 			type: String,
-			required: true
+				default:''
 		},
 		Name: {
 			type: String,
-			required: true
+				default:''
 		},
 		Description: {
 			type: String,
-			required: true
+				default:''
 		},
 		Price: {
 			type: Number,
-			required: true
+			default:1000000
 		},
 		Quantity: {
-			type: String
+			type: String,
+			default:''
 		},
 		Image: [{ type: String }],
 		Size: {
@@ -49,26 +50,31 @@ const Product = new Schema(
 				type: String
 			}
 		],
-		Rate: {
-			type: [
+		Rate: 
+			 [
 				{
-					value: {
-						type: String
-					},
-					comment: [
-						{
-							current: {
-								type: String
-							},
-							content: { type: String }
-						}
-					]
-				}
+						value: {
+							type: String,
+							default:'1'
+						},
+						comment: [
+							{
+								current: {
+									type: String,
+									default:''
+								},
+								content: { type: String,default:'' }
+							}
+						]	
+					}
+					
+			
 			],
-			default: []
-		},
+			// default: []
+		// },
 		Heart: {
-			type: String
+			type: String,
+			default:'0'
 		},
 		FK_Category: {
 			type: String,

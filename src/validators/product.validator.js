@@ -8,28 +8,27 @@ const schemas = {
 		price: joi.number()
 	}),
 	create: joi.object().keys({
-		Image: joi.array().items(joi.string().required().empty()),
-		Size: joi.string().required().empty(),
-		Material: joi.string().required().empty(),
+		Image: joi.array().items(joi.string().required()),
+		Size: joi.string().required(),
+		Material: joi.string().required(),
 		Guarantee: joi.string(),
 		Total: joi.number().min(0),
 		Price: joi.number().min(100000),
-		tags: joi.array().items(joi.string().required().empty()),
-		Name: joi.string().required().empty(),
+		tags: joi.array().items(joi.string().required()),
+		Name: joi.string().required(),
 		Code: joi
 			.string()
 			.required()
-			.empty()
 			.regex(/^\d{8}$/),
-		Description: joi.string().required().empty(),
+		Description: joi.string().required(),
 		Quantity: joi.string().required(),
-		FK_Room: joi.string().required().empty(),
-		FK_Category: joi.string().required().empty()
+		FK_Room: joi.string().required(),
+		FK_Category: joi.string().required()
 	}),
 	rateProduct: joi.object().keys({
-		idProduct: joi.string().required().empty(),
-		value: joi.string().required().empty(),
-		content: joi.string().required().empty(),
+		idProduct: joi.string().required(),
+		value: joi.string().required(),
+		content: joi.string().required(),
 	})
 };
 

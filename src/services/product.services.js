@@ -2,6 +2,7 @@ const PRODUCT = require('../models/Product');
 const CATEGORY = require('../models/Categories');
 const ROOM = require('../models/Room');
 const { promises } = require('stream');
+const User = require('../models/User');
 
 const getAllProducts = async query => {
 	try {
@@ -91,12 +92,21 @@ const getProduct = async id => {
 			name: 1
 		});
 		product.FK_Category = category;
+		const newP=await Promise.all(product.Rate.map(async (r)=>{
+			const newR=await Promise.all(r.comment.map(async c=>{
+				c.current=await User.findById(c.current,{id:1,fullName:1,avatar:1})
+				return c
+			}))
+			return newR
+		}))
+		console.log(newP)
 		return {
 			message: 'Successfully get product',
 			success: true,
 			data: product
 		};
 	} catch (error) {
+		console.log(error)
 		return {
 			message: 'An error occurred',
 			success: false
