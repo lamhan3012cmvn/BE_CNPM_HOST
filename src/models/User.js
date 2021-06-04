@@ -17,6 +17,10 @@ const User = new Schema({
         type: String,
         default: ''
     },
+    address:{
+        type:String,
+        default:''
+    },
     phone: {
         type: String,
         default: ''
