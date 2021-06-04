@@ -22,6 +22,12 @@ const schemas = {
     fullName: joi.string().min(6),
     phone: joi.string().min(10).max(10)
   }),
+  updateProfile: joi.object().keys({
+    fullName: joi.string().min(6),
+    phone: joi.string().min(10).max(10),
+    address:joi.string(),
+    image:joi.string()
+  }),
   verify: joi.object().keys({
     email: joi.string().min(6).email().required(),
     password: joi.string().min(6).required(),

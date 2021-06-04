@@ -211,12 +211,18 @@ const getProfile = async (id) => {
 
 const updateUserProfile = async (id, body) => {
   try {
-    await USER.updateOne({ _id: id }, body)
-
+    const userUpdate=await USER.findByIdAndUpdate(id,body)
+    if(userUpdate)
+    {
+      return {
+        message: 'Successfully update user',
+        success: true,
+      }
+  
+    }
     return {
-      message: 'Successfully update user',
-      success: true,
-      data: body
+      message: 'Fail update user',
+      success: false,
     }
   } catch (error) {
     return {

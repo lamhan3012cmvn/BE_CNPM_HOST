@@ -112,6 +112,22 @@ const changePassword = async (req, res, next) => {
 
 }
 
+const updateProfile=async (req,res,next)=>{
+  try {
+    const {fullName,address,image,phone,decodeToken}=req.value.body
+    // const { newPassword, decodeToken } = req.value.body
+    const id = decodeToken.data
+    const resServices = await authServices.updateUserProfile(id, {fullName,address,image,phone})
+    if (!resServices.success) {
+      return controller.sendSuccess(res, resServices.success, 300, resServices.message)
+    }
+
+    return controller.sendSuccess(res, resServices.data, 200, resServices.message)
+  } catch (error) {
+    return controller.sendError(res)
+  }
+
+}
 module.exports = {
   register,
   login,
@@ -119,5 +135,6 @@ module.exports = {
   getAuth,
   changePassword,
   getAllUsers,
-  loginAdmin
+  loginAdmin,
+  updateProfile
 }

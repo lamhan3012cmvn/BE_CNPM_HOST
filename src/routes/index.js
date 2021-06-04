@@ -22,6 +22,6 @@ router.use('/payment-paypal', paypalRoute)
 router.use('/auth', authRoute)
 router.use('/statistics',statisticsRoute)
 
-router.get('/info', (req, res) => res.status(200).send('Welcome to server aws v3'))
+router.get('/info', (req, res) => res.status(200).send('Welcome to server aws v3.1'))
 
 module.exports = router

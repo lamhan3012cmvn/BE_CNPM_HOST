@@ -3,6 +3,8 @@ const CATEGORY = require('../models/Categories');
 const ROOM = require('../models/Room');
 const { promises } = require('stream');
 const User = require('../models/User');
+const TypeInteriorDesign=require('../models/TypeInteriorDesign')
+const InteriorDesign=require('../models/InteriorDesign')
 
 const getAllProducts = async query => {
 	try {
@@ -119,6 +121,14 @@ const getProductRoom = async () => {
 		let perPage = 24;
 		let page = 1;
 
+		const interior=await InteriorDesign.find({},{_id:1,Images:1,title:1,FK_TypeInteriorDesign:1}).limit(4);
+
+		const newInterior=await Promise.all(interior.map(async iter=>{
+			const typeInter=await TypeInteriorDesign.findById(iter.FK_TypeInteriorDesign,{_id:1,name:1})
+			const newInter=JSON.parse(JSON.stringify(iter));
+			newInter.TypeInteriorDesign=typeInter
+			return newInter
+		}))
 		const awesome = await PRODUCT.find(
 			{},
 			{ _id: 1, Image: 1, Name: 1, Price: 1 }
@@ -150,7 +160,10 @@ const getProductRoom = async () => {
 		return {
 			message: 'Successfully get product Home Page',
 			success: true,
-			data: results
+			data: {
+				inter:newInterior,
+				product:results
+			}
 		};
 	} catch (error) {
 		return {
