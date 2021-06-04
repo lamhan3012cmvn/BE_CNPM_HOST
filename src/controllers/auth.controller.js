@@ -30,6 +30,23 @@ const login = async (req, res, next) => {
   }
 }
 
+
+const loginAdmin = async (req, res, next) => {
+  try {
+    const resServices = await authServices.loginAdmin(req.value.body)
+    if (!resServices.success) {
+      return controller.sendSuccess(res, {}, 300, resServices.message)
+    }
+    // const token = jwtServices.createToken(resServices.data._id)
+
+    return controller.sendSuccess(res, resServices.data, 200, resServices.message)
+
+  } catch (err) {
+    return controller.sendError(res)
+  }
+}
+
+
 const getAuth = async (req, res, next) => {
   try {
     const body = req.value.body
@@ -101,5 +118,6 @@ module.exports = {
   verify,
   getAuth,
   changePassword,
-  getAllUsers
+  getAllUsers,
+  loginAdmin
 }

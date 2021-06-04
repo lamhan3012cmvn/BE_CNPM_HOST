@@ -83,6 +83,55 @@ const login = async (body) => {
   }
 }
 
+const loginAdmin = async (body) => {
+  try {
+    const {
+      email,
+      password
+    } = body
+    const user = await USER.findOne({
+      email,
+      isAdmin:true
+    })
+    if (!user) {
+      return {
+        message: 'Login Fail',
+        success: false
+      }
+    }
+    if (!user.isVerify) {
+      const otp = generateOTP()
+      user.otp = otp
+      sendMail(email, otp)
+      //await user.updateOne({ "email": email }, { $set: { "otp": otp } })
+      await user.save()
+      return {
+        message: 'Please verify your account',
+        success: false,
+      }
+    }
+    const isPasswordMatch = await bcrypt.compare(password, user.password)
+    if (!isPasswordMatch) {
+      return {
+        message: 'Login Fail',
+        success: false
+      }
+    }
+    const generateToken=jwtServices.createToken(user._id)
+    return {
+      message: 'Successfully login',
+      success: true,
+      data: {token:generateToken, isAdmin: user.isAdmin,},
+    };
+  } catch (err) {
+    return {
+      message: 'An error occurred',
+      success: false
+    }
+  }
+}
+
+
 const getAuth = async (body) => {
   try {
     const user = await USER.findById(body)
@@ -274,5 +323,6 @@ module.exports = {
   getProfile,
   updateUserProfile,
   verifyUser,
-  getAllUsers
+  getAllUsers,
+  loginAdmin
 }

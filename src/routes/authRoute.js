@@ -10,6 +10,7 @@ router.get('/getAuth', jwtServices.verify, Controller.getAuth)
 router.post('/verify', Validate.body(SchemaValidate.verify), Controller.verify)
 router.post('/changePassword', jwtServices.verify, Validate.body(SchemaValidate.changePassword), Controller.changePassword)
 router.post('/login', Validate.body(SchemaValidate.login), Controller.login)
+router.post('/loginAdmin', Validate.body(SchemaValidate.login), Controller.loginAdmin)
 router.post('/register', Validate.body(SchemaValidate.register), Controller.register)
 
 module.exports = router
