@@ -58,7 +58,6 @@ const createNewProduct = async body => {
 			return {
 				message: 'Product already exist',
 				success: false,
-				data: newProduct
 			};
 		}
 
@@ -70,6 +69,7 @@ const createNewProduct = async body => {
 			data: newProduct
 		};
 	} catch (error) {
+		console.log(error)
 		return {
 			message: 'An error occurred',
 			success: false

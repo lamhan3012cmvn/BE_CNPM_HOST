@@ -6,27 +6,36 @@ const PRODUCT = require('../models/Product');
 const { defaultStatusPending } = require('../config/default');
 const Bill = require('../models/Bill');
 const CancelProduct = require('../models/CancelProduct');
+const User = require('../models/User');
 
 const createNewPendingCart = async body => {
 	try {
 		const idUser = body.idCustomer;
+		const user = await User.findById(idUser);
 		let resCart = await CART.findOne({ FK_CreateAt: idUser });
 
 		if (!resCart)
 			return {
 				message: 'Cannot found cart',
-				success: false,
+				success: false
 			};
 
-		body.products = resCart.products;
+		body.products = resCart.products.filter(p => {
+			return p.isActive === 'ACTIVE';
+		});
+		if (body.products.length <= 0)
+			return { message: 'Successfully create Fail', success: false };
+		body.address = user.address;
 
 		const pendingCart = await PENDINGCART.create(body);
-		resCart.products = [];
+		resCart.products = resCart.products.filter(p => {
+			return p.isActive === 'INACTIVE';
+		});
 		await resCart.save();
 		return {
 			message: 'Successfully create PendingCart',
 			success: true,
-			data: pendingCart,
+			data: pendingCart
 		};
 	} catch (error) {
 		console.log(error);
@@ -45,7 +54,7 @@ const changeStatusPendingCart = async (idPackage, idCustomer, status) => {
 			existPendingCart.status = status;
 			await existPendingCart.save();
 			if (status === defaultStatusPending.delivered) {
-				let prices=0
+				let prices = 0;
 				const billProduct = await Promise.all(
 					existPendingCart.products.map(async p => {
 						const newProduct = await PRODUCT.findById(p.idProduct);
@@ -61,9 +70,9 @@ const changeStatusPendingCart = async (idPackage, idCustomer, status) => {
 							name: 1
 						});
 						product.FK_Category = category;
-						newProduct.Total -= (+p.total);
+						newProduct.Total -= +p.total;
 						newProduct.save();
-						prices+=product.Price*(+p.total)
+						prices += product.Price * +p.total;
 						delete product.isStatus;
 						delete product.Total;
 						delete product.tags;
@@ -71,16 +80,16 @@ const changeStatusPendingCart = async (idPackage, idCustomer, status) => {
 						delete product.Rate;
 						delete product.Heart;
 						console.log(product);
-						return { total: p.total, product: product} 
+						return { total: p.total, product: product };
 					})
 				);
-				
+
 				const objBill = {
 					idCustomer,
 					products: billProduct,
-					totalPrice:prices
+					totalPrice: prices
 				};
-				console.log(billProduct[0])
+				console.log(billProduct[0]);
 				const bill = new Bill(objBill);
 				await bill.save();
 				return {
@@ -88,7 +97,7 @@ const changeStatusPendingCart = async (idPackage, idCustomer, status) => {
 					success: true
 				};
 			} else if (status === defaultStatusPending.cancel) {
-				let prices=0
+				let prices = 0;
 				const billProduct = await Promise.all(
 					existPendingCart.products.map(async p => {
 						const newProduct = await PRODUCT.findById(p.idProduct);
@@ -103,7 +112,7 @@ const changeStatusPendingCart = async (idPackage, idCustomer, status) => {
 							name: 1
 						});
 						product.FK_Category = category;
-						prices+=product.Price*(+p.total)
+						prices += product.Price * +p.total;
 						delete product.isStatus;
 						delete product.Total;
 						delete product.tags;
@@ -111,14 +120,14 @@ const changeStatusPendingCart = async (idPackage, idCustomer, status) => {
 						delete product.Rate;
 						delete product.Heart;
 						console.log(product);
-						return { total: (+p.total), product: product };
+						return { total: +p.total, product: product };
 					})
 				);
-					
+
 				const objBill = {
 					idCustomer,
 					products: billProduct,
-					totalPrice:prices
+					totalPrice: prices
 				};
 				const cancel = new CancelProduct(objBill);
 				await cancel.save();

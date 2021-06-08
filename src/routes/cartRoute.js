@@ -10,7 +10,7 @@ router.post('/createCart', jwtServices.verify, Validate.body(SchemaValidate.crea
 
 router.post('/updateCart', jwtServices.verify, Validate.body(SchemaValidate.update), Controller.updateCart)
 
-router.delete('/deleteCart/:id', Controller.deleteCart)
+router.post('/deleteCart', jwtServices.verify, Validate.body(SchemaValidate.delete),Controller.deleteCart)
 
 router.get('/getCart', jwtServices.verify,Controller.getCarts)
 

@@ -36,8 +36,7 @@ const updateCart = async (req, res, next) => {
 
 const deleteCart = async (req, res, next) => {
     try {
-        const { id } = req.params
-        const resServices = await cartServices.deleteCart(id)
+        const resServices = await cartServices.deleteCart(req.value.body)
         if (!resServices.success)
             return controller.sendSuccess(res, {}, 300, resServices.message)
         return controller.sendSuccess(res, {}, 200, resServices.message)

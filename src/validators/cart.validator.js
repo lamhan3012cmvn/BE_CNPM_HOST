@@ -9,6 +9,9 @@ const schemas = {
         idProduct: joi.string().required(),
         total:joi.number(),
         status:joi.string(),
+    }),
+    delete:joi.object().keys({
+        idProduct: joi.string().required(),
     })
 }
 
